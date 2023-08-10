@@ -1,4 +1,5 @@
 const Product=require('../Models/productModel')
+const ErrorHandler = require('../Utils/errorHandling')
 
 
 //Admin route
@@ -10,7 +11,7 @@ exports.createProduct=async(req,res,next)=>{
             product:doc
         })
     }).catch((e)=>{
-        console.log(e)
+        return next(new ErrorHandler("Can't create product",500))
     })
 }
 
@@ -23,7 +24,7 @@ exports.updateProduct=async(req,res)=>{
             details:doc
         })
     }).catch((e)=>{
-        console.log(e)
+        return next(new ErrorHandler("Product Not Found",404))
     })
 }
 
@@ -36,7 +37,7 @@ exports.deleteProduct=async(req,res)=>{
             details:e
         })
     }).catch((e)=>{
-        console.log(e)
+        return next(new ErrorHandler("Product Not Found",404))
     })
 }
 
@@ -49,7 +50,7 @@ exports.getSingleProduct=(req,res,next)=>{
             Product:doc
         })
     }).catch((e)=>{
-        console.log(e)
+        return next(new ErrorHandler("Product Not Found",404))
     })
 }
 
@@ -60,6 +61,6 @@ exports.getAllProducts=(_,res)=>{
     Products:e
     })
    }).catch((e)=>{
-    console.log(e)
+    return next(new ErrorHandler("Product Not Found",404))
    })
 }
