@@ -1,4 +1,5 @@
 const Product=require('../Models/productModel')
+const ApiFeatures = require('../Utils/apifeatures')
 const ErrorHandler = require('../Utils/errorHandling')
 
 
@@ -54,10 +55,17 @@ exports.getSingleProduct=(req,res,next)=>{
     })
 }
 
-exports.getAllProducts=(_,res)=>{
-   Product.find().then((e)=>{
+exports.getAllProducts=async (req,res)=>{
+  const resultPerPage=5
+  const productCount=await Product.countDocuments()
+  const apifeature= new ApiFeatures(Product.find(),req.query)
+  .search()
+  .filter()
+  .pagination(resultPerPage)
+   apifeature.query.then((e)=>{
     res.status(200).json({
     success:true,
+    Total_Product:productCount,
     Products:e
     })
    }).catch((e)=>{
