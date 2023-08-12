@@ -2,6 +2,7 @@ const ErrorHandler = require('../Utils/errorHandling')
 const User=require("../Models/userModel")
 const bcrypt=require("bcryptjs")
 const JWT=require("jsonwebtoken")
+const sendToken = require('../Utils/jwtToken')
 //Register User
 
 exports.registerUser=async(req,res)=>{
@@ -13,11 +14,7 @@ exports.registerUser=async(req,res)=>{
     }})
 
     user.save().then((doc)=>{
-        const token=user.getJWTToken()
-        res.status(201).json({
-            success:true,
-            token
-        })
+        sendToken(user,201,res)
     }).catch((e)=>{
         res.status(500).json({
             success:false,
@@ -48,13 +45,7 @@ exports.loginUser=async(req,res)=>{
                 const login=await bcrypt.compare(password,doc.password)
                 if(login){
                     //generated token
-                    const token=await JWT.sign({id:doc._id},process.env.JWT_SECRET,{
-                        expiresIn:process.env.JWT_EXPIRE
-                    })
-                    res.status(200).json({
-                        success:true,
-                        token
-                    })
+                   sendToken(doc,200,res)
     
                 }else{
                     res.status(403).json({
