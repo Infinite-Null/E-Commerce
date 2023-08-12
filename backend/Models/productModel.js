@@ -1,70 +1,75 @@
-const mongoose=require("mongoose")
+const mongoose = require("mongoose")
 
-const productSchema=new mongoose.Schema({
-    name:{
-        type:String,
-        required:[true,"Please Enter name"],
-        trim:true
+const productSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: [true, "Please Enter name"],
+        trim: true
     },
-    description:{
-        type:String,
-        required:[true,"Please Enter discription"]
+    description: {
+        type: String,
+        required: [true, "Please Enter discription"]
     },
-    price:{
-        type:Number,
-        required:[true,"Please Enter price"],
-        maxLength:[8,"Price cannot exceed 8 character"]
+    price: {
+        type: Number,
+        required: [true, "Please Enter price"],
+        maxLength: [8, "Price cannot exceed 8 character"]
     },
-    rating:{
-        type:Number,
-        default:0
+    rating: {
+        type: Number,
+        default: 0
     },
-    images:[
+    images: [
         {
-            public_id:{
-                type:String,
-                required:true
+            public_id: {
+                type: String,
+                required: true
             },
-            url:{
-                type:String,
-                required:true
+            url: {
+                type: String,
+                required: true
             }
         }
     ],
-    category:{
-        type:String,
-        required:[true,"Plase enter category"]
+    category: {
+        type: String,
+        required: [true, "Plase enter category"]
     },
-    Stock:{
-        type:Number,
-        required:[true,"Please enter stock"],
-        maxLength:[4,"Cannot exceed limit"],
-        default:1
+    Stock: {
+        type: Number,
+        required: [true, "Please enter stock"],
+        maxLength: [4, "Cannot exceed limit"],
+        default: 1
     },
-    numOfReviews:{
-        type:Number,
-        default:0
+    numOfReviews: {
+        type: Number,
+        default: 0
     },
-    reviews:[
+    reviews: [
         {
-            name:{
-                type:String,
-                required:true
+            name: {
+                type: String,
+                required: true
             },
-            rating:{
-                type:Number,
-                required:true
+            rating: {
+                type: Number,
+                required: true
             },
-            comment:{
-                type:String,
-                required:true
+            comment: {
+                type: String,
+                required: true
             }
         }
     ],
-    createdAt:{
-        type:Date,
-        default:Date.now
-    } 
+    user: {
+        type: mongoose.Schema.ObjectId,
+        ref: "User",
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
 })
 
-module.exports=mongoose.model("Product",productSchema)
+module.exports = mongoose.model("Product", productSchema)
