@@ -12,7 +12,10 @@ exports.createProduct=async(req,res,next)=>{
             product:doc
         })
     }).catch((e)=>{
-        return next(new ErrorHandler("Can't create product",500))
+        res.status(500).json({
+            success:false,
+            details:e.message
+        })
     })
 }
 
