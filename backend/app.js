@@ -1,8 +1,10 @@
 const express=require('express')
 const app=express()
 const errorMiddleware=require("./Middleware/error")
+const cookieParser=require('cookie-parser')
 
 app.use(express.json())
+app.use(cookieParser())
 
 const product=require("./Routes/productRoute")
 const user=require("./Routes/userRoute")
