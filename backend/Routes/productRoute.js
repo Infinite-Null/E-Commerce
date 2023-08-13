@@ -4,7 +4,8 @@ const {
     createProduct,
     updateProduct,
     deleteProduct,
-    getSingleProduct
+    getSingleProduct,
+    createProductReview, getProductReview, deleteProductReview
 } = require("../Controllers/productControllers")
 const {isAuthenticatedUser, authorizeRoles} = require("../Middleware/auth")
 
@@ -16,5 +17,7 @@ Router.route("/products/:id").get(getSingleProduct)
 Router.route("/admin/products/new").post(isAuthenticatedUser, authorizeRoles("admin"), createProduct)
 Router.route("/admin/products/:id").patch(isAuthenticatedUser, authorizeRoles("admin"), updateProduct)
 Router.route("/admin/products/:id").delete(isAuthenticatedUser, authorizeRoles("admin"), deleteProduct)
+Router.route("/review").put(isAuthenticatedUser, createProductReview)
+Router.route("/reviews").get(getProductReview).delete(isAuthenticatedUser, deleteProductReview)
 
 module.exports = Router
