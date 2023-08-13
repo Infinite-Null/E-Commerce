@@ -202,3 +202,69 @@ exports.updateProfile = async (req, res) => {
         })
     })
 }
+
+// Get all user admin
+exports.getAllUser = async (req, res) => {
+    User.find().then((users) => {
+        res.status(200).json({
+            success: true,
+            users
+        })
+    }).catch((e) => {
+        res.status(500).json({
+            success: false,
+            message: e.message
+        })
+    })
+}
+
+// Get single user admin
+exports.getSingleUser = async (req, res) => {
+    User.findById(req.params.id).then((user) => {
+        if (!user) {
+            return res.status(404).json({
+                success: false,
+                message: "User Not Found"
+            })
+        }
+        res.status(200).json({
+            success: true,
+            user
+        })
+    }).catch((e) => {
+        res.status(500).json({
+            success: false,
+            message: e.message
+        })
+    })
+}
+
+// Update user role admin
+exports.updateRole = async (req, res) => {
+    User.updateOne({_id: req.params.id}, {role: req.body.role}).then((message) => {
+        res.status(200).json({
+            success: true,
+            message
+        })
+    }).catch((e) => {
+        res.status(500).json({
+            success: false,
+            message: e.message
+        })
+    })
+}
+
+//Delete user admin
+exports.deleteUser = async (req, res) => {
+    User.deleteOne({_id: req.params.id}).then((message) => {
+        res.status(200).json({
+            success: true,
+            message
+        })
+    }).catch((e) => {
+        res.status(500).json({
+            success: false,
+            message: e.message
+        })
+    })
+}
