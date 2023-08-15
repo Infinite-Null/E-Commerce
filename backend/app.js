@@ -8,10 +8,13 @@ app.use(cookieParser())
 
 const product = require("./Routes/productRoute")
 const user = require("./Routes/userRoute")
+const order = require("./Routes/orderRoute")
+
 app.use("/api/v1", product)
 app.use("/api/v1", user)
+app.use("/api/v1", order)
 
-//Midddleware for error
+//Middleware for error
 app.use(errorMiddleware)
 
 module.exports=app
