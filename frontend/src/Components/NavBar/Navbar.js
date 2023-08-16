@@ -17,22 +17,11 @@ import logo from "../../Images/logo.jpg"
 import {TfiShoppingCartFull} from "react-icons/tfi";
 import Icon from "./Icon";
 import {BsFillArrowRightCircleFill, BsSearch} from "react-icons/bs";
+import DropDown from "./DropDown";
 
 export default function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-    const menuItems = [
-        "Profile",
-        "Dashboard",
-        "Activity",
-        "Analytics",
-        "System",
-        "Deployments",
-        "My Settings",
-        "Team Settings",
-        "Help & Feedback",
-        "Log Out",
-    ];
     return (
         <Navbar
             shouldHideOnScroll
@@ -55,18 +44,19 @@ export default function NavBar() {
 
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
-                    <Link color="foreground" href="#" className="navItem">
-                        Features
+                    <Link color="foreground" href="/" className="navItem">
+                       Home
                     </Link>
                 </NavbarItem>
+                <DropDown/>
                 <NavbarItem>
                     <Link href="#" aria-current="page" color="foreground" className="navItem">
-                        Customers
+                        Products
                     </Link>
                 </NavbarItem>
                 <NavbarItem>
                     <Link color="foreground" href="#" className="navItem">
-                        Integrations
+                        Contact Us
                     </Link>
                 </NavbarItem>
             </NavbarContent>
@@ -123,20 +113,43 @@ export default function NavBar() {
                         <img src={logo} alt="not found" width={30} height={20}/>
                         <p className="font-bold text-inherit">E-commerce</p>
                     </Link>
-                {menuItems.map((item, index) => (
-                    <NavbarMenuItem key={`${item}-${index}`}>
-                        <Link
-                            className="w-full"
-                            color={
-                                index === 2 ? "warning" : index === menuItems.length - 1 ? "danger" : "foreground"
-                            }
-                            href="#"
-                            size="lg"
-                        >
-                            {item}
-                        </Link>
-                    </NavbarMenuItem>
-                ))}
+                <NavbarMenuItem key={`Home`}>
+                    <Link
+                        className="w-full"
+                        href="#"
+                        size="lg"
+                        style={{
+                            color:"black"
+                        }}
+                    >
+                        Home
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem key={`Products`}>
+                    <Link
+                        style={{
+                            color:"black"
+                        }}
+                        className="w-full"
+                        href="#"
+                        size="lg">
+                        Products
+                    </Link>
+                </NavbarMenuItem>
+                <NavbarMenuItem key={"dropdown"}>
+                <DropDown color="black" fontSize={19}/>
+                </NavbarMenuItem>
+                <NavbarMenuItem key={`Products`}>
+                    <Link
+                        style={{
+                            color:"black"
+                        }}
+                        className="w-full"
+                        href="#"
+                        size="lg">
+                        Contact Us
+                    </Link>
+                </NavbarMenuItem>
             </NavbarMenu>
         </Navbar>
     );
