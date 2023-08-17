@@ -1,12 +1,11 @@
 import './App.css';
 import NavBar from "./Components/NavBar/Navbar";
+import Banner from "./Components/Banner/Banner";
 
 function App() {
     return <>
         <NavBar/>
-        <div className="h-{200vh}" style={{
-            height:"200vh"
-        }}></div>
+        <Banner/>
     </>
 }
 
