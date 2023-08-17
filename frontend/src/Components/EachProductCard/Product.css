@@ -1,7 +1,7 @@
 .card{
     border-radius: 10px;
-    width: 300px;
-    box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    width: 350px;
+    box-shadow: 0 8px 27px 0 rgba(0,0,0,0.1),0 6px 20px 0 rgba(0,0,0,0.14);
     margin: 10px;
 }
 .Imageproduct{
@@ -13,18 +13,33 @@
 }
 .description{
     padding: 10px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .ProductTitle{
-    font-size: 30px;
+    font-size: 25px;
 }
 .ProductDupliPrice{
-    color: red;
+    color: gray;
     text-decoration: line-through;
     font-size: 20px;
     margin-right: 10px;
 }
 .ProductPrice{
+    font-family: "Bahnschrift", serif;
+    font-weight: 100;
+    letter-spacing: -1px;
     font-size: 25px;
-    color: green;
+    color: red;
+}
+.category {
+
+    gap: 20px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    width: 100%;
 }
 

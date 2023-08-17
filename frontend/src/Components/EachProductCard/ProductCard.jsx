@@ -17,10 +17,16 @@ export default function ProductCard(props) {
                     justifyContent:"space-around",
                     padding:"5px"
                 }}>
-                    <Button className="m-2 font-bold" color="secondary" variant="ghost" startContent={<FaCartPlus/>}>Cart</Button>
-                    <Button className="m-2 font-bold" color="secondary" variant="ghost" startContent={<TbListDetails/>}>Details</Button>
+                    <Button className="m-2 font-bold"  variant="ghost" startContent={<FaCartPlus/>}>Cart</Button>
+                    <Button className="m-2 font-bold"  variant="ghost" startContent={<TbListDetails/>}>Details</Button>
                 </div>
             </div>
         </div></>
     )
+}
+
+export function ProductLayout(props){
+    return <div className="category">
+        {props.children}
+    </div>
 }
