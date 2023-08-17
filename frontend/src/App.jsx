@@ -38,7 +38,7 @@ function App() {
                 name:"Shorts"
             },
             {
-                link:"https://static.standard.co.uk/2022/06/20/10/Colorful-Standardjpg?width=968&auto=webp&quality=50&crop=968%3A645%2Csmart",
+                link:"https://cdn.thewirecutter.com/wp-content/media/2021/01/whitetshirts-2048px-0297-2x1-1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200",
                 name:"Relaxed Shirt"
             }
         ]}/>

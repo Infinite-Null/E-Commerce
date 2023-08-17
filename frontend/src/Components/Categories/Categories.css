@@ -1,5 +1,5 @@
 .MainCategories{
-    width:100vw;
+    width:99vw;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -30,6 +30,7 @@
     text-decoration: none;
     transition: 0.5s;
     z-index: 0;
+    border-radius: 10px;
 }
 
 .item1:hover {
