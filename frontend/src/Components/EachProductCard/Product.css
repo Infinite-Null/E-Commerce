@@ -1,0 +1,30 @@
+.card{
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    margin: 10px;
+}
+.Imageproduct{
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    object-fit: cover;
+    width: 100%;
+    height: 350px;
+}
+.description{
+    padding: 10px;
+}
+.ProductTitle{
+    font-size: 30px;
+}
+.ProductDupliPrice{
+    color: red;
+    text-decoration: line-through;
+    font-size: 20px;
+    margin-right: 10px;
+}
+.ProductPrice{
+    font-size: 25px;
+    color: green;
+}
+

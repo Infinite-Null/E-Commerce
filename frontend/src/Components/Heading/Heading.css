@@ -1,0 +1,19 @@
+.EachHeading{
+    margin-top: 70px;
+    font-size: 3vw;
+    font-weight: 900;
+    color: #4d4d4d;
+    text-align: center;
+    text-decoration: underline;
+}
+
+@media screen and (max-width: 1200px) {
+    .EachHeading{
+        font-size: 5vw;
+    }
+}
+@media screen and (max-width: 540px) {
+    .EachHeading{
+        font-size: 10vw;
+    }
+}
