@@ -1,5 +1,7 @@
 import {Link} from "@nextui-org/react";
 import "./Banner.css"
+import {motion} from "framer-motion";
+
 const Banner = () => {
     return (
         <>
@@ -7,14 +9,53 @@ const Banner = () => {
                 <div className="sides">
                     <div className="logo"></div>
                 </div>
-                <div className="info">
-                    <h6 className="heading">Welcome To Store of</h6>
-                    <h1 className="SubHeading">Elegance weaved in every stitch, tailored to embrace your unique style.</h1>
+                <motion.div
+                    initial={{
+                        opacity:0,
+
+                    }}
+                    animate={{
+                        opacity:1,
+
+                    }}
+                    transition={{
+                        delay:0.2,
+                        duration:1
+                    }}
+                    className="info">
+                    <motion.h6
+                        initial={{
+                            opacity:0,
+
+                        }}
+                        animate={{
+                            opacity:1,
+
+                        }}
+                        transition={{
+                            delay:0.6,
+                            duration:1
+                        }}
+                        className="heading">Welcome To Store of</motion.h6>
+                    <motion.h1
+                        initial={{
+                            opacity:0,
+
+                        }}
+                        animate={{
+                            opacity:1,
+
+                        }}
+                        transition={{
+                            delay:1.2,
+                            duration:0.5
+                        }}
+                        className="SubHeading">Elegance weaved in every stitch, tailored to embrace your unique style.</motion.h1>
                     <div className="meta">
                         <Link  href="/" target="_b" className="author"></Link><br/>
                         <h1 style={{fontSize:"1rem"}}>Scroll Down</h1>
                     </div>
-                </div>
+                </motion.div>
             </div>
         </>
     )
