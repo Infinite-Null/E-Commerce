@@ -5,41 +5,8 @@
     -webkit-transition: all 0.4s cubic-bezier(.5, .24, 0, 1);
     transition: all 0.4s cubic-bezier(.5, .24, 0, 1);
 }
-
-.navItem::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom:0;
-    z-index:-1;
-    width: 0;
-    height:2px;
-    background: black;
-    box-shadow: inset 0 0 0 black;
-    display: block;
-    -webkit-transition: all 0.4s cubic-bezier(.5, .24, 0, 1);
-    transition: all 0.4s cubic-bezier(.5, .24, 0, 1)
-}
-
-.navItem:hover::before {
-    width:100%;
-}
-
-.navItem::after {
-    content: '';
-    position: absolute;
-    right: 0;
-    top:0;
-    z-index:-1;
-    width: 0;
-    height:2px;
-    background: black;
-    -webkit-transition: all 0.4s cubic-bezier(.5, .24, 0, 1);
-    transition: all 0.4s cubic-bezier(.5, .24, 0, 1)
-}
-.navItem:hover::after {
-    width:100%;
-}
 .navItem:hover{
-    color: black;
+    font-weight: 900;
+    font-size: 20px;
+    transition: all 0.4s cubic-bezier(.5, .24, 0, 1);
 }

@@ -4,7 +4,6 @@ import {
     NavbarBrand,
     NavbarContent,
     NavbarItem,
-    Link,
     DropdownItem,
     DropdownTrigger,
     Dropdown,
@@ -12,6 +11,7 @@ import {
     Avatar,
     NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Input
 } from "@nextui-org/react";
+import { Link } from "react-router-dom";
 import "./NavBar.css"
 import logo from "../../Images/logo.png"
 import {TfiShoppingCartFull} from "react-icons/tfi";
@@ -36,7 +36,7 @@ export default function NavBar() {
             </NavbarContent>
 
                <NavbarBrand className="hidden sm:inline">
-                   <Link href="/" style={{color:"black"}}>
+                   <Link style={{color:"black"}} to="/">
                    <img src={logo} alt="not found" width={40} height={40}/>
                    <p className="font-bold text-inherit">E-commerce</p>
                    </Link>
@@ -44,18 +44,18 @@ export default function NavBar() {
 
             <NavbarContent className="hidden sm:flex gap-4" justify="center">
                 <NavbarItem>
-                    <Link color="foreground" href="/" className="navItem">
+                    <Link color="foreground" to="/" className="navItem">
                        Home
                     </Link>
                 </NavbarItem>
                 <DropDown/>
                 <NavbarItem>
-                    <Link href="#" aria-current="page" color="foreground" className="navItem">
+                    <Link to="/" aria-current="page" color="foreground" className="navItem">
                         Products
                     </Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link color="foreground" href="#" className="navItem">
+                    <Link to="/" color="foreground" href="#" className="navItem">
                         Contact Us
                     </Link>
                 </NavbarItem>
@@ -109,12 +109,13 @@ export default function NavBar() {
                 </Dropdown>
             </NavbarContent>
             <NavbarMenu>
-                    <Link href="/" style={{color:"black",marginBottom:"10px"}}>
+                    <Link to="/" style={{color:"black",marginBottom:"10px"}}>
                         <img src={logo} alt="not found" width={30} height={20}/>
                         <p className="font-bold text-inherit">E-commerce</p>
                     </Link>
                 <NavbarMenuItem key={`Home`}>
                     <Link
+                        to="/"
                         className="w-full"
                         href="#"
                         size="lg"
@@ -127,6 +128,7 @@ export default function NavBar() {
                 </NavbarMenuItem>
                 <NavbarMenuItem key={`Products`}>
                     <Link
+                        to="/"
                         style={{
                             color:"black"
                         }}
@@ -141,6 +143,7 @@ export default function NavBar() {
                 </NavbarMenuItem>
                 <NavbarMenuItem key={`Products`}>
                     <Link
+                        to="/"
                         style={{
                             color:"black"
                         }}

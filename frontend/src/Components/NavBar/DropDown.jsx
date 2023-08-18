@@ -4,6 +4,7 @@ import {MdOutlineKeyboardArrowDown} from "react-icons/md";
 import {GiShorts, GiSleevelessJacket, GiSocks, GiTShirt} from "react-icons/gi";
 import {PiPantsFill} from "react-icons/pi";
 import {IoShirtSharp} from "react-icons/io5";
+import "./NavBar.css"
 
 export default function  DropDown({color,fontSize}) {
     const fontStyle={fontWeight:"bold"}
@@ -18,10 +19,11 @@ export default function  DropDown({color,fontSize}) {
                         endContent={<MdOutlineKeyboardArrowDown/>}
                         style={(!color)?{}:{
                             color,
-                            fontSize
+                            fontSize,
+                            transition:"0.5s"
                     }}
                     >
-                        Categories
+                       <span className="navItem">Categories</span>
                     </Button>
                 </DropdownTrigger>
             </NavbarItem>
