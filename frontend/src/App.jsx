@@ -4,6 +4,10 @@ import Banner from "./Components/Banner/Banner";
 import ProductCard, {ProductLayout} from "./Components/EachProductCard/ProductCard";
 import Heading from "./Components/Heading/Heading";
 import {Categories} from "./Components/Categories/Categories";
+import {Footer} from "./Components/Footer/Footer";
+import {TfiFacebook} from "react-icons/tfi";
+import {SiInstagram} from "react-icons/si";
+import {FaTwitter} from "react-icons/fa";
 
 function App() {
     const x=[1,2,3,4,5]
@@ -33,6 +37,47 @@ function App() {
             name:"Relaxed Shirt"
         }
     ]
+    const contact=[
+        {
+            link:"https://mail.google.com/",
+            text:"xyz@gmail.com"
+        },
+        {
+            link:"/",
+            text:"+91 1234567890"
+        },
+    ]
+    const follow=[
+        {
+            link:"https://instagram.com",
+            text:"Instagram"
+        },
+        {
+            link:"https://facebook.com",
+            text:"Facebook"
+        },
+        {
+            link:"https://twitter.com",
+            text:"Twitter"
+        },
+    ]
+    const social=[
+        {
+            link:"https://facebook.com",
+            page:"Facebook",
+            icon:<TfiFacebook/>
+        },
+        {
+            link:"https://instagram.com",
+            page:"Instagram",
+            icon:<SiInstagram/>
+        },
+        {
+            link:"https://twitter.com",
+            page:"Twitter",
+            icon:<FaTwitter/>
+        },
+    ]
     return <>
         <NavBar/>
         <Banner/>
@@ -58,6 +103,7 @@ function App() {
             {x.map((_,i)=> <ProductCard title="White Relaxed Shirt" orignalPrice={"300"} link={"https://hips.hearstapps.com/hmg-prod/images/index-cuban-collar-1-64b6f686e40f3.jpg"} discountPrice={"230"} key={i}/>
             )}
         </ProductLayout>
+        <Footer Contact={contact} Follow={follow} Social={social}/>
     </>
 }
 
