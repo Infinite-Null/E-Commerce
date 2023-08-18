@@ -10,6 +10,7 @@
     object-fit: cover;
     width: 100%;
     height: 350px;
+    transition: 0.5s;
 }
 .description{
     padding: 10px;
@@ -42,5 +43,14 @@
     width: 100%;
     justify-items: center;
 }
+.card:hover .Imageproduct{
+    scale: 1.2;
+    border-radius: 10px;
+    transition: 0.5s;
+}
 
-
+.photo{
+    overflow: hidden;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
