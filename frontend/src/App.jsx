@@ -8,32 +8,38 @@ import {Footer} from "./Components/Footer/Footer";
 import {TfiFacebook} from "react-icons/tfi";
 import {SiInstagram} from "react-icons/si";
 import {FaTwitter} from "react-icons/fa";
-
+import cargo from "../src/Images/cargo.jpg"
+import windcheater from '../src/Images/windcheater.webp'
+import socks from '../src/Images/socks.webp'
+import oversized from '../src/Images/oversized.png'
+import shorts from '../src/Images/shorts.webp'
+import tshirt from '../src/Images/tshirt.webp'
+import {Review} from "./Components/Reviews/Review";
 function App() {
     const x=[1,2,3,4,5]
     const categories=[
         {
-            link:"https://yourdesignstore.s3.amazonaws.com/uploads/yds/productImages/full/1686143600342516611518738868oversized-tee-website-1.png",
+            link:oversized,
             name:"Oversized"
         },
         {
-            link: "https://cdn.pixelbin.io/v2/black-bread-289bfa/woTKH5/wrkr/t.resize(h:1000,w:820)/data/Superdry/11oct2021/410294621021_4.jpg",
+            link: windcheater,
             name:"Windcheater"
         },
         {
-            link:"https://5.imimg.com/data5/ECOM/Default/2023/6/313447685/CD/HO/QO/9422220/cargo-pants-men-solid-color-black-loose-casual-jogger-pocket-elastic-waist-ankle-length-977.jpg",
+            link:cargo,
             name:"Cargo-pants"
         },
         {
-            link:"https://cdn.thewirecutter.com/wp-content/media/2023/06/no-show-socks-2048px-1205.jpg?auto=webp&quality=75&width=1024",
+            link:socks,
             name:"Socks"
         },
         {
-            link:"https://pyxis.nymag.com/v1/imgs/ba0/b4b/692b1c17930ef698abdc5549b51b2cf36e-bic-mens-gym-shorts.2x.rsocial.w600.jpg",
+            link:shorts,
             name:"Shorts"
         },
         {
-            link:"https://cdn.thewirecutter.com/wp-content/media/2021/01/whitetshirts-2048px-0297-2x1-1.jpg?auto=webp&quality=75&crop=1.91:1&width=1200",
+            link:tshirt,
             name:"Relaxed Shirt"
         }
     ]
@@ -93,6 +99,8 @@ function App() {
             {x.map((_,i)=> <ProductCard title="Red Polo T-shirt" orignalPrice={"300"} link={"https://www.uniqlo.com/jp/ja/contents/feature/masterpiece/common_22fw/img/item_61_01.jpg?220211"} discountPrice={"230"} key={i}/>
             )}
         </ProductLayout>
+        <Heading title={"Top Reviews"}/>
+        <Review/>
         <Heading title={"New Arrivals"}/>
         <ProductLayout>
             {x.map((_,i)=> <ProductCard title="Blue Print Shirt" orignalPrice={"300"} link={"https://imgmedia.lbb.in/media/2020/05/5eac0e7c833b2b7acdc583b2_1588334204878.jpg"} discountPrice={"230"} key={i}/>

@@ -26,7 +26,7 @@ export default function NavBar() {
         <Navbar
             shouldHideOnScroll
             isBordered
-            isBlurred
+            isBlurred={false}
             isMenuOpen={isMenuOpen}
             onMenuOpenChange={setIsMenuOpen}
             maxWidth="2xl"
