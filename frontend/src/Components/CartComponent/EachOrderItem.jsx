@@ -15,7 +15,7 @@ export function EachOrderItem() {
                 </div>
                 <div className="flex justify-between space-x-8 items-start w-full">
                     <p className="text-base xl:text-lg leading-6">
-                        $36.00 <span className="text-red-300 line-through"> $45.00</span>
+                        $36.00 
                     </p>
                     <p className="text-base xl:text-lg leading-6 text-gray-800"><Button isIconOnly aria-label="Add">
                         <AiOutlineMinus/>
