@@ -11,7 +11,7 @@ import {
     Avatar,
     NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Input
 } from "@nextui-org/react";
-import { Link } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import "./NavBar.css"
 import logo from "../../Images/logo.png"
 import {TfiShoppingCartFull} from "react-icons/tfi";
@@ -20,6 +20,7 @@ import {BsFillArrowRightCircleFill, BsSearch} from "react-icons/bs";
 import DropDown from "./DropDown";
 
 export default function NavBar() {
+    const navigate=useNavigate()
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
     return (
@@ -76,7 +77,9 @@ export default function NavBar() {
                                                             cursor:"pointer"
                                                         }}/>
                                                     }/></div>
-                <Icon icon={<TfiShoppingCartFull style={{
+                <Icon
+                    navigate={navigate}
+                    icon={<TfiShoppingCartFull style={{
                     fontSize:25
                 }}/>} count={"0"}/>
                 <Dropdown placement="bottom-end">
@@ -91,16 +94,17 @@ export default function NavBar() {
                             src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
                         />
                     </DropdownTrigger>
-                    <DropdownMenu aria-label="Profile Actions" variant="flat">
-                        <DropdownItem key="profile" className="h-14 gap-2">
+                    <DropdownMenu aria-label="Profile Actions" variant="shadow" onAction={(key)=>{
+                        if(key!==""||key){
+                            navigate(key)
+                        }
+                    }}>
+                        <DropdownItem key="profile" className="h-14 gap-2 b">
                             <p className="font-semibold">Signed in as</p>
                             <p className="font-semibold">zoey@example.com</p>
                         </DropdownItem>
-                        <DropdownItem key="settings">My Settings</DropdownItem>
-                        <DropdownItem key="team_settings">Team Settings</DropdownItem>
-                        <DropdownItem key="analytics">Analytics</DropdownItem>
-                        <DropdownItem key="system">System</DropdownItem>
-                        <DropdownItem key="configurations">Configurations</DropdownItem>
+                        <DropdownItem key="settings">Your Profile</DropdownItem>
+                        <DropdownItem key="orders">Your Orders</DropdownItem>
                         <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
                         <DropdownItem key="logout" color="danger">
                             Log Out

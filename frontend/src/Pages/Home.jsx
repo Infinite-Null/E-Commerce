@@ -13,6 +13,7 @@ import ProductCard, {ProductLayout} from "../Components/EachProductCard/ProductC
 import {Categories} from "../Components/Categories/Categories";
 import {Review} from "../Components/Reviews/Review";
 import {Footer} from "../Components/Footer/Footer";
+import Highlight1 from "../Components/Highlights/Highlights";
 
 export function Home() {
     const x=[1,2,3,4,5]
@@ -105,6 +106,8 @@ export function Home() {
             {x.map((_,i)=> <ProductCard title="Blue Print Shirt" orignalPrice={"300"} link={"https://imgmedia.lbb.in/media/2020/05/5eac0e7c833b2b7acdc583b2_1588334204878.jpg"} discountPrice={"230"} key={i}/>
             )}
         </ProductLayout>
+        <Heading title={"Reliability"}/>
+        <Highlight1/>
         <Heading title={"Best Sellers"}/>
         <ProductLayout>
             {x.map((_,i)=> <ProductCard title="White Relaxed Shirt" orignalPrice={"300"} link={"https://hips.hearstapps.com/hmg-prod/images/index-cuban-collar-1-64b6f686e40f3.jpg"} discountPrice={"230"} key={i}/>

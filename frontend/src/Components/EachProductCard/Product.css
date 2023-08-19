@@ -37,10 +37,10 @@
     color: red;
 }
 .category {
+    width: 99vw;
     gap: 20px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    width: 100%;
     justify-items: center;
 }
 .card:hover .Imageproduct{

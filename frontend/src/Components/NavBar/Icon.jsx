@@ -1,9 +1,7 @@
 import React from "react";
 import {Badge, Button} from "@nextui-org/react";
-import {useNavigate} from "react-router-dom";
 
-export default function Icon({icon,count}) {
-    const navigate=useNavigate()
+export default function Icon({icon,count,navigate}) {
     return (
         <Badge content={count} shape="circle" color="danger">
             <Button
