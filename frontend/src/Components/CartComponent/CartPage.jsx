@@ -1,6 +1,7 @@
 import {Billing} from "./Billing";
 import {EachOrderItem} from "./EachOrderItem";
 import Heading from "../Heading/Heading";
+import './CartPage.css'
 
 export function CartPage() {
     return (
@@ -8,7 +9,7 @@ export function CartPage() {
             <Heading title="Your Cart" marginTop="0px"/>
             <div className="mt-10 flex flex-col xl:flex-row jusitfy-center items-stretch  w-full xl:space-x-8 space-y-4 md:space-y-6 xl:space-y-0">
                 <div className="flex flex-col justify-start items-start w-full space-y-4 md:space-y-6 xl:space-y-8">
-                    <div className="h-[450px] flex flex-col justify-start items-start bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full overflow-y-scroll">
+                    <div className="h-[450px] flex flex-col justify-start items-start bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full overflow-y-scroll scroll">
                         <p className="text-lg md:text-xl font-semibold leading-6 xl:leading-5 text-gray-800">Scroll to view items</p>
                             <EachOrderItem/>
                             <EachOrderItem/>
