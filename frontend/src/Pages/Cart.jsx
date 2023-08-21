@@ -2,6 +2,7 @@ import {CartPage} from "../Components/CartComponent/CartPage";
 import {AddressForm} from "../Components/AddressForm/AddressForm";
 import MultiStep from "../Components/MultiStep";
 import {useState} from "react";
+import {PaymentForm} from "../Components/PaymentForm/PaymentForm";
 
 export function Cart() {
     const [step,setStep]=useState(0)
@@ -11,7 +12,7 @@ export function Cart() {
     return (
             <>
                 <MultiStep step={step}/>
-                {(step===0)?<CartPage change={changeStep}/>:(step===1)?<AddressForm change={changeStep}/>:<h1>1</h1>}
+                {(step===0)?<CartPage change={changeStep}/>:(step===1)?<AddressForm change={changeStep}/>:<PaymentForm change={changeStep}/>}
             </>
     )
 }
