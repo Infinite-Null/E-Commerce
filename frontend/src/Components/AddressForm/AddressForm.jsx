@@ -95,9 +95,11 @@ export function AddressForm({change}) {
             alignItems:"center",
             justifyContent:"center",
             height:"80vh",
-            flexDirection:"column"
+            flexDirection:"column",
         }}>
-            <Card className="max-w-full w-[350px]  border-2 border-black">
+            <Card className="max-w-full w-[350px]  border-2 border-black" style={{
+                boxShadow:"0px 0px 20px 2px rgba(0,0,0,0.25)",
+            }}>
                 <CardHeader>Address Details</CardHeader>
                 <CardBody className="overflow-hidden gap-4">
                     <Input
