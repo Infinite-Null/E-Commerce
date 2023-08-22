@@ -2,7 +2,9 @@ import "./Product.css"
 import {Button} from "@nextui-org/react";
 import {FaCartPlus} from "react-icons/fa6";
 import {TbListDetails} from "react-icons/tb";
+import {useNavigate} from "react-router-dom";
 export default function ProductCard(props) {
+    const navigate = useNavigate()
     return (
             <div className="card">
                 <div className="photo">
@@ -18,7 +20,9 @@ export default function ProductCard(props) {
                         padding:"5px"
                     }}>
                         <Button className="m-2 font-bold"  variant="ghost" startContent={<FaCartPlus/>}>Cart</Button>
-                        <Button className="m-2 font-bold"  variant="ghost" startContent={<TbListDetails/>}>Details</Button>
+                        <Button className="m-2 font-bold"  variant="ghost" startContent={<TbListDetails/>} onPress={()=>{
+                            navigate("/product/1234")
+                        }}>Details</Button>
                     </div>
                 </div>
             </div>
