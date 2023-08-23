@@ -6,7 +6,8 @@ import {PiPantsFill} from "react-icons/pi";
 import {IoShirtSharp} from "react-icons/io5";
 import "./NavBar.css"
 
-export default function  DropDown({color,fontSize}) {
+export default function  DropDown({color,fontSize,navigate}) {
+
     const fontStyle={fontWeight:"bold"}
     return<Dropdown>
             <NavbarItem>
@@ -28,6 +29,11 @@ export default function  DropDown({color,fontSize}) {
                 </DropdownTrigger>
             </NavbarItem>
             <DropdownMenu
+                onAction={(key)=>{
+                    if(key !== "") {
+                    navigate("/"+key,{state:{category:key}})
+                    }
+                }}
                 aria-label="ACME features"
                 className="w-[340px]"
                 itemClasses={{
@@ -35,7 +41,7 @@ export default function  DropDown({color,fontSize}) {
                 }}
             >
                 <DropdownItem
-                    key="autoscaling"
+                    key="oversized"
                     description="Our oversized t-shirts offer a versatile and fashionable option for your wardrobe."
                     startContent={<GiTShirt style={{
                         color:"green",
@@ -45,7 +51,7 @@ export default function  DropDown({color,fontSize}) {
                     <span style={fontStyle}>Over-Sized</span>
                 </DropdownItem>
                 <DropdownItem
-                    key="usage_metrics"
+                    key="windcheater"
                     description="outdoor activities or traveling, Our windcheater offers practicality and style in one package."
                     startContent={<GiSleevelessJacket style={{
                         color:"purple",
@@ -55,7 +61,7 @@ export default function  DropDown({color,fontSize}) {
                     <span style={fontStyle}>Windcheater</span>
                 </DropdownItem>
                 <DropdownItem
-                    key="production_ready"
+                    key="cargopants"
                     startContent={<GiShorts style={{
                         color:"rosybrown",
                         fontSize:30
@@ -65,7 +71,7 @@ export default function  DropDown({color,fontSize}) {
                     <span style={fontStyle}>Cargo-Pants</span>
                 </DropdownItem>
                 <DropdownItem
-                    key="99_uptime"
+                    key="socks"
                     startContent={<GiSocks style={{
                         color:"orange",
                         fontSize:30
@@ -75,7 +81,7 @@ export default function  DropDown({color,fontSize}) {
                     <span style={fontStyle}>Socks</span>
                 </DropdownItem>
                 <DropdownItem
-                    key="supreme_support"
+                    key="shorts"
                     startContent={<PiPantsFill style={{
                         color:"brown",
                         fontSize:30
@@ -85,7 +91,7 @@ export default function  DropDown({color,fontSize}) {
                     <span style={fontStyle}>Shorts</span>
                 </DropdownItem>
                 <DropdownItem
-                    key="supreme_support"
+                    key="relaxedshirt"
                     startContent={<IoShirtSharp style={{
                         color:"teal",
                         fontSize:30

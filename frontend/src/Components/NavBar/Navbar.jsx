@@ -49,7 +49,13 @@ export default function NavBar() {
                        Home
                     </Link>
                 </NavbarItem>
-                <DropDown/>
+
+
+
+                <DropDown navigate={navigate}/>
+
+
+
                 <NavbarItem>
                     <Link to="/" aria-current="page" color="foreground" className="navItem">
                         Products
@@ -143,7 +149,7 @@ export default function NavBar() {
                     </Link>
                 </NavbarMenuItem>
                 <NavbarMenuItem key={"dropdown"}>
-                <DropDown color="black" fontSize={19}/>
+                <DropDown color="black" fontSize={19} navigate={navigate}/>
                 </NavbarMenuItem>
                 <NavbarMenuItem key={`Products`}>
                     <Link
