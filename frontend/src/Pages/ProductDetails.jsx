@@ -1,4 +1,5 @@
 import ProductDetail from "../Components/ProductDetail/ProductDetail";
+import {useEffect} from "react";
 
 export function ProductDetails() {
     const discription="It is a long established fact that a reader will be distracted by readable content of a page when looking at its layout. The point of usingLorem Ipsum is that it has a more-or-less normal distribution of letters."
@@ -42,6 +43,9 @@ export function ProductDetails() {
             dicription:"When you want to decorate your home, the idea of choosing a decorative theme can seem daunting. Some themes seem to have an endless amount of pieces, while others can feel hard to accomplish"
         },
     ]
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
     return (
         <ProductDetail
             productId={"123456"}

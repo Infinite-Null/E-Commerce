@@ -4,6 +4,6 @@ import {useLocation} from "react-router-dom";
 export function AllProductWithCategory() {
     const {state}=useLocation()
     return (
-        <><AllProductCategory/></>
+        <><AllProductCategory data={state}/></>
     )
 }

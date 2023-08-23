@@ -3,48 +3,16 @@ import {
     Card,
     CardBody, CardFooter,
     CardHeader,
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownTrigger,
     Input
 } from "@nextui-org/react";
+import {Select, SelectItem} from "@nextui-org/react";
 import React from "react"
 import {AiFillHome} from "react-icons/ai";
 import {SiHomeassistantcommunitystore} from "react-icons/si";
 import {FaPhoneAlt} from "react-icons/fa";
 import {FaLocationDot} from "react-icons/fa6";
-import {TbBuildingEstate} from "react-icons/tb";
+import {MdPlace} from "react-icons/md";
 let state = [
-    "Karnataka",
-    "Kerala",
-    "Madhya Pradesh",
-    "Arunachal Pradesh",
-    "Assam",
-    "Bihar",
-    "Chhattisgarh",
-    "Goa",
-    "Gujarat",
-    "Haryana",
-    "Himachal Pradesh",
-    "Jammu and Kashmir",
-    "Jharkhand",
-    "Karnataka",
-    "Kerala",
-    "Madhya Pradesh",
-    "Arunachal Pradesh",
-    "Assam",
-    "Bihar",
-    "Chhattisgarh",
-    "Goa",
-    "Gujarat",
-    "Haryana",
-    "Himachal Pradesh",
-    "Jammu and Kashmir",
-    "Jharkhand",
-    "Karnataka",
-    "Kerala",
-    "Madhya Pradesh",
     "Andhra Pradesh",
     "Arunachal Pradesh",
     "Assam",
@@ -82,12 +50,6 @@ let state = [
     "Lakshadweep",
     "Puducherry"]
 export function AddressForm({change}) {
-    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Delhi"]));
-
-    const selectedValue = React.useMemo(
-        () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-        [selectedKeys]
-    );
     return (
         <div style={{
             width:"99vw",
@@ -156,34 +118,24 @@ export function AddressForm({change}) {
                         placeholder="Enter your phone number"
                         startContent={<FaPhoneAlt style={{fontSize:"25px",marginRight:"5px"}}/>}
                     />
-                    <Dropdown offset={20} className="h-[250px] overflow-y-scroll">
-                        <DropdownTrigger>
-                            <Input
-                                style={{
-                                    fontSize:"15px",
-                                    fontWeight:"900",
-                                    textAlign:"start"
-                                }}
-                                value={selectedValue}
-                                aria-label={"Place"}
-                                variant={"bordered"}
-                                isRequired
-                                label={<span style={{fontSize:"15px",marginBottom:"5px"}}>Place</span>}
-                                placeholder="Enter your phone number"
-                                startContent={<TbBuildingEstate style={{fontSize:"25px",marginRight:"5px"}}/>}
-                            />
-                        </DropdownTrigger>
-                        <DropdownMenu
-                            aria-label="Single selection actions"
-                            variant="shadow"
-                            disallowEmptySelection
-                            selectionMode="single"
-                            selectedKeys={selectedKeys}
-                            onSelectionChange={setSelectedKeys}
-                        >
-                            {state.map((e,i)=><DropdownItem  key={e} aria-label={e}>{e}</DropdownItem>)}
-                        </DropdownMenu>
-                    </Dropdown>
+                    <Select
+                        onChange={(e)=>{
+
+                        }}
+                        startContent={<MdPlace style={{fontSize:"25px",marginRight:"5px"}}/>}
+                        variant={"bordered"}
+                        defaultValue={"Delhi"}
+                        placeholder="Delhi"
+                        label="Place"
+                        className="max-w-xs"
+                    >
+                        {state.map((e) => (
+                            <SelectItem key={e} value={e}>
+                                {e}
+                            </SelectItem>
+                        ))}
+                    </Select>
+
                 </CardBody>
                 <CardFooter style={{
                     display:"flex",

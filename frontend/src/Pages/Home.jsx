@@ -88,28 +88,28 @@ export function Home() {
 
         <Banner/>
         <Heading title={"Featured"}/>
-        <ProductLayout>
+        <ProductLayout width="99">
             {x.map((_,i)=> <ProductCard title="Classic Peace Lily" orignalPrice={"300"} link={"https://www.yourdesignstore.in/admin/uploads/654321/productImages/full/1632490432614dd3c096612Kid_OR.jpg"} discountPrice={"230"} key={i}/>
             )}
         </ProductLayout>
         <Heading title={"Categories"}/>
         <Categories cat={categories}/>
         <Heading title={"Trending"}/>
-        <ProductLayout>
+        <ProductLayout width="99">
             {x.map((_,i)=> <ProductCard title="Red Polo T-shirt" orignalPrice={"300"} link={"https://www.uniqlo.com/jp/ja/contents/feature/masterpiece/common_22fw/img/item_61_01.jpg?220211"} discountPrice={"230"} key={i}/>
             )}
         </ProductLayout>
         <Heading title={"Top Reviews"}/>
         <Review/>
         <Heading title={"New Arrivals"}/>
-        <ProductLayout>
+        <ProductLayout width="99">
             {x.map((_,i)=> <ProductCard title="Blue Print Shirt" orignalPrice={"300"} link={"https://imgmedia.lbb.in/media/2020/05/5eac0e7c833b2b7acdc583b2_1588334204878.jpg"} discountPrice={"230"} key={i}/>
             )}
         </ProductLayout>
         <Heading title={"Reliability"}/>
         <Highlight1/>
         <Heading title={"Best Sellers"}/>
-        <ProductLayout>
+        <ProductLayout width="99">
             {x.map((_,i)=> <ProductCard title="White Relaxed Shirt" orignalPrice={"300"} link={"https://hips.hearstapps.com/hmg-prod/images/index-cuban-collar-1-64b6f686e40f3.jpg"} discountPrice={"230"} key={i}/>
             )}
         </ProductLayout>

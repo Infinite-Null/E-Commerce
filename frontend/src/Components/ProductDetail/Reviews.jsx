@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Rating from "react-rating";
 import {LiaStarSolid} from "react-icons/lia";
 

@@ -61,7 +61,7 @@ export default function  DropDown({color,fontSize,navigate}) {
                     <span style={fontStyle}>Windcheater</span>
                 </DropdownItem>
                 <DropdownItem
-                    key="cargopants"
+                    key="cargo-pants"
                     startContent={<GiShorts style={{
                         color:"rosybrown",
                         fontSize:30
@@ -91,7 +91,7 @@ export default function  DropDown({color,fontSize,navigate}) {
                     <span style={fontStyle}>Shorts</span>
                 </DropdownItem>
                 <DropdownItem
-                    key="relaxedshirt"
+                    key="relaxed-shirt"
                     startContent={<IoShirtSharp style={{
                         color:"teal",
                         fontSize:30
