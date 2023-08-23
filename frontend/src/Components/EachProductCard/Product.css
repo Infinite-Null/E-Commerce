@@ -1,12 +1,10 @@
 .card{
-    border-radius: 10px;
+    border-radius: 0;
     width: 350px;
     box-shadow: 0 8px 27px 0 rgba(0,0,0,0.1),0 6px 20px 0 rgba(0,0,0,0.14);
     margin: 10px;
 }
 .Imageproduct{
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
     object-fit: cover;
     width: 100%;
     height: 350px;
@@ -45,12 +43,9 @@
 }
 .card:hover .Imageproduct{
     scale: 1.2;
-    border-radius: 10px;
     transition: 0.5s;
 }
 
 .photo{
     overflow: hidden;
-    border-top-right-radius: 10px;
-    border-top-left-radius: 10px;
 }

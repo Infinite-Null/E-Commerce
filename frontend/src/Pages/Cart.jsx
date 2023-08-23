@@ -13,6 +13,7 @@ export function Cart() {
             <>
                 <MultiStep step={step}/>
                 {(step===0)?<CartPage change={changeStep}/>:(step===1)?<AddressForm change={changeStep}/>:<PaymentForm change={changeStep}/>}
+
             </>
     )
 }
