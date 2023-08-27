@@ -5,7 +5,7 @@ export function Categories({cat,onPress}) {
             <div className="category1">
                 {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                 {cat.map((x,i)=> <div onClick={()=>{
-
+                        x.onPressed()
                 }} className="item1" key={i}>
                         <span className="title1">{x.name}</span>
                         <span className="link1">Shop Now</span>

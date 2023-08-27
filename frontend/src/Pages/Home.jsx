@@ -23,43 +23,44 @@ export function Home() {
         {
             link:oversized,
             name:"Oversized",
-            onPress:()=>{
-                navigate('/Oversized',{state:"Oversized"})
+            onPressed:()=>{
+                console.log("Hello")
+                navigate('/Oversized',{state: {category: "Oversized"}})
             }
         },
         {
             link: windcheater,
             name:"Windcheater",
-            onPress:()=>{
-                navigate('/Windcheater',{state:"Windcheater"})
+            onPressed:()=>{
+                navigate('/Windcheater',{state: {category: "Windcheater"}})
             }
         },
         {
             link:cargo,
             name:"Cargo-pants",
-            onPress:()=>{
-                navigate('/Cargo-pants',{state:"Cargo-pants"})
+            onPressed:()=>{
+                navigate('/Cargo-pants',{state: {category: "Cargo-pants"}})
             }
         },
         {
             link:socks,
             name:"Socks",
-            onPress:()=>{
-                navigate('/Socks',{state:"Socks"})
+            onPressed:()=>{
+                navigate('/Socks',{state: {category: "Socks"}})
             }
         },
         {
             link:shorts,
             name:"Shorts",
-            onPress:()=>{
-                navigate('/Shorts',{state:"Shorts"})
+            onPressed:()=>{
+                navigate('/Shorts',{state: {category: "Shorts"}})
             }
         },
         {
             link:tshirt,
             name:"Relaxed Shirt",
-            onPress:()=>{
-                navigate('/Relaxed-Shirt',{state:"Relaxed-Shirt"})
+            onPressed:()=>{
+                navigate('/Relaxed-Shirt',{state:{category:"Relaxed-Shirt"}})
             }
         }
     ]
