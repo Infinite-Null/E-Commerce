@@ -4,10 +4,14 @@ import {useEffect} from "react";
 
 export function AllProductWithCategory() {
     const {state}=useLocation()
+    function onRangeChange(range){
+
+    }
+    const products=[1,2,3,4,5,1,2,3,4,5,1,2,3,4,5]
     useEffect(() => {
         window.scroll(0,0)
     }, []);
     return (
-        <><AllProductCategory data={state}/></>
+        <><AllProductCategory data={state} onRangeChange={onRangeChange} products={products} totalProducts={9}/></>
     )
 }

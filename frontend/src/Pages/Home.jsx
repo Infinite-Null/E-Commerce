@@ -14,33 +14,53 @@ import {Categories} from "../Components/Categories/Categories";
 import {Review} from "../Components/Reviews/Review";
 import {Footer} from "../Components/Footer/Footer";
 import Highlight1 from "../Components/Highlights/Highlights";
+import {useNavigate} from "react-router-dom";
 
 export function Home() {
+    const navigate=useNavigate()
     const x=[1,2,3,4,5]
     const categories=[
         {
             link:oversized,
-            name:"Oversized"
+            name:"Oversized",
+            onPress:()=>{
+                navigate('/Oversized',{state:"Oversized"})
+            }
         },
         {
             link: windcheater,
-            name:"Windcheater"
+            name:"Windcheater",
+            onPress:()=>{
+                navigate('/Windcheater',{state:"Windcheater"})
+            }
         },
         {
             link:cargo,
-            name:"Cargo-pants"
+            name:"Cargo-pants",
+            onPress:()=>{
+                navigate('/Cargo-pants',{state:"Cargo-pants"})
+            }
         },
         {
             link:socks,
-            name:"Socks"
+            name:"Socks",
+            onPress:()=>{
+                navigate('/Socks',{state:"Socks"})
+            }
         },
         {
             link:shorts,
-            name:"Shorts"
+            name:"Shorts",
+            onPress:()=>{
+                navigate('/Shorts',{state:"Shorts"})
+            }
         },
         {
             link:tshirt,
-            name:"Relaxed Shirt"
+            name:"Relaxed Shirt",
+            onPress:()=>{
+                navigate('/Relaxed-Shirt',{state:"Relaxed-Shirt"})
+            }
         }
     ]
     const contact=[
@@ -89,7 +109,7 @@ export function Home() {
         <Banner/>
         <Heading title={"Featured"}/>
         <ProductLayout width="99">
-            {x.map((_,i)=> <ProductCard title="Classic Peace Lily" orignalPrice={"300"} link={"https://www.yourdesignstore.in/admin/uploads/654321/productImages/full/1632490432614dd3c096612Kid_OR.jpg"} discountPrice={"230"} key={i}/>
+            {x.map((_,i)=> <ProductCard title="Classic Peace Lily" orignalPrice={"300"} link={"https://www.mydesignation.com/wp-content/uploads/2019/06/trivandrum-tshirt-mydesignation-image-latest.jpg"} discountPrice={"230"} key={i}/>
             )}
         </ProductLayout>
         <Heading title={"Categories"}/>

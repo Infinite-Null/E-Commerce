@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {Slider} from "antd";
 import {FaIndianRupeeSign} from "react-icons/fa6";
 
-const Filters= ({title}) => {
+const Filters= ({title,onRangeChange,totalProducts}) => {
     const [showFilters, setShowfilters] = useState(false);
     const [minMax, setMinMax]=useState([100,1500])
 
@@ -28,7 +28,7 @@ const Filters= ({title}) => {
                         Filters
                     </button>
                 </div>
-                <p className=" text-xl leading-5 text-gray-600 font-medium">09 Products</p>
+                <p className=" text-xl leading-5 text-gray-600 font-medium">{`${totalProducts} Products`}</p>
 
                 {/* Filters Button (Small Screen)  */}
 
@@ -66,6 +66,7 @@ const Filters= ({title}) => {
                     <div className="w-72">
                         <Slider
                             onChange={(val)=>{
+                                onRangeChange(val)
                                 setMinMax((prev)=>prev=val)
                             }}
                             railStyle={{
