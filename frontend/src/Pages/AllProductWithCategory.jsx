@@ -3,7 +3,12 @@ import {useLocation} from "react-router-dom";
 import {useEffect} from "react";
 
 export function AllProductWithCategory() {
-    const {state}=useLocation()
+    let {state} = useLocation();
+    if(state===null){
+        state={
+            category:"All Products"
+        }
+    }
     function onRangeChange(range){
 
     }

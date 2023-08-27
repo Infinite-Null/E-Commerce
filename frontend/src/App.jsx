@@ -6,6 +6,7 @@ import {Route, Routes} from "react-router-dom";
 import {Orders} from "./Pages/Orders";
 import {ProductDetails} from "./Pages/ProductDetails";
 import {AllProductWithCategory} from "./Pages/AllProductWithCategory";
+import {ToastContainer} from "react-toastify";
 function App() {
    return<>
        <NavBar/>
@@ -16,6 +17,9 @@ function App() {
            <Route path="product/:id" element={ <ProductDetails/> } />
            <Route path="/:id" element={<AllProductWithCategory/>}/>
        </Routes>
+       <ToastContainer position="bottom-center" theme="colored" icon={false} limit={2} toastStyle={{
+           backgroundColor:"cadetblue",
+       }}/>
    </>
 }
 

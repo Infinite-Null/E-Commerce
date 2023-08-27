@@ -11,6 +11,7 @@ import {
     Avatar,
     NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Input
 } from "@nextui-org/react";
+import 'react-toastify/dist/ReactToastify.css';
 import {Link, useNavigate} from "react-router-dom";
 import "./NavBar.css"
 import logo from "../../Images/logo.png"
@@ -18,11 +19,12 @@ import {TfiShoppingCartFull} from "react-icons/tfi";
 import Icon from "./Icon";
 import {BsFillArrowRightCircleFill, BsSearch} from "react-icons/bs";
 import DropDown from "./DropDown";
+import {Tost} from "../Tost";
 
 export default function NavBar() {
     const navigate=useNavigate()
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
-
+    const [search,setSearch]=React.useState("")
     return (
         <Navbar
             shouldHideOnScroll
@@ -38,7 +40,6 @@ export default function NavBar() {
 
                <NavbarBrand className="hidden sm:inline">
                    <Link style={{color:"black"}} to="/">
-                   <img src={logo} alt="not found" width={40} height={40}/>
                    <p className="font-bold text-inherit">E-commerce</p>
                    </Link>
                </NavbarBrand>
@@ -57,7 +58,12 @@ export default function NavBar() {
 
 
                 <NavbarItem>
-                    <Link to="/" aria-current="page" color="foreground" className="navItem">
+                    <Link
+                        to={
+                        {
+                            pathname:"/All-Products",
+                        }
+                    } aria-current="page" color="foreground" className="navItem">
                         Products
                     </Link>
                 </NavbarItem>
@@ -70,7 +76,11 @@ export default function NavBar() {
 
             <NavbarContent as="div" justify="end">
 
-                <div style={{width:"150px"}}><Input aria-label={"Search"}
+                <div style={{width:"150px"}}><Input
+                                                    onChange={(e)=>{
+                                                        setSearch(e.target.value)
+                                                    }}
+                                                    aria-label={"Search"}
                                                     size="sm"
                                                     fullWidth={false}
                                                     variant={"bordered"}
@@ -78,7 +88,13 @@ export default function NavBar() {
                                                         fontSize:25,
                                                     }}/>}
                                                     endContent={
-                                                        <BsFillArrowRightCircleFill style={{
+                                                        <BsFillArrowRightCircleFill onClick={()=>{
+                                                            if(search===""){
+                                                                Tost("Please Type something!!")
+                                                                return
+                                                            }
+                                                            navigate("/"+search,{state:{category:search}})
+                                                        }} style={{
                                                             fontSize:25,
                                                             cursor:"pointer"
                                                         }}/>
