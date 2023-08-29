@@ -7,11 +7,13 @@ import {Orders} from "./Pages/Orders";
 import {ProductDetails} from "./Pages/ProductDetails";
 import {AllProductWithCategory} from "./Pages/AllProductWithCategory";
 import {ToastContainer} from "react-toastify";
+import {ContactUs} from "./Pages/ContactUs";
 function App() {
    return<>
        <NavBar/>
        <Routes>
            <Route path="/" element={ <Home/> } />
+           <Route path="AboutUs" element={ <ContactUs/> } />
            <Route path="cart" element={ <Cart/> } />
            <Route path="orders" element={ <Orders/> } />
            <Route path="product/:id" element={ <ProductDetails/> } />

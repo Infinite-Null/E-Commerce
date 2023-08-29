@@ -68,7 +68,7 @@ export default function NavBar() {
                     </Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link to="/" color="foreground" href="#" className="navItem">
+                    <Link to="/AboutUs" color="foreground" href="#" className="navItem">
                         Contact Us
                     </Link>
                 </NavbarItem>
