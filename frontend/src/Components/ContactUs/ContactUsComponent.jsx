@@ -72,11 +72,13 @@ function SocialMedia({Social}){
             <div className=" bg-gray-50 grid lg:grid-cols-4 md:grid-cols-2 grid-cols-1 lg:gap-8 md:gap-12 gap-14 lg:px-20 lg:py-12 py-10 md:px-12 px-4">
                 {/* Delivery grid Card */}
                 {Social.map((e,i)=>
-                    <div style={style} className="hover:shadow-[0px_0px_30px_5px_#cbd5e0]" key={i}>
-                        {e.icon}
-                        <h3 className=" text-xl leading-5 font-semibold text-gray-800 lg:mt-10 mt-8 ">{e.title}</h3>
-                        <p className=" text-base leading-6 font-normal text-gray-600 mt-4 lg:w-full md:w-9/12 w-full">{e.discription}</p>
-                    </div>)}
+                   <a href={e.Link} target={"_blank"} rel="noreferrer">
+                       <div style={style} className="hover:shadow-[0px_0px_30px_5px_#cbd5e0]" key={i}>
+                           {e.icon}
+                           <h3 className=" text-xl leading-5 font-semibold text-gray-800 lg:mt-10 mt-8 ">{e.title}</h3>
+                           <p className=" text-base leading-6 font-normal text-gray-600 mt-4 lg:w-full md:w-9/12 w-full">{e.discription}</p>
+                       </div>
+                   </a>)}
             </div>
         </div>
     );
