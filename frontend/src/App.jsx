@@ -8,11 +8,15 @@ import {ProductDetails} from "./Pages/ProductDetails";
 import {AllProductWithCategory} from "./Pages/AllProductWithCategory";
 import {ToastContainer} from "react-toastify";
 import {ContactUs} from "./Pages/ContactUs";
+import {AboutUser} from "./Pages/AboutUser";
+import {HelpandFeedback} from "./Pages/HelpandFeedback";
 function App() {
    return<>
        <NavBar/>
        <Routes>
            <Route path="/" element={ <Home/> } />
+           <Route path="/Help" element={ <HelpandFeedback/> } />
+           <Route path="Profile" element={ <AboutUser/> } />
            <Route path="AboutUs" element={ <ContactUs/> } />
            <Route path="cart" element={ <Cart/> } />
            <Route path="orders" element={ <Orders/> } />

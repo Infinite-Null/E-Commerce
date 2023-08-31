@@ -68,7 +68,7 @@ export default function NavBar() {
                     </Link>
                 </NavbarItem>
                 <NavbarItem>
-                    <Link to="/AboutUs" color="foreground" href="#" className="navItem">
+                    <Link to="/Help" color="foreground" className="navItem">
                         Contact Us
                     </Link>
                 </NavbarItem>
@@ -125,7 +125,7 @@ export default function NavBar() {
                             <p className="font-semibold">Signed in as</p>
                             <p className="font-semibold">zoey@example.com</p>
                         </DropdownItem>
-                        <DropdownItem key="settings">Your Profile</DropdownItem>
+                        <DropdownItem key="Profile">Your Profile</DropdownItem>
                         <DropdownItem key="orders">Your Orders</DropdownItem>
                         <DropdownItem key="help_and_feedback">Help & Feedback</DropdownItem>
                         <DropdownItem key="logout" color="danger">
