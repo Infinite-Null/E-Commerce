@@ -5,8 +5,9 @@ import { InputNumber } from 'antd';
 import {Textarea} from "@nextui-org/react";
 import {motion} from "framer-motion"
 import Review from "./Reviews";
+import {RiSendPlane2Fill} from "react-icons/ri";
 
-const ProductDetail= ({images,title,averageReview,discountedPrice,totalPrice,discription,onQuntityChange,onReviewTextChange,productId,getReviewStar,reviews,onAddToCart}) => {
+const ProductDetail= ({images,title,averageReview,discountedPrice,totalPrice,discription,onQuntityChange,onReviewTextChange,productId,getReviewStar,reviews,onAddToCart,onPostReviewPress}) => {
     const [selectedImage,changeSelected]=useState(images[0])
     return (
         <>
@@ -184,19 +185,29 @@ const ProductDetail= ({images,title,averageReview,discountedPrice,totalPrice,dis
                         description="Enter a concise review of product."
                         className="max-w-xs"
                     />
-                    <Rating
-                        onChange={(x)=>{
-                            getReviewStar(x)
-                        }}
-                        initialRating={0}
-                        fullSymbol={<LiaStarSolid style={{
-                            color:"black",
-                            fontSize:"30px"
-                        }}/>}
-                        emptySymbol={<LiaStarSolid style={{
-                            color:"gray",
-                            fontSize:"30px"
-                        }}/>}/>
+                   <div className={"flex justify-between items-center w-72"}>
+                       <Rating
+                           onChange={(x)=>{
+                               getReviewStar(x)
+                           }}
+                           initialRating={0}
+                           fullSymbol={<LiaStarSolid style={{
+                               color:"black",
+                               fontSize:"30px"
+                           }}/>}
+                           emptySymbol={<LiaStarSolid style={{
+                               color:"gray",
+                               fontSize:"30px"
+                           }}/>}/>
+                       <RiSendPlane2Fill
+                           onClick={()=>{
+                               onPostReviewPress()
+                           }}
+                           className={"text-gray-800 cursor-pointer hover:text-gray-950 border-1 border-black p-2 rounded-full"}
+                           style={{
+                               fontSize:"38px"
+                           }}/>
+                   </div>
                 </div>
             </div>
         </div>

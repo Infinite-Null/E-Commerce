@@ -1,5 +1,6 @@
 import ProductDetail from "../Components/ProductDetail/ProductDetail";
 import {useEffect} from "react";
+import {Tost} from "../Components/Tost";
 
 export function ProductDetails() {
     const discription="It is a long established fact that a reader will be distracted by readable content of a page when looking at its layout. The point of usingLorem Ipsum is that it has a more-or-less normal distribution of letters."
@@ -18,7 +19,10 @@ export function ProductDetails() {
 
     }
     function Pressed(id){
-        console.log(id)
+        Tost("Item Added to cart.")
+    }
+    function onPostReviewPress(){
+        Tost("Thank you for your review.")
     }
     const reviews=[
         {
@@ -60,6 +64,7 @@ export function ProductDetails() {
             getReviewStar={getReviewStar}
             reviews={reviews}
             onAddToCart={Pressed}
+            onPostReviewPress={onPostReviewPress}
         />
     )
 }
