@@ -18,7 +18,7 @@ export function LineGraph({Earnings}) {
     };
     return (
         <div className="flex justify-center items-center flex-col mt-14">
-            <h1 className="text-3xl underline">Total Earnings</h1>
+            <h1 className="text-3xl underline mb-5">Total Earnings</h1>
             <div className="w-full sm:w-[80vw] sm:h-full">
                 <Line data={data}/>
             </div>
