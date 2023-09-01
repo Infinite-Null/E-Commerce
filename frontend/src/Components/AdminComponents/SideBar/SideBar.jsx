@@ -30,16 +30,16 @@ const SideBar = ({onDashBoardPress,onProductsPress,onOrdersPress,onUsersPress,on
                 <Button onClick={onDashBoardPress} startContent={<LuLayoutDashboard/>} className={"w-full mb-5"} variant={"ghost"} color={"default"}>
                     Dashboard
                 </Button>
-                <Button startContent={<GiClothes/>} className={"w-full mb-5"} variant={"ghost"} color={"default"}>
+                <Button onClick={onProductsPress} startContent={<GiClothes/>} className={"w-full mb-5"} variant={"ghost"} color={"default"}>
                 Products
             </Button>
-                <Button startContent={<BiSolidPackage/>} className={"w-full mb-5"} variant={"ghost"} color={"default"}>
+                <Button onClick={onOrdersPress}  startContent={<BiSolidPackage/>} className={"w-full mb-5"} variant={"ghost"} color={"default"}>
                     Orders
                 </Button>
-                <Button startContent={<FaUsersCog/>} className={"w-full mb-5"} variant={"ghost"} color={"default"}>
+                <Button onClick={onUsersPress} startContent={<FaUsersCog/>} className={"w-full mb-5"} variant={"ghost"} color={"default"}>
                     Users
                 </Button>
-                <Button startContent={<MdOutlineReviews/>} className={"w-full mb-5"} variant={"ghost"} color={"default"}>
+                <Button onClick={onReviewsPress} startContent={<MdOutlineReviews/>} className={"w-full mb-5"} variant={"ghost"} color={"default"}>
                     Reviews
                 </Button>
                 <Button onClick={onClose} startContent={<FaWindowClose/>} className={"mb-5"} variant={"ghost"} color={"default"}>
