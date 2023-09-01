@@ -2,9 +2,7 @@ import {Card, CardHeader} from "@nextui-org/react";
 
 export function EachCardHomeAdmin({color,title,amount}) {
     return (
-        <>    <Card isBlurred
-                    isHoverable
-                    className="py-4 text-white" style={{
+        <>    <Card className="py-4 text-white" style={{
             flex:"1",
             margin:"5px",
             backgroundColor:color,

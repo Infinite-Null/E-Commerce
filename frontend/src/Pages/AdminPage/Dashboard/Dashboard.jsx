@@ -1,4 +1,5 @@
 import {EachCardHomeAdmin} from "../../../Components/AdminComponents/Dashboard/EachCardHomeAdmin";
+import {LineGraph} from "../../../Components/AdminComponents/Dashboard/LineGraph";
 
 export function Dashboard() {
 
@@ -13,6 +14,7 @@ export function Dashboard() {
             <EachCardHomeAdmin title={"Total Orders"} color={"coral"} amount={"5"}/>
             <EachCardHomeAdmin title={"Total Users"} color={"royalblue"} amount={"4"}/>
         </div>
+        <LineGraph Earnings={350}/>
         </>
     )
 }
