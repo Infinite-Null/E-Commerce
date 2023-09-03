@@ -136,14 +136,12 @@ export default function NavBar() {
             </NavbarContent>
             <NavbarMenu>
                     <Link to="/" style={{color:"black",marginBottom:"10px"}}>
-                        <img src={logo} alt="not found" width={30} height={20}/>
                         <p className="font-bold text-inherit">E-commerce</p>
                     </Link>
                 <NavbarMenuItem key={`Home`}>
                     <Link
                         to="/"
                         className="w-full"
-                        href="#"
                         size="lg"
                         style={{
                             color:"black"
@@ -154,12 +152,11 @@ export default function NavBar() {
                 </NavbarMenuItem>
                 <NavbarMenuItem key={`Products`}>
                     <Link
-                        to="/"
+                        to="/All-Products"
                         style={{
                             color:"black"
                         }}
                         className="w-full"
-                        href="#"
                         size="lg">
                         Products
                     </Link>
@@ -169,14 +166,13 @@ export default function NavBar() {
                 </NavbarMenuItem>
                 <NavbarMenuItem key={`Products`}>
                     <Link
-                        to="/"
+                        to="/AboutUs"
                         style={{
                             color:"black"
                         }}
                         className="w-full"
-                        href="#"
                         size="lg">
-                        Contact Us
+                        About Us
                     </Link>
                 </NavbarMenuItem>
             </NavbarMenu>
