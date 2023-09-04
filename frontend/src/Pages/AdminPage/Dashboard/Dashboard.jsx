@@ -1,11 +1,13 @@
 import {EachCardHomeAdmin} from "../../../Components/AdminComponents/Dashboard/EachCardHomeAdmin";
 import {LineGraph} from "../../../Components/AdminComponents/Dashboard/LineGraph";
 import {PieChart} from "../../../Components/AdminComponents/Dashboard/PieChat";
+import SideBar from "../../../Components/AdminComponents/SideBar/SideBar";
 
 export function Dashboard() {
 
     return (
         <>
+            <SideBar/>
         <h1 className={'text-center text-gray-950 text-3xl uppercase underline mb-5'}>Dashboard</h1>
         <div style={{
             display:"flex",

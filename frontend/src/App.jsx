@@ -10,18 +10,22 @@ import {ToastContainer} from "react-toastify";
 import {ContactUs} from "./Pages/ContactUs";
 import {AboutUser} from "./Pages/AboutUser";
 import {HelpandFeedback} from "./Pages/HelpandFeedback";
-import {AdminRoutingPage} from "./Pages/AdminPage/AdminRoutingPage";
+import {Dashboard} from "./Pages/AdminPage/Dashboard/Dashboard";
+import {ProductsPageAdmin} from "./Pages/AdminPage/Products/AllProducts";
+import {AddProduct} from "./Pages/AdminPage/Products/AddProduct";
 function App() {
    return<>
        <NavBar/>
        <Routes>
            <Route path="/" element={ <Home/> } />
-           <Route path="Admin" element={ <AdminRoutingPage/> } />
            <Route path="/Help" element={ <HelpandFeedback/> } />
            <Route path="Profile" element={ <AboutUser/> } />
            <Route path="AboutUs" element={ <ContactUs/> } />
            <Route path="cart" element={ <Cart/> } />
            <Route path="orders" element={ <Orders/> } />
+           <Route path="/Admin" element={ <Dashboard/> } />
+           <Route path="/Admin/Products/AllProduct" element={ <ProductsPageAdmin/> } />
+           <Route path="/Admin/Products/AddProduct" element={ <AddProduct/> } />
            <Route path="product/:id" element={ <ProductDetails/> } />
            <Route path="/:id" element={<AllProductWithCategory/>}/>
        </Routes>
