@@ -1,6 +1,11 @@
 import SideBar from "../../../Components/AdminComponents/SideBar/SideBar";
+import {AddProductComponent} from "../../../Components/AdminComponents/AddProductComponent/AddProductComponent";
+import {Tost} from "../../../Components/Tost";
 
 export function AddProduct() {
+    function onCreatePress(name,price,discription,stock,category) {
+        Tost("Successfully Created")
+    }
     return (
         <>
             <SideBar/>
@@ -10,6 +15,8 @@ export function AddProduct() {
                 textDecoration:"underline"
             }}>
                Add Product
-            </h1></>
+            </h1>
+            <AddProductComponent onCreatePress={onCreatePress}/>
+        </>
     )
 }

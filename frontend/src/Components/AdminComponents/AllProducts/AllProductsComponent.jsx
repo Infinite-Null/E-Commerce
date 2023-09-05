@@ -68,7 +68,7 @@ export function AllProductsComponent({onUpdatePress,onDeletePress}) {
     )
 }
 
-function EachItem({productId,name,stock,price,discription,onUpdatePress,onDeletePress}){
+function EachItem({productId,name,stock,price,discription,category,onUpdatePress,onDeletePress}){
     const [visible, setVisible] = useState(false);
 
     const handleClose = () => {
@@ -80,6 +80,7 @@ function EachItem({productId,name,stock,price,discription,onUpdatePress,onDelete
     const [UpdateStock,setStock]=useState(stock)
     const [UpdatePrice,setPrice]=useState(price)
     const [UpdateDiscription,setDiscription]=useState(discription)
+    const [UpdateCategory,setCategory]=useState(category)
     return <>
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             <ModalContent>
@@ -97,6 +98,7 @@ function EachItem({productId,name,stock,price,discription,onUpdatePress,onDelete
                                 }}
                             />
                             <Input
+                                type={"number"}
                                 classNames={"p-5"}
                                 label="Price"
                                 variant="bordered"
@@ -116,6 +118,7 @@ function EachItem({productId,name,stock,price,discription,onUpdatePress,onDelete
                                 }}
                             />
                             <Input
+                                type={"number"}
                                 classNames={"p-5"}
                                 label="Stock"
                                 variant="bordered"
@@ -124,14 +127,22 @@ function EachItem({productId,name,stock,price,discription,onUpdatePress,onDelete
                                     setStock(e.target.value)
                                 }}
                             />
+                            <Input
+                                className={"mb-5"}
+                                label="Category"
+                                placeholder={"Enter Category Separated with space"}
+                                variant="bordered"
+                                onChange={(e)=>{
+                                    setCategory(e.target.value)
+                                }}
+                            />
                         </ModalBody>
                         <ModalFooter>
                             <Button color="danger" variant="light" onPress={onClose}>
                                 Close
                             </Button>
                             <Button color="primary" onPress={()=>{
-                                onUpdatePress(UpdateName, UpdatePrice, UpdateDiscription, UpdateStock, productId)
-                                Tost("Successfully Updated")
+                                onUpdatePress(UpdateName, UpdatePrice, UpdateDiscription, UpdateStock, productId, UpdateCategory)
                                 onClose()
                             }}>
                                 Update
