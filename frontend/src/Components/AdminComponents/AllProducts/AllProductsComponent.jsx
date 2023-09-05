@@ -204,23 +204,25 @@ function EachItem({productId,name,stock,price,discription,category,onUpdatePress
             </Dropdown>
         </div>
     </CardBody>
-        {visible&&<Alert
-            className="ml-10 mr-10 text-lg"
-            message={"Are you sure you want to delete productId: " + productId + "?"}
-            type="info"
-            action={
-                <Space>
-                    <Button color={"danger"}  onPress={()=>{
-                    onDeletePress()
-                    handleClose()
-                    }}>
-                        Yes
-                    </Button>
-                    <Button type="text" size="small" ghost onPress={handleClose}>
-                        Cancel
-                    </Button>
-                </Space>
-            }
-        />}
+       <>
+           {visible&&<Alert
+               className="ml-10 mr-10 text-lg"
+               message={"Are you sure you want to delete productId: " + productId + "?"}
+               type="info"
+               action={
+                   <Space>
+                       <Button color={"danger"}  onPress={()=>{
+                           onDeletePress()
+                           handleClose()
+                       }}>
+                           Yes
+                       </Button>
+                       <Button type="text" size="small" ghost onPress={handleClose}>
+                           Cancel
+                       </Button>
+                   </Space>
+               }
+           />}
+       </>
     </>
 }
