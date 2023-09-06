@@ -6,10 +6,27 @@ import SideBar from "../../../Components/AdminComponents/SideBar/SideBar";
 
 export function OrdersDetailsPage() {
     const {state}=useLocation()
+    const cartItems=[
+        {
+        name:"Temp Item",
+        image:"https://img.freepik.com/free-photo/skin-products-arrangement-wooden-blocks_23-2148761445.jpg",
+        price:"200",
+        quantity:"1"
+        },
+        {
+            name:"Temp Item",
+            image:"https://img.freepik.com/free-photo/skin-products-arrangement-wooden-blocks_23-2148761445.jpg",
+            price:"200",
+            quantity:"1"
+        }
+    ]
+    function OnUpdatePress(value) {
+        console.log(value)
+    }
     return (
        <>
            <SideBar/>
-           <OrderDetailsPageComponent/>
+           <OrderDetailsPageComponent name={"Ankit Kumar Shah"} phone={"7478856289"} orderStatus={"Processing"} cartItems={cartItems} address={"Sanikpuri Khaprail, New Chumpta"} OnUpdatePress={OnUpdatePress}/>
        </>
     )
 }

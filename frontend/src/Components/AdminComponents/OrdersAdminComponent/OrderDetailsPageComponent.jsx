@@ -1,10 +1,11 @@
 import {Descriptions} from "antd";
-import React from "react";
+import React, {useState} from "react";
 import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button} from "@nextui-org/react";
 import {MdOutlineCategory} from "react-icons/md";
 import {AiFillCaretDown} from "react-icons/ai";
 
-export function OrderDetailsPageComponent() {
+export function OrderDetailsPageComponent({name,phone,address,orderStatus,cartItems,OnUpdatePress}) {
+    const [selectedKey,setSelectedKey]=useState("Processing")
     return (
         <div className="flex flex-col-reverse xl:flex-row xl:flex">
             <div className="w-[100vw] xl:w-[70vw] pl-10 pt-10 xl:border-r-1 border-r-black">
@@ -16,9 +17,9 @@ export function OrderDetailsPageComponent() {
                     fontSize:"20px",
                     color:"grey"
                 }}>
-                    <Descriptions.Item label="Name">Zhou Maomao</Descriptions.Item>
-                    <Descriptions.Item label="Phone">1810000000</Descriptions.Item>
-                    <Descriptions.Item label="Address">Zhou Maomao</Descriptions.Item>
+                    <Descriptions.Item label="Name">{name}</Descriptions.Item>
+                    <Descriptions.Item label="Phone">{phone}</Descriptions.Item>
+                    <Descriptions.Item label="Address">{address}</Descriptions.Item>
                 </Descriptions>
 
                 <h1 className={"text-5xl font-[100] mb-5 mt-14 underline"}>Payment</h1>
@@ -35,17 +36,15 @@ export function OrderDetailsPageComponent() {
                     <Descriptions.Item label="Amount">{"₹"+"1490"}</Descriptions.Item>
                 </Descriptions>
                 <h1 className={"text-5xl font-[100] mb-5 mt-14 underline"}>Order Status</h1>
-                <h1 className={"text-2xl font-[200] text-red-500 mb-1"}>Processing</h1>
+                <h1 className={"text-2xl font-[200] text-red-500 mb-1"}>{orderStatus}</h1>
 
 
                 <h1 className={"text-5xl font-[100] mb-5 mt-14 underline"}>Cart Items</h1>
-                 <CartItems/>
-                <CartItems/>
-                <CartItems/>
+                {cartItems.map((e,i)=><CartItems image={e.image} name={e.name} price={e.price} quantity={e.quantity} key={i}/>)}
             </div>
             <div className="xl:w-[30vw] xl:h-[500px] flex flex-col items-center w-[100vw] h-fit mb-14">
                 <h1 className={"text-5xl font-[100] mb-5 mt-14 underline"}>Update Status</h1>
-                <DropDown/>
+                <DropDown selectedKey={selectedKey} setSelectedKey={setSelectedKey}/>
                 <Button
                 className="bg-gray-800 hover:bg-gray-950"
                 style={{
@@ -53,28 +52,23 @@ export function OrderDetailsPageComponent() {
                 width:"300px",
                 height:"60px",color:"white"
             }}  variant="flat" onPress={()=>{
-
+                    OnUpdatePress(selectedKey)
             }}>Update</Button>
             </div>
         </div>
     )
 }
 
-function CartItems() {
+function CartItems({image,name,quantity,price}) {
     return  <div className="mb-5 border-1 border-black mr-10 flex justify-between items-center flex-wrap">
-        <img src="https://img.freepik.com/free-photo/skin-products-arrangement-wooden-blocks_23-2148761445.jpg" alt={"no"} width={200} height={200}/>
-        <h1 className={"text-2xl font-[100] mr-8 ml-8"}>Temp Product</h1>
-        <h1 className={"text-2xl font-[100] mr-8 ml-8"}>{"1 * 500 = ₹500"}</h1>
+        <img src={image} alt={"no"} width={200} height={200}/>
+        <h1 className={"text-2xl font-[100] mr-8 ml-8"}>{name}</h1>
+        <h1 className={"text-2xl font-[100] mr-8 ml-8"}>{`${quantity} * ${price} = ₹${parseFloat(quantity)*parseFloat(price)}`}</h1>
     </div>
 }
 
-function DropDown(){
+function DropDown({selectedKey, setSelectedKey}){
 
-    const [selectedKeys, setSelectedKeys] = React.useState(new Set(["Processing"]));
-    const selectedValue = React.useMemo(
-        () => Array.from(selectedKeys).join(", ").replaceAll("_", " "),
-        [selectedKeys]
-    )
         return (
             <>
                     <Dropdown className={"bg-gray-700 text-white rounded-[0px] w-[300px]"} style={{
@@ -90,7 +84,7 @@ function DropDown(){
                                 }}  variant="flat"
                             >
                                 <MdOutlineCategory className="text-xl text-gray-800"/>
-                                <h1 className={'text-gray-800 text-xl'}>{selectedValue}</h1>
+                                <h1 className={'text-gray-800 text-xl'}>{selectedKey}</h1>
                                 <AiFillCaretDown className="text-xl text-gray-800"/>
                             </Button>
                         </DropdownTrigger>
@@ -101,12 +95,20 @@ function DropDown(){
                             color={"primary"}
                             disallowEmptySelection
                             selectionMode="single"
-                            selectedKeys={selectedKeys}
-                            onSelectionChange={setSelectedKeys}
                         >
-                            <DropdownItem key="Processing">Processing</DropdownItem>
-                            <DropdownItem key="Shipped">Shipped</DropdownItem>
-                            <DropdownItem key="Delivered">Delivered</DropdownItem>
+                            <DropdownItem key="Processing" onPress={()=>{
+                                setSelectedKey("Processing")
+                            }}>Processing</DropdownItem>
+                            <DropdownItem
+                                onPress={()=>{
+                                    setSelectedKey("Shipped")
+                                }}
+                                key="Shipped">Shipped</DropdownItem>
+                            <DropdownItem
+                                onPress={()=>{
+                                    setSelectedKey("Delivered")
+                                }}
+                                key="Delivered">Delivered</DropdownItem>
                         </DropdownMenu>
                     </Dropdown>
             </>
