@@ -1,6 +1,5 @@
 import {Button, Card, CardBody, Dropdown, DropdownItem, DropdownMenu, DropdownTrigger} from "@nextui-org/react";
 import {useState} from "react";
-import {useNavigate} from "react-router-dom";
 import {CiMenuKebab} from "react-icons/ci";
 import {Alert, Space} from "antd";
 import React from "react";
@@ -9,6 +8,10 @@ import {MdOutlineCategory} from "react-icons/md";
 import {AiFillCaretDown} from "react-icons/ai";
 
 export function UsersAdminComponent() {
+    const [selectedKey,setSelectedKey]=useState("User")
+    function OnUpdatePress(value){
+
+    }
     return (
         <>
             <Card className={"m-5 border-black border-1"} isHoverable={true}>
@@ -44,13 +47,14 @@ export function UsersAdminComponent() {
                         justifyContent:"center"
                     }}><div>ACTION</div></div>
                 </CardBody>
-                <EachOrderComponent UserId={"1234"} Email={"ankit.kum.sha9933@gmail.com"} Name={"Ankit Kumar Shah"} Role={"Admin"}/>
+                <EachOrderComponent UserId={"1234"} Email={"ankit.kum.sha9933@gmail.com"} Name={"Ankit Kumar Shah"}
+                                    Role={"Admin"} setSelectedKey={setSelectedKey} selectedKey={selectedKey} OnUpdatePress={OnUpdatePress}/>
             </Card>
         </>
     )
 }
 
-function EachOrderComponent({UserId,Email,Name,Role}){
+function EachOrderComponent({UserId,Email,Name,Role,selectedKey,setSelectedKey,OnUpdatePress}){
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const [visible, setVisible] = useState(false);
 
@@ -130,14 +134,15 @@ function EachOrderComponent({UserId,Email,Name,Role}){
                 </Space>
             }
         />}
-        <ModalUser isOpen={isOpen} onOpenChange={onOpenChange} name={Name} email={Email}/>
+        <ModalUser isOpen={isOpen} onOpenChange={onOpenChange} name={Name} email={Email} setSelectedKey={setSelectedKey} selectedKey={selectedKey}
+                   onUpdatePress={OnUpdatePress} UserId={UserId}/>
     </>
 }
 
-function ModalUser({isOpen, onOpenChange, name, email}) {
-    const [selectedKey,setSelectedKey]=useState("User")
+function ModalUser({isOpen, onOpenChange, name, email, selectedKey, setSelectedKey, onUpdatePress, UserId}) {
+
         return (
-                <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} className="flex flex-col items-center justify-center">
+                <Modal isOpen={isOpen} onOpenChange={onOpenChange} isDismissable={false} className="flex flex-col items-center justify-center rounded-[0px]">
                     <ModalContent>
                         {(onClose) => (
                             <>
@@ -183,12 +188,24 @@ function ModalUser({isOpen, onOpenChange, name, email}) {
                                     </Dropdown>
                                 </ModalBody>
                                 <ModalFooter>
-                                    <Button color="danger" variant="light" onPress={onClose}>
-                                        Close
-                                    </Button>
-                                    <Button color="primary" onPress={onClose}>
-                                        Update
-                                    </Button>
+                                    <Button
+                                        className="text-white bg-red-500"
+                                        style={{
+                                            borderRadius:"0",
+                                            width:"100px",
+                                            height:"50px",
+                                        }}  variant="flat" onPress={()=>{
+                                        onOpenChange()
+                                    }}>Close</Button>
+                                    <Button
+                                        className="bg-gray-800 hover:bg-gray-950"
+                                        style={{
+                                            borderRadius:"0",
+                                            width:"100px",
+                                            height:"50px",color:"white"
+                                        }}  variant="flat" onPress={()=>{
+                                        onUpdatePress(UserId)
+                                    }}>Update</Button>
                                 </ModalFooter>
                             </>
                         )}
