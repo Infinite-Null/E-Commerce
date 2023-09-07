@@ -2,6 +2,9 @@ import SideBar from "../../../Components/AdminComponents/SideBar/SideBar";
 import {UsersAdminComponent} from "../../../Components/AdminComponents/UsersAdminComponent/UsersAdminComponent";
 
 export function UsersAdminPage() {
+    function OnUpdatePressed(UserId,Role) {
+
+    }
     return (
         <>
         <SideBar/>
@@ -12,7 +15,7 @@ export function UsersAdminPage() {
             }}>
                 All Users
             </h1>
-        <UsersAdminComponent/>
+        <UsersAdminComponent OnUpdatePressed={OnUpdatePressed}/>
         </>
     )
 }

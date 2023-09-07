@@ -7,10 +7,10 @@ import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, useDisclosure}
 import {MdOutlineCategory} from "react-icons/md";
 import {AiFillCaretDown} from "react-icons/ai";
 
-export function UsersAdminComponent() {
+export function UsersAdminComponent({List,OnUpdatePressed}) {
     const [selectedKey,setSelectedKey]=useState("User")
     function OnUpdatePress(value){
-
+        OnUpdatePressed(value,selectedKey)
     }
     return (
         <>
