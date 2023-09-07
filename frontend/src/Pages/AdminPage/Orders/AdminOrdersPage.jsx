@@ -6,6 +6,14 @@ export function AdminOrdersPage() {
     function OnDeletePress(){
         Tost("Deleted Successfully")
     }
+    const list=[
+        {
+            OrderId:"12345",
+            Status:"Processing",
+            Quantity:5,
+            Amount:3500
+        }
+    ]
     return (
         <>
             <SideBar/>
@@ -16,7 +24,7 @@ export function AdminOrdersPage() {
             }}>
                 All Orders
             </h1>
-            <OrdersAdminComponent OnDeletePress={OnDeletePress}/>
+            <OrdersAdminComponent OnDeletePress={OnDeletePress} list={list}/>
         </>
     )
 }

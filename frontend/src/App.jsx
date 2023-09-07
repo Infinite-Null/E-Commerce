@@ -15,6 +15,8 @@ import {ProductsPageAdmin} from "./Pages/AdminPage/Products/AllProducts";
 import {AddProduct} from "./Pages/AdminPage/Products/AddProduct";
 import {AdminOrdersPage} from "./Pages/AdminPage/Orders/AdminOrdersPage";
 import {OrdersDetailsPage} from "./Pages/AdminPage/Orders/OrdersDetailsPage";
+import {UsersAdminPage} from "./Pages/AdminPage/Users/UsersAdminPage";
+import {Login} from "./Pages/Login";
 function App() {
    return<>
        <NavBar/>
@@ -22,11 +24,13 @@ function App() {
            <Route path="/" element={ <Home/> } />
            <Route path="/Help" element={ <HelpandFeedback/> } />
            <Route path="Profile" element={ <AboutUser/> } />
+           <Route path="Login" element={ <Login/> } />
            <Route path="AboutUs" element={ <ContactUs/> } />
            <Route path="cart" element={ <Cart/> } />
            <Route path="orders" element={ <Orders/> } />
            <Route path="/Admin" element={ <Dashboard/> } />
            <Route path="/Admin/Orders" element={ <AdminOrdersPage/> } />
+           <Route path="/Admin/Users" element={ <UsersAdminPage/> } />
            <Route path="/Admin/Orders/Detail" element={ <OrdersDetailsPage/> } />
            <Route path="/Admin/Products/AllProduct" element={ <ProductsPageAdmin/> } />
            <Route path="/Admin/Products/AddProduct" element={ <AddProduct/> } />

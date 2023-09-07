@@ -4,7 +4,7 @@ import {useNavigate} from "react-router-dom";
 import {Alert, Space} from "antd";
 import {useState} from "react";
 
-export function OrdersAdminComponent({OnDeletePress}) {
+export function OrdersAdminComponent({OnDeletePress,list}) {
     return (
         <>
                 <Card className={"m-5 border-black border-1"} isHoverable={true}>
@@ -40,7 +40,7 @@ export function OrdersAdminComponent({OnDeletePress}) {
                             justifyContent:"center"
                         }}><div>ACTION</div></div>
                     </CardBody>
-                    <EachOrderComponent OrderId={12345} Status="processing" Quantity={5} Amount={3500} OnDeletePress={OnDeletePress}/>
+                    {list.map((e,i)=><EachOrderComponent OrderId={e.OrderId} Status={e.Status} Quantity={e.Quantity} Amount={e.Amount} OnDeletePress={OnDeletePress}/>)}
                 </Card>
         </>
     )

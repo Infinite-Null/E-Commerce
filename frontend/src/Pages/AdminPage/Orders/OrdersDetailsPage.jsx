@@ -21,7 +21,7 @@ export function OrdersDetailsPage() {
         }
     ]
     function OnUpdatePress(value) {
-        console.log(value)
+
     }
     return (
        <>
