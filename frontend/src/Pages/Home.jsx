@@ -15,10 +15,35 @@ import {Review} from "../Components/Reviews/Review";
 import {Footer} from "../Components/Footer/Footer";
 import Highlight1 from "../Components/Highlights/Highlights";
 import {useNavigate} from "react-router-dom";
+import {useEffect, useState} from "react";
+import axios from "axios";
+import Api from "../ApiInfo/ApiInfo";
+import LodingSkeletion from "../Components/LodingSkeletion/LodingSkeletion";
 
 export function Home() {
-    const navigate=useNavigate()
     const x=[1,2,3,4,5]
+    const [Featured,setFeatured]=useState([])
+    const [FeaturedLoding,setFeaturedLoding]=useState(false)
+    async function GetFeaturedItems(){
+        const result=await  axios.get(Api+"/products?category=featured")
+        setFeatured(result.data)
+    }
+    function IsLodingFeatured(){
+        if(FeaturedLoding===true){
+            return x.map((e)=><LodingSkeletion key={e}/>)
+        }else{
+            return Featured && Featured.Products ? Featured.Products.map((e, i) => <ProductCard title={e.name}
+                                                                                                orignalPrice={e.price}
+                                                                                                link={e.images[0].url}
+                                                                                                discountPrice={e.price-100}
+                                                                                                key={i}/>
+            ) : undefined
+        }
+    }
+
+
+
+    const navigate=useNavigate()
     const categories=[
         {
             link:oversized,
@@ -105,13 +130,23 @@ export function Home() {
             icon:<FaTwitter/>
         },
     ]
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    useEffect(()=>{
+        setFeaturedLoding(true)
+        GetFeaturedItems().then(()=>{
+            setFeaturedLoding(false)
+        })
+        return()=>{
+
+        }
+    },[])
     return <>
 
         <Banner/>
         <Heading title={"Featured"}/>
         <ProductLayout width="99">
-            {x.map((_,i)=> <ProductCard title="Classic Peace Lily" orignalPrice={"300"} link={"https://www.mydesignation.com/wp-content/uploads/2019/06/trivandrum-tshirt-mydesignation-image-latest.jpg"} discountPrice={"230"} key={i}/>
-            )}
+            {IsLodingFeatured()}
         </ProductLayout>
         <Heading title={"Categories"}/>
         <Categories cat={categories}/>
