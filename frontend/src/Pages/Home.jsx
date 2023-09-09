@@ -22,12 +22,43 @@ import LodingSkeletion from "../Components/LodingSkeletion/LodingSkeletion";
 
 export function Home() {
     const x=[1,2,3,4,5]
+    //featured state
     const [Featured,setFeatured]=useState([])
     const [FeaturedLoding,setFeaturedLoding]=useState(false)
+    //Trending state
+    const [Trending,setTrending]=useState([])
+    const [TrendingLoading,setTrendingLoading]=useState(false)
+    //New Arrival
+    const [Arrival,setArrival]=useState([])
+    const [ArrivalLoading,setArrivalLoading]=useState(false)
+    //BestSeller
+    const [Best,setBest]=useState([])
+    const [BestLoading,setBestLoading]=useState(false)
+
+    //Functions:
+    //Get Featured
     async function GetFeaturedItems(){
         const result=await  axios.get(Api+"/products?category=featured")
         setFeatured(result.data)
     }
+    //Get Trending
+    async function GetTrendingItems(){
+        const result=await  axios.get(Api+"/products?category=trending")
+        setTrending(result.data)
+    }
+    //Get Arrival
+    async function GetArrivalItems(){
+        const result=await  axios.get(Api+"/products?category=newarrivals")
+        setArrival(result.data)
+    }
+    //Get Best
+    async function GetBestItems(){
+        const result=await  axios.get(Api+"/products?category=bestseller")
+        setBest(result.data)
+    }
+
+    //Loading:
+    //Featured Loading
     function IsLodingFeatured(){
         if(FeaturedLoding===true){
             return x.map((e)=><LodingSkeletion key={e}/>)
@@ -40,8 +71,45 @@ export function Home() {
             ) : undefined
         }
     }
-
-
+    //Trending Loading
+    function IsLodingTrending(){
+        if(TrendingLoading===true){
+            return x.map((e)=><LodingSkeletion key={e}/>)
+        }else{
+            return Trending && Trending.Products ? Trending.Products.map((e, i) => <ProductCard title={e.name}
+                                                                                                orignalPrice={e.price}
+                                                                                                link={e.images[0].url}
+                                                                                                discountPrice={e.price-100}
+                                                                                                key={i}/>
+            ) : undefined
+        }
+    }
+    //Arrival Loading
+    function IsLodingArrival(){
+        if(ArrivalLoading===true){
+            return x.map((e)=><LodingSkeletion key={e}/>)
+        }else{
+            return Arrival && Arrival.Products ? Arrival.Products.map((e, i) => <ProductCard title={e.name}
+                                                                                                orignalPrice={e.price}
+                                                                                                link={e.images[0].url}
+                                                                                                discountPrice={e.price-100}
+                                                                                                key={i}/>
+            ) : undefined
+        }
+    }
+    //Best Loading
+    function IsLodingBest(){
+        if(BestLoading===true){
+            return x.map((e)=><LodingSkeletion key={e}/>)
+        }else{
+            return Best && Best.Products ? Best.Products.map((e, i) => <ProductCard title={e.name}
+                                                                                             orignalPrice={e.price}
+                                                                                             link={e.images[0].url}
+                                                                                             discountPrice={e.price-100}
+                                                                                             key={i}/>
+            ) : undefined
+        }
+    }
 
     const navigate=useNavigate()
     const categories=[
@@ -134,8 +202,20 @@ export function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(()=>{
         setFeaturedLoding(true)
+        setTrendingLoading(true)
+        setArrivalLoading(true)
+        setBestLoading(true)
         GetFeaturedItems().then(()=>{
             setFeaturedLoding(false)
+        })
+        GetTrendingItems().then(()=>{
+            setTrendingLoading(false)
+        })
+        GetArrivalItems().then(()=>{
+            setArrivalLoading(false)
+        })
+        GetBestItems().then(()=>{
+            setBestLoading(false)
         })
         return()=>{
 
@@ -152,22 +232,19 @@ export function Home() {
         <Categories cat={categories}/>
         <Heading title={"Trending"}/>
         <ProductLayout width="99">
-            {x.map((_,i)=> <ProductCard title="Red Polo T-shirt" orignalPrice={"300"} link={"https://www.uniqlo.com/jp/ja/contents/feature/masterpiece/common_22fw/img/item_61_01.jpg?220211"} discountPrice={"230"} key={i}/>
-            )}
+            {IsLodingTrending()}
         </ProductLayout>
         <Heading title={"Top Reviews"}/>
         <Review/>
         <Heading title={"New Arrivals"}/>
         <ProductLayout width="99">
-            {x.map((_,i)=> <ProductCard title="Blue Print Shirt" orignalPrice={"300"} link={"https://imgmedia.lbb.in/media/2020/05/5eac0e7c833b2b7acdc583b2_1588334204878.jpg"} discountPrice={"230"} key={i}/>
-            )}
+            {IsLodingArrival()}
         </ProductLayout>
         <Heading title={"Reliability"}/>
         <Highlight1/>
         <Heading title={"Best Sellers"}/>
         <ProductLayout width="99">
-            {x.map((_,i)=> <ProductCard title="White Relaxed Shirt" orignalPrice={"300"} link={"https://hips.hearstapps.com/hmg-prod/images/index-cuban-collar-1-64b6f686e40f3.jpg"} discountPrice={"230"} key={i}/>
-            )}
+            {IsLodingBest()}
         </ProductLayout>
         <Footer Contact={contact} Follow={follow} Social={social}/>
     </>
