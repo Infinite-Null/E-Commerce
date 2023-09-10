@@ -19,7 +19,7 @@ export default function ProductCard(props) {
                             width:"300px",
                             height:"60px",color:"white"
                         }}  variant="flat" startContent={<TbListDetails/>} onPress={()=>{
-                            navigate("/product/1234")
+                            navigate("/product/"+props.id,{state:props.id})
                         }}>Details</Button>
                 </div>
             </div>

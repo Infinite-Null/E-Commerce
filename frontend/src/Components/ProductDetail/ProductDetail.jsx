@@ -8,7 +8,7 @@ import Review from "./Reviews";
 import {RiSendPlane2Fill} from "react-icons/ri";
 
 const ProductDetail= ({images,title,averageReview,discountedPrice,totalPrice,discription,onQuntityChange,onReviewTextChange,productId,getReviewStar,reviews,onAddToCart,onPostReviewPress}) => {
-    const [selectedImage,changeSelected]=useState(images[0])
+    const [selectedImage,changeSelected]=useState(images[0].url)
     return (
         <>
         <div className="md:flex items-start justify-center py-12 2xl:px-20 md:px-6 px-4">
@@ -26,7 +26,7 @@ const ProductDetail= ({images,title,averageReview,discountedPrice,totalPrice,dis
                     transition={{ duration: 0.5 }}
                     className="xl:w-[600px] xl:h-[600px] lg:w-[50vw] lg:h-[50vw]" style={{
                     objectFit:"cover"
-                }} alt="img of a girl posing" src={selectedImage} />
+                }} alt="product" src={selectedImage} />
                 <div className="flex items-center justify-start mt-3 space-x-4 md:space-x-0 w-full overflow-x-scroll gap-4">
                     {images.map((e,i)=> <div
                         key={i}
@@ -36,8 +36,8 @@ const ProductDetail= ({images,title,averageReview,discountedPrice,totalPrice,dis
                             objectFit:"cover",
                             overflow:"hidden"
                         }}>
-                        <img alt="img-tag-one" className="md:w-48 md:h-48 w-48" style={{objectFit:"cover"}} src={e} key={i} onClick={()=>{
-                            changeSelected(e)
+                        <img alt="img-tag-one" className="md:w-48 md:h-48 w-48" style={{objectFit:"cover"}} src={e.url} key={i} onClick={()=>{
+                            changeSelected(e.url)
                         }}/>
                     </div>)}
                 </div>
@@ -56,7 +56,7 @@ const ProductDetail= ({images,title,averageReview,discountedPrice,totalPrice,dis
                     transition={{ duration: 0.5 }}
                     className="w-full h-96" style={{
                         objectFit:"cover"
-                }} alt="img of a girl posing" src={selectedImage} />
+                }} alt="product" src={selectedImage} />
                 <div className="flex items-center justify-start mt-3 space-x-4 md:space-x-0 w-full overflow-x-scroll">
                     {images.map((e,i)=> <div
                         key={i}
@@ -66,8 +66,8 @@ const ProductDetail= ({images,title,averageReview,discountedPrice,totalPrice,dis
                         objectFit:"cover",
                         overflow:"hidden"
                     }}>
-                        <img alt="img-tag-one" className="md:w-48 md:h-48 w-48" src={e} key={i} onClick={()=>{
-                            changeSelected(e)
+                        <img alt="img-tag-one" className="md:w-48 md:h-48 w-48" src={e.url} key={i} onClick={()=>{
+                            changeSelected(e.url)
                         }}/>
                     </div>)}
                 </div>

@@ -67,7 +67,7 @@ export function Home() {
                                                                                                 orignalPrice={e.price}
                                                                                                 link={e.images[0].url}
                                                                                                 discountPrice={e.price-100}
-                                                                                                key={i}/>
+                                                                                                key={i} id={e._id}/>
             ) : undefined
         }
     }
@@ -80,7 +80,7 @@ export function Home() {
                                                                                                 orignalPrice={e.price}
                                                                                                 link={e.images[0].url}
                                                                                                 discountPrice={e.price-100}
-                                                                                                key={i}/>
+                                                                                                key={i} id={e._id}/>
             ) : undefined
         }
     }
@@ -93,7 +93,7 @@ export function Home() {
                                                                                                 orignalPrice={e.price}
                                                                                                 link={e.images[0].url}
                                                                                                 discountPrice={e.price-100}
-                                                                                                key={i}/>
+                                                                                                key={i} id={e._id}/>
             ) : undefined
         }
     }
@@ -106,7 +106,7 @@ export function Home() {
                                                                                              orignalPrice={e.price}
                                                                                              link={e.images[0].url}
                                                                                              discountPrice={e.price-100}
-                                                                                             key={i}/>
+                                                                                             key={i} id={e._id}/>
             ) : undefined
         }
     }
