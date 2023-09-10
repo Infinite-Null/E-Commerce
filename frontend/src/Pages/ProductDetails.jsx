@@ -9,6 +9,7 @@ export function ProductDetails() {
         "https://5.imimg.com/data5/ANDROID/Default/2021/7/KU/YI/VT/44196072/product-jpeg.jpg",
         "https://ph-test-11.slatic.net/p/11b5eb757692f1cbd46b345f199da268.jpg",
     ]
+
     function onQuntityChange(value){
 
     }
@@ -24,6 +25,7 @@ export function ProductDetails() {
     function onPostReviewPress(){
         Tost("Thank you for your review.")
     }
+
     const reviews=[
         {
             avater:"https://i.ibb.co/QcqyrVG/Mask-Group.png",
@@ -47,6 +49,10 @@ export function ProductDetails() {
             dicription:"When you want to decorate your home, the idea of choosing a decorative theme can seem daunting. Some themes seem to have an endless amount of pieces, while others can feel hard to accomplish"
         },
     ]
+
+    function FetchDetails(){
+
+    }
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
