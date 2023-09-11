@@ -46,7 +46,7 @@ export function ProductDetails() {
 
     return (
        <>
-           {(loading===true)?<ProductDetail
+           {(loading===false)?<ProductDetail
                productId={state}
                images={data.images??[{url:"https://img.freepik.com/free-photo/textured-background-white-tone_53876-128610.jpg"}]}
                title={data.name}

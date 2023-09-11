@@ -7,7 +7,7 @@ export const AllProductCategory = ({data,onRangeChange,products,totalProducts}) 
         <>
         <Filters title={data.category} onRangeChange={onRangeChange} totalProducts={totalProducts}/>
                 <ProductLayout width="80">
-                    {products.map((_,i)=> <ProductCard title="Classic Peace Lily" orignalPrice={"300"} link={"https://hips.hearstapps.com/hmg-prod/images/best-athletic-socks-1677091465.jpg?crop=0.888888888888889xw:1xh;center,top&resize=1200:*"} discountPrice={"230"} key={i}/>
+                    {products.map((e,i)=> <ProductCard title={e.name} id={e._id} orignalPrice={e.price} link={e.images[0].url} discountPrice={parseInt(e.price)-100} key={i}/>
                     )}
                 </ProductLayout>
         </>
