@@ -4,6 +4,7 @@ import {Tost} from "../Components/Tost";
 import {useLocation} from "react-router-dom";
 import Api from "../ApiInfo/ApiInfo";
 import axios from "axios";
+import {LoadingProductDetails} from "../Components/ProductDetail/LoadingProductDetails";
 
 export function ProductDetails() {
 
@@ -60,7 +61,7 @@ export function ProductDetails() {
                onAddToCart={Pressed}
                onPostReviewPress={onPostReviewPress}
                key={data}
-           />:<h1>Loading</h1>}
+           />:<LoadingProductDetails/>}
        </>
     )
 }
