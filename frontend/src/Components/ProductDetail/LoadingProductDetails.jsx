@@ -1,7 +1,5 @@
 import {Skeleton} from "@nextui-org/react";
 import React from "react";
-import Rating from "react-rating";
-import {LiaStarSolid} from "react-icons/lia";
 
 export function LoadingProductDetails() {
     return <>
