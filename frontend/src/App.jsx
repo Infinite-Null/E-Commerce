@@ -37,7 +37,7 @@ function App() {
            <Route path="/Admin/Products/AllProduct" element={ <ProductsPageAdmin/> } />
            <Route path="/Admin/Products/AddProduct" element={ <AddProduct/> } />
            <Route path="product/:id" element={ <ProductDetails/> } />
-           <Route path="/:id" element={<AllProductWithCategory/>}/>
+           <Route path="/:id" element={<AllProductWithCategory key={Math.random()}/>}/>
        </Routes>
        <ToastContainer position="bottom-center" theme="colored" icon={false} limit={2} toastStyle={{
            backgroundColor:"cadetblue",

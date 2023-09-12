@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import {Slider} from "antd";
 import {FaIndianRupeeSign} from "react-icons/fa6";
 
-const Filters= ({title,onRangeChange,totalProducts}) => {
+const Filters= ({title,onRangeChange,totalProducts,onApplyPress}) => {
     const [showFilters, setShowfilters] = useState(false);
-    const [minMax, setMinMax]=useState([100,1500])
+    const [minMax, setMinMax]=useState([50,1500])
 
     return (
         <div className="2xl:container 2xl:mx-auto">
@@ -86,7 +86,11 @@ const Filters= ({title,onRangeChange,totalProducts}) => {
                 </div>
                 <hr className=" bg-gray-200 lg:w-6/12 w-full md:my-10 my-8" />
                 <div className="px-0 mt-10 w-full md:w-auto md:mt-0 md:absolute md:right-0 md:bottom-0 md:py-10 lg:px-20 md:px-6">
-                    <button className="w-full hover:bg-gray-700 focus:ring focus:ring-offset-2 focus:ring-gray-800 text-base leading-4 font-medium py-4 px-10 text-white bg-gray-800">
+                    <button
+                        onClick={()=>{
+                            onApplyPress([minMax])
+                        }}
+                        className="w-full hover:bg-gray-700 focus:ring focus:ring-offset-2 focus:ring-gray-800 text-base leading-4 font-medium py-4 px-10 text-white bg-gray-800">
                         Apply Filter
                     </button>
                 </div>

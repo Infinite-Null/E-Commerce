@@ -64,9 +64,9 @@ export function Home() {
             return x.map((e)=><LodingSkeletion key={e}/>)
         }else{
             return Featured && Featured.Products ? Featured.Products.map((e, i) => <ProductCard title={e.name}
-                                                                                                orignalPrice={e.price}
+                                                                                                orignalPrice={e.price+100}
                                                                                                 link={e.images[0].url}
-                                                                                                discountPrice={e.price-100}
+                                                                                                discountPrice={e.price}
                                                                                                 key={i} id={e._id}/>
             ) : undefined
         }
@@ -77,9 +77,9 @@ export function Home() {
             return x.map((e)=><LodingSkeletion key={e}/>)
         }else{
             return Trending && Trending.Products ? Trending.Products.map((e, i) => <ProductCard title={e.name}
-                                                                                                orignalPrice={e.price}
+                                                                                                orignalPrice={e.price+100}
                                                                                                 link={e.images[0].url}
-                                                                                                discountPrice={e.price-100}
+                                                                                                discountPrice={e.price}
                                                                                                 key={i} id={e._id}/>
             ) : undefined
         }
@@ -90,9 +90,9 @@ export function Home() {
             return x.map((e)=><LodingSkeletion key={e}/>)
         }else{
             return Arrival && Arrival.Products ? Arrival.Products.map((e, i) => <ProductCard title={e.name}
-                                                                                                orignalPrice={e.price}
+                                                                                                orignalPrice={e.price+100}
                                                                                                 link={e.images[0].url}
-                                                                                                discountPrice={e.price-100}
+                                                                                                discountPrice={e.price}
                                                                                                 key={i} id={e._id}/>
             ) : undefined
         }
@@ -103,9 +103,9 @@ export function Home() {
             return x.map((e)=><LodingSkeletion key={e}/>)
         }else{
             return Best && Best.Products ? Best.Products.map((e, i) => <ProductCard title={e.name}
-                                                                                             orignalPrice={e.price}
+                                                                                             orignalPrice={e.price+100}
                                                                                              link={e.images[0].url}
-                                                                                             discountPrice={e.price-100}
+                                                                                             discountPrice={e.price}
                                                                                              key={i} id={e._id}/>
             ) : undefined
         }

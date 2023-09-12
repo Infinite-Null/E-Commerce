@@ -3,6 +3,7 @@ import {useLocation} from "react-router-dom";
 import {useEffect, useState} from "react";
 import ApiInfo from "../ApiInfo/ApiInfo";
 import axios from "axios";
+import Filters from "../Components/AllProductsWithCategory/Filters";
 
 export function AllProductWithCategory() {
     let {state} = useLocation();
@@ -13,19 +14,18 @@ export function AllProductWithCategory() {
     }
     const[data,setData]=useState([])
     const[loading,setLoading]=useState(false)
-    async function FetchData(){
+    async function FetchData(min,max){
         let url=state.category
         if(url==="All Products"){
             url=""
         }
-        const greater=100
-        const less=1000
-        const result=await axios.get(ApiInfo+"/products?price[gt]="+greater+"&price[lt]="+less+"&category="+url.split(" ").join(""))
+        const result=await axios.get(ApiInfo+"/products?price[gt]="+min+"&price[lt]="+max+"&category="+url.split(" ").join(""))
+        console.log(ApiInfo+"/products?price[gte]="+min+"&price[lte]="+max+"&category="+url.split(" ").join(""))
         setData(result.data)
     }
     useEffect(()=>{
         setLoading(true)
-        FetchData().then(()=>{
+        FetchData(0,1000).then(()=>{
             setLoading(false)
         })
         return()=>{
@@ -35,10 +35,19 @@ export function AllProductWithCategory() {
     function onRangeChange(range){
 
     }
+    function onApplyPress(minMax){
+        setLoading(true)
+        FetchData(minMax[0][0],minMax[0][1]).then(()=>{
+            setLoading(false)
+        })
+    }
     useEffect(() => {
         window.scroll(0,0)
     }, []);
-    return (
-        <>{(loading===false)?<AllProductCategory data={state} onRangeChange={onRangeChange} products={data.Products??[]} totalProducts={9} key={state.category}/>:<h1>Loading</h1>}</>
+    return (<>
+            <Filters title={state.category} onRangeChange={onRangeChange} totalProducts={data.TotalReaturened} onApplyPress={onApplyPress}/>
+            {(loading===false)?<>
+            <AllProductCategory data={state} products={data.Products??[]} key={Math.random()}/>
+        </>:<h1>Loading</h1>}</>
     )
 }
