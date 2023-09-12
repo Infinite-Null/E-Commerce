@@ -1,13 +1,14 @@
 .card{
     border-radius: 0;
-    width: 350px;
+    width: 100%;
+    height: fit-content;
     box-shadow: 0 8px 27px 0 rgba(0,0,0,0.1),0 6px 20px 0 rgba(0,0,0,0.14);
-    margin: 10px;
+    padding-bottom: 20px;
 }
 .Imageproduct{
     object-fit: cover;
     width: 100%;
-    height: 350px;
+    height: 450px;
     transition: 0.5s;
 }
 .description{
