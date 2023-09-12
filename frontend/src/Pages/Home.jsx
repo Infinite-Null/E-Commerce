@@ -19,8 +19,11 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import Api from "../ApiInfo/ApiInfo";
 import LodingSkeletion from "../Components/LodingSkeletion/LodingSkeletion";
+import {Button} from "@nextui-org/react";
+import {AiOutlineArrowRight} from "react-icons/ai";
 
 export function Home() {
+    const navigate=useNavigate()
     const x=[1,2,3,4,5]
     //featured state
     const [Featured,setFeatured]=useState([])
@@ -63,11 +66,19 @@ export function Home() {
         if(FeaturedLoding===true){
             return x.map((e)=><LodingSkeletion key={e}/>)
         }else{
-            return Featured && Featured.Products ? Featured.Products.map((e, i) => <ProductCard title={e.name}
-                                                                                                orignalPrice={e.price+100}
-                                                                                                link={e.images[0].url}
-                                                                                                discountPrice={e.price}
-                                                                                                key={i} id={e._id}/>
+            // eslint-disable-next-line array-callback-return
+            return Featured && Featured.Products ? Featured.Products.map((e, i) => {
+                if(i<5){
+                    return <ProductCard title={e.name}
+                                        orignalPrice={e.price+100}
+                                        link={e.images[0].url}
+                                        discountPrice={e.price}
+                                        key={i} id={e._id}/>
+                }
+                else{
+                    return <></>
+                }
+                }
             ) : undefined
         }
     }
@@ -76,11 +87,19 @@ export function Home() {
         if(TrendingLoading===true){
             return x.map((e)=><LodingSkeletion key={e}/>)
         }else{
-            return Trending && Trending.Products ? Trending.Products.map((e, i) => <ProductCard title={e.name}
-                                                                                                orignalPrice={e.price+100}
-                                                                                                link={e.images[0].url}
-                                                                                                discountPrice={e.price}
-                                                                                                key={i} id={e._id}/>
+            // eslint-disable-next-line array-callback-return
+            return Trending && Trending.Products ? Trending.Products.map((e, i) => {
+                    if(i<5){
+                        return <ProductCard title={e.name}
+                                            orignalPrice={e.price+100}
+                                            link={e.images[0].url}
+                                            discountPrice={e.price}
+                                            key={i} id={e._id}/>
+                    }
+                    else{
+                        return <></>
+                    }
+                }
             ) : undefined
         }
     }
@@ -89,11 +108,19 @@ export function Home() {
         if(ArrivalLoading===true){
             return x.map((e)=><LodingSkeletion key={e}/>)
         }else{
-            return Arrival && Arrival.Products ? Arrival.Products.map((e, i) => <ProductCard title={e.name}
-                                                                                                orignalPrice={e.price+100}
-                                                                                                link={e.images[0].url}
-                                                                                                discountPrice={e.price}
-                                                                                                key={i} id={e._id}/>
+            // eslint-disable-next-line array-callback-return
+            return Arrival && Arrival.Products ? Arrival.Products.map((e, i) => {
+                    if(i<5){
+                        return <ProductCard title={e.name}
+                                            orignalPrice={e.price+100}
+                                            link={e.images[0].url}
+                                            discountPrice={e.price}
+                                            key={i} id={e._id}/>
+                    }
+                    else{
+                        return <></>
+                    }
+                }
             ) : undefined
         }
     }
@@ -102,16 +129,23 @@ export function Home() {
         if(BestLoading===true){
             return x.map((e)=><LodingSkeletion key={e}/>)
         }else{
-            return Best && Best.Products ? Best.Products.map((e, i) => <ProductCard title={e.name}
-                                                                                             orignalPrice={e.price+100}
-                                                                                             link={e.images[0].url}
-                                                                                             discountPrice={e.price}
-                                                                                             key={i} id={e._id}/>
+            // eslint-disable-next-line array-callback-return
+            return Best && Best.Products ? Best.Products.map((e, i) => {
+                    if(i<5){
+                        return <ProductCard title={e.name}
+                                            orignalPrice={e.price+100}
+                                            link={e.images[0].url}
+                                            discountPrice={e.price}
+                                            key={i} id={e._id}/>
+                    }
+                    else{
+                        return <></>
+                    }
+                }
             ) : undefined
         }
     }
 
-    const navigate=useNavigate()
     const categories=[
         {
             link:oversized,
@@ -227,24 +261,80 @@ export function Home() {
         <Heading title={"Featured"}/>
         <ProductLayout width="99">
             {IsLodingFeatured()}
+            {!FeaturedLoding&&<div className={"flex justify-center items-center"}>
+                <Button
+                    className="bg-transparent hover:bg-gray-950 rounded-[0px] text-gray-800 border-2 border-gray-800 hover:text-white"
+                    style={{
+                        width: "300px",
+                        height: "60px",
+                        fontWeight: "900",
+                        fontSize: "25px"
+                    }} variant="flat" endContent={<AiOutlineArrowRight style={{
+                    fontSize: "25px"
+                }}/>} onPress={() => {
+                    navigate("/featured", {state: {category: "featured"}})
+                }}>View All</Button>
+            </div>}
         </ProductLayout>
         <Heading title={"Categories"}/>
         <Categories cat={categories}/>
         <Heading title={"Trending"}/>
         <ProductLayout width="99">
             {IsLodingTrending()}
+            {!TrendingLoading&&<div className={"flex justify-center items-center"}>
+                <Button
+                    className="bg-transparent hover:bg-gray-950 rounded-[0px] text-gray-800 border-2 border-gray-800 hover:text-white"
+                    style={{
+                        width: "300px",
+                        height: "60px",
+                        fontWeight: "900",
+                        fontSize: "25px"
+                    }} variant="flat" endContent={<AiOutlineArrowRight style={{
+                    fontSize: "25px"
+                }}/>} onPress={() => {
+                    navigate("/Trending", {state: {category: "trending"}})
+                }}>View All</Button>
+            </div>}
         </ProductLayout>
         <Heading title={"Top Reviews"}/>
         <Review/>
         <Heading title={"New Arrivals"}/>
         <ProductLayout width="99">
             {IsLodingArrival()}
+            {!ArrivalLoading&&<div className={"flex justify-center items-center"}>
+                <Button
+                    className="bg-transparent hover:bg-gray-950 rounded-[0px] text-gray-800 border-2 border-gray-800 hover:text-white"
+                    style={{
+                        width: "300px",
+                        height: "60px",
+                        fontWeight: "900",
+                        fontSize: "25px"
+                    }} variant="flat" endContent={<AiOutlineArrowRight style={{
+                    fontSize: "25px"
+                }}/>} onPress={() => {
+                    navigate("/New-Arrival", {state: {category: "new"}})
+                }}>View All</Button>
+            </div>}
         </ProductLayout>
         <Heading title={"Reliability"}/>
         <Highlight1/>
         <Heading title={"Best Sellers"}/>
         <ProductLayout width="99">
             {IsLodingBest()}
+            {!BestLoading&&<div className={"flex justify-center items-center"}>
+                <Button
+                    className="bg-transparent hover:bg-gray-950 rounded-[0px] text-gray-800 border-2 border-gray-800 hover:text-white"
+                    style={{
+                        width: "300px",
+                        height: "60px",
+                        fontWeight: "900",
+                        fontSize: "25px"
+                    }} variant="flat" endContent={<AiOutlineArrowRight style={{
+                    fontSize: "25px"
+                }}/>} onPress={() => {
+                    navigate("/Best-Seller", {state: {category: "Best"}})
+                }}>View All</Button>
+            </div>}
         </ProductLayout>
         <Footer Contact={contact} Follow={follow} Social={social}/>
     </>
