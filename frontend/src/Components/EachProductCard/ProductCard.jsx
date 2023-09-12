@@ -29,7 +29,6 @@ export default function ProductCard(props) {
 }
 
 export function ProductLayout(props){
-    const width=(props.width!=null)?`${props.width}vw`:"99vw"
     return<div className="mx-auto container">
         <div className="flex flex-col">
             <div className="mt-10 grid lg:grid-cols-3 items-center">
