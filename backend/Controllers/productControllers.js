@@ -51,7 +51,6 @@ exports.deleteProduct = async (req, res) => {
 
 exports.getSingleProduct = (req, res, next) => {
     Product.findOne({_id: req.params.id}).populate("reviews.user", "avatar").then((doc) => {
-        console.log(doc)
         res.status(200).json({
             success: true,
             Product: doc
@@ -70,7 +69,6 @@ exports.getAllProducts = async (req, res, next) => {
         .pagination(resultPerPage)
     const k = new ApiFeatures(Product.find(), req.query).filter()
     const Result = await k.query
-    console.log(Result.length)
     apifeature.query.then((e) => {
         res.status(200).json({
             success: true,
@@ -102,11 +100,9 @@ exports.createProductReview = async (req, res) => {
         })
     }
     const isReviewed = product.reviews.find((rev) => rev.user.toString() === req.user._id.toString())
-    console.log(isReviewed)
     if (isReviewed) {
         product.reviews.forEach((rev) => {
             if (rev.user.toString() === req.user._id.toString()) {
-                console.log("Hi")
                 rev.rating = rating
                 rev.comment = comment
             }
