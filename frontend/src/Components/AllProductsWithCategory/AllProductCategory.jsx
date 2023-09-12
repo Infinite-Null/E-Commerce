@@ -1,4 +1,3 @@
-import Filters from "./Filters";
 import ProductCard, {ProductLayout} from "../EachProductCard/ProductCard";
 
 export const AllProductCategory = ({data,onRangeChange,products,totalProducts,onApplyPress}) => {

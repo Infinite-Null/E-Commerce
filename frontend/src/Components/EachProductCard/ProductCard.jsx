@@ -27,10 +27,9 @@ export default function ProductCard(props) {
 }
 
 export function ProductLayout(props){
-    return<div className="w-[99vw] flex items-center justify-center">
-        <div className={`category`} style={{
-            width:(props.width!=null)?`${props.width}vw`:"99vw"
-        }}>
+    const width=(props.width!=null)?`${props.width}vw`:"99vw"
+    return<div className={`w-[100vw] flex items-center justify-center`}>
+        <div className={`category w-[100vw] md:w-[${width}]`}>
             {props.children}
         </div>
     </div>

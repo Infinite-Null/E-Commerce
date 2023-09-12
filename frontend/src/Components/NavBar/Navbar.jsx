@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useContext} from "react";
 import {
     Navbar,
     NavbarBrand,
@@ -14,14 +14,16 @@ import {
 import 'react-toastify/dist/ReactToastify.css';
 import {Link, useNavigate} from "react-router-dom";
 import "./NavBar.css"
-import logo from "../../Images/logo.png"
 import {TfiShoppingCartFull} from "react-icons/tfi";
 import Icon from "./Icon";
 import {BsFillArrowRightCircleFill, BsSearch} from "react-icons/bs";
 import DropDown from "./DropDown";
 import {Tost} from "../Tost";
+import Context from "../../Context/Context";
 
 export default function NavBar() {
+    const {setSearchValue} = useContext(Context)
+
     const navigate=useNavigate()
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [search,setSearch]=React.useState("")
@@ -93,6 +95,7 @@ export default function NavBar() {
                                                                 Tost("Please Type something!!")
                                                                 return
                                                             }
+                                                            setSearchValue(search)
                                                             navigate("/"+search,{state:{category:search}})
                                                         }} style={{
                                                             fontSize:25,

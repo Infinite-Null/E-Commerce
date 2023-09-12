@@ -1,16 +1,19 @@
 import {AllProductCategory} from "../Components/AllProductsWithCategory/AllProductCategory";
 import {useLocation} from "react-router-dom";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import ApiInfo from "../ApiInfo/ApiInfo";
 import axios from "axios";
 import Filters from "../Components/AllProductsWithCategory/Filters";
+import Context from "../Context/Context";
 
 export function AllProductWithCategory() {
+    const {searchValue,setSearchValue}=useContext(Context)
     let {state} = useLocation();
     if(state===null){
         state={
             category:"All Products"
         }
+        setSearchValue("")
     }
     const[data,setData]=useState([])
     const[loading,setLoading]=useState(false)
@@ -20,7 +23,6 @@ export function AllProductWithCategory() {
             url=""
         }
         const result=await axios.get(ApiInfo+"/products?price[gt]="+min+"&price[lt]="+max+"&category="+url.split(" ").join(""))
-        console.log(ApiInfo+"/products?price[gte]="+min+"&price[lte]="+max+"&category="+url.split(" ").join(""))
         setData(result.data)
     }
     useEffect(()=>{
@@ -31,7 +33,7 @@ export function AllProductWithCategory() {
         return()=>{
 
         }
-    },[])
+    },[searchValue])
     function onRangeChange(range){
 
     }
