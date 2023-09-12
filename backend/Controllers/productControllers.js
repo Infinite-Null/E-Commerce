@@ -50,7 +50,8 @@ exports.deleteProduct = async (req, res) => {
 
 
 exports.getSingleProduct = (req, res, next) => {
-    Product.findOne({_id: req.params.id}).then((doc) => {
+    Product.findOne({_id: req.params.id}).populate("reviews.user", "avatar").then((doc) => {
+        console.log(doc)
         res.status(200).json({
             success: true,
             Product: doc
@@ -67,10 +68,15 @@ exports.getAllProducts = async (req, res, next) => {
         .search()
         .filter()
         .pagination(resultPerPage)
+    const k = new ApiFeatures(Product.find(), req.query).filter()
+    const Result = await k.query
+    console.log(Result.length)
     apifeature.query.then((e) => {
         res.status(200).json({
             success: true,
             Total_Product: productCount,
+            TotalReaturened: Result.length,
+            ResultPerPage: 5,
             Products: e
         })
     }).catch((e) => {

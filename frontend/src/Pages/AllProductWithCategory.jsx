@@ -5,6 +5,8 @@ import ApiInfo from "../ApiInfo/ApiInfo";
 import axios from "axios";
 import Filters from "../Components/AllProductsWithCategory/Filters";
 import Context from "../Context/Context";
+import {ProductLayout} from "../Components/EachProductCard/ProductCard";
+import LodingSkeletion from "../Components/LodingSkeletion/LodingSkeletion";
 
 export function AllProductWithCategory() {
     const {searchValue,setSearchValue}=useContext(Context)
@@ -15,19 +17,23 @@ export function AllProductWithCategory() {
         }
         setSearchValue("")
     }
+    else{
+        setSearchValue(state.category.toLowerCase())
+    }
     const[data,setData]=useState([])
     const[loading,setLoading]=useState(false)
     async function FetchData(min,max){
-        let url=state.category
-        if(url==="All Products"){
+        let url=state.category.toLowerCase()
+        if(url==="all products"){
             url=""
         }
-        const result=await axios.get(ApiInfo+"/products?price[gt]="+min+"&price[lt]="+max+"&category="+url.split(" ").join(""))
+        const result=await axios.get(ApiInfo+"/products?price[gte]="+min+"&price[lte]="+max+"&category="+url.split(" ").join(""))
+        console.log(ApiInfo+"/products?price[gt]="+min+"&price[lt]="+max+"&category="+url.split(" ").join(""))
         setData(result.data)
     }
     useEffect(()=>{
         setLoading(true)
-        FetchData(0,1000).then(()=>{
+        FetchData(0,1000000).then(()=>{
             setLoading(false)
         })
         return()=>{
@@ -50,6 +56,10 @@ export function AllProductWithCategory() {
             <Filters title={state.category} onRangeChange={onRangeChange} totalProducts={data.TotalReaturened} onApplyPress={onApplyPress}/>
             {(loading===false)?<>
             <AllProductCategory data={state} products={data.Products??[]} key={Math.random()}/>
-        </>:<h1>Loading</h1>}</>
+        </>:<ProductLayout>
+                {[1,2,3,4,5,6].map((e)=>
+                    <LodingSkeletion key={e}/>
+                )}
+            </ProductLayout>}</>
     )
 }
