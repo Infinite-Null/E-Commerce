@@ -7,9 +7,11 @@ import Filters from "../Components/AllProductsWithCategory/Filters";
 import Context from "../Context/Context";
 import {ProductLayout} from "../Components/EachProductCard/ProductCard";
 import LodingSkeletion from "../Components/LodingSkeletion/LodingSkeletion";
+import {Pagination} from "@nextui-org/react";
 
 export function AllProductWithCategory() {
     const {searchValue,setSearchValue}=useContext(Context)
+    const {page,setPage}=useState(1)
     let {state} = useLocation();
     if(state===null){
         state={
@@ -60,6 +62,9 @@ export function AllProductWithCategory() {
                 {[1,2,3,4,5,6].map((e)=>
                     <LodingSkeletion key={e}/>
                 )}
-            </ProductLayout>}</>
+            </ProductLayout>}
+            {!loading&&<div className={"flex justify-center items-center mb-5"}><Pagination showControls total={parseInt(data.TotalReaturened/data.ResultPerPage)}
+                                                                                  initialPage={1} size={"lg"}/></div>}
+        </>
     )
 }

@@ -61,7 +61,7 @@ exports.getSingleProduct = (req, res, next) => {
 }
 
 exports.getAllProducts = async (req, res, next) => {
-    const resultPerPage = 5
+    const resultPerPage = 6
     const productCount = await Product.countDocuments()
     const apifeature = new ApiFeatures(Product.find(), req.query)
         .search()
@@ -74,7 +74,7 @@ exports.getAllProducts = async (req, res, next) => {
             success: true,
             Total_Product: productCount,
             TotalReaturened: Result.length,
-            ResultPerPage: 5,
+            ResultPerPage: resultPerPage,
             Products: e
         })
     }).catch((e) => {
