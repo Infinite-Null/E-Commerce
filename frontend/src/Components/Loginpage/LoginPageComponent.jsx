@@ -1,10 +1,14 @@
-import React from "react";
+// noinspection JSCheckFunctionSignatures
+
+import React, {useState} from "react";
 import {Tabs, Tab, Input, Link, Button, Card, CardBody} from "@nextui-org/react";
 import {TbListDetails} from "react-icons/tb";
+import axios from "axios";
+import Cookies from 'js-cookie';
 
 export default function LoginPageComponent({onLoginEmailChange,onLoginPasswordChange,onSignupEmailChange,onSignupPasswordChange,onSignupNameChange,OnSignupPress,OnLoginPress}) {
     const [selected, setSelected] = React.useState("login");
-
+    const [selectedImage,setSelectedIamage]=useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
     return (
         <div className="flex
         bg-[url('https://i0.wp.com/www.m2w2.com/wp-content/uploads/2022/05/sq-ht-logo-with-photo.png?fit=1000%2C1000&ssl=1')]
@@ -14,12 +18,12 @@ export default function LoginPageComponent({onLoginEmailChange,onLoginPasswordCh
                 className={'md:inline hidden '}
                 style={{
                width:"300px",
-               height:"400px",
+               height:"520px",
                borderLeft:"1px solid black",
                borderBottom:"1px solid black",
                borderTop:"1px solid black",
            }}/>
-            <Card className="max-w-full w-[340px] h-[400px] drop-shadow-md rounded-[0px]" style={{
+            <Card className="max-w-full w-[340px] h-[520px] drop-shadow-md rounded-[0px]" style={{
                 borderRight:"1px solid black",
                 borderBottom:"1px solid black",
                 borderTop:"1px solid black",
@@ -50,7 +54,7 @@ export default function LoginPageComponent({onLoginEmailChange,onLoginPasswordCh
                                         onLoginPasswordChange(e.target.value)
                                     }}
                                 />
-                                <p className="text-center text-small">
+                                <p className="text-center text-small mt-10">
                                     Need to create an account?{" "}
                                     <Link size="sm" onPress={() => setSelected("sign-up")}>
                                         Sign up
@@ -91,6 +95,26 @@ export default function LoginPageComponent({onLoginEmailChange,onLoginPasswordCh
                                         onSignupPasswordChange(e.target.value)
                                     }}
                                 />
+                                <label>Choose Avater</label>
+                               <div className={"flex"}> <Input
+                                   isRequired
+                                   type="file"
+                                   variant={"underlined"}
+                                   onChange={(e)=>{
+                                       try {
+                                           setSelectedIamage(URL.createObjectURL(e.target.files[0]));
+                                       }catch (e) {
+                                            console.log("select Iamge")
+                                       }
+                                       console.log(e.target.value)
+                                   }}
+                               /><img alt={"asdhj"} src={selectedImage} style={{
+                                   height:"60px",
+                                   width:"60px",
+                                   objectFit:"cover",
+                                   border:"2px solid black",
+                                   borderRadius:"100%"
+                               }}/></div>
                                 <p className="text-center text-small">
                                     Already have an account?{" "}
                                     <Link size="sm" onPress={() => setSelected("login")}>
@@ -99,12 +123,34 @@ export default function LoginPageComponent({onLoginEmailChange,onLoginPasswordCh
                                 </p>
                                 <div className="flex gap-2 justify-end">
                                     <Button
+                                        type={"submit"}
                                         className="bg-gray-800 hover:bg-gray-950"
                                         style={{
                                             borderRadius:"0",
                                             width:"300px",
                                             height:"60px",color:"white"
-                                        }}  variant="flat" startContent={<TbListDetails/>} onPress={()=>{
+                                        }}  variant="flat" onPress={async (e)=>{
+                                            await Cookies.set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDczYzZmMjQ3NzBmMWQyNjllMTEzMyIsImlhdCI6MTY5NDYyNjkyOSwiZXhwIjoxNjk3MjE4OTI5fQ.Q2dbnVKSM34xDcyBpg_Tj7dfbeVVi_irdC6XklXOmPI')
+                                            console.log(Cookies.get('token'))
+                                           const result = await axios.post("http://localhost:4000/api/v1/login",{
+                                                "email":"ankit.kum.sha9933@gmail.com",
+                                                "password":"1234567890"
+                                            })
+                                        console.log(result.data)
+                                        try {
+                                            const result1 = await axios.get("http://localhost:4000/api/v1/user/detail",{
+                                                "email":"ankit.kum.sha9933@gmail.com",
+                                                "password":"1234567890"
+                                            },{
+
+                                                withCredentials:true
+                                            })
+                                            console.log(result1)
+                                        }catch (e) {
+                                            console.log("failed")
+                                        }
+
+
                                         OnSignupPress()
                                     }}>Signup</Button>
                                 </div>

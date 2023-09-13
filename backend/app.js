@@ -3,10 +3,14 @@ const app = express()
 const errorMiddleware = require("./Middleware/error")
 const cookieParser = require('cookie-parser')
 const cors = require('cors')
-
+app.use(cors({
+    origin: 'http://localhost:3000',
+    credentials: true,            //access-control-allow-credentials:true
+    optionSuccessStatus: 200
+}))
 app.use(express.json())
 app.use(cookieParser())
-app.use(cors());
+
 
 const product = require("./Routes/productRoute")
 const user = require("./Routes/userRoute")
@@ -19,4 +23,4 @@ app.use("/api/v1", order)
 //Middleware for error
 app.use(errorMiddleware)
 
-module.exports=app
+module.exports = app
