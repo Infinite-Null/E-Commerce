@@ -1,12 +1,20 @@
 import Context from "./Context";
-import React, {useState} from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
+import React, {useEffect, useState} from "react";
+import {FristLoadCookie, LoggedInDetails} from "./SetCookieUser";
 
 const ContextState=(props)=>{
     const [searchValue,setSearchValue]=useState("")
+    const [User,SetUser]=useState(LoggedInDetails())
 
-    return <Context.Provider value={{searchValue, setSearchValue}}>
+    useEffect(()=>{
+        FristLoadCookie()
+        SetUser(LoggedInDetails())
+        return()=>{
+            
+        }
+    }, [])
+
+    return <Context.Provider value={{searchValue, setSearchValue, User, SetUser}}>
         {props.children}
     </Context.Provider>
 }

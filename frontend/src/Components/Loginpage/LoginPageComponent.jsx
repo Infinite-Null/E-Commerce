@@ -3,8 +3,6 @@
 import React, {useState} from "react";
 import {Tabs, Tab, Input, Link, Button, Card, CardBody} from "@nextui-org/react";
 import {TbListDetails} from "react-icons/tb";
-import axios from "axios";
-import Cookies from 'js-cookie';
 
 export default function LoginPageComponent({onLoginEmailChange,onLoginPasswordChange,onSignupEmailChange,onSignupPasswordChange,onSignupNameChange,OnSignupPress,OnLoginPress}) {
     const [selected, setSelected] = React.useState("login");
@@ -68,7 +66,8 @@ export default function LoginPageComponent({onLoginEmailChange,onLoginPasswordCh
                                             borderRadius:"0",
                                             width:"300px",
                                             height:"60px",color:"white"
-                                        }}  variant="flat" startContent={<TbListDetails/>} onPress={()=>{
+                                        }}  variant="flat" startContent={<TbListDetails/>} onClick={(e)=>{
+                                            e.preventDefault()
                                         OnLoginPress()
                                     }}>Login</Button>
                                 </div>
@@ -130,7 +129,8 @@ export default function LoginPageComponent({onLoginEmailChange,onLoginPasswordCh
                                             borderRadius:"0",
                                             width:"300px",
                                             height:"60px",color:"white"
-                                        }}  variant="flat" onPress={async (e)=>{
+                                        }}  variant="flat" onClick={async (e)=>{
+                                            e.preventDefault()
                                             OnSignupPress()
                                     }}>Signup</Button>
                                 </div>

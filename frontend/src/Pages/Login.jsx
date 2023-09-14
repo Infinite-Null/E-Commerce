@@ -1,6 +1,10 @@
 import LoginPageComponent from "../Components/Loginpage/LoginPageComponent";
 import {Tost} from "../Components/Tost";
 import {useState} from "react";
+import axios from "axios";
+import ApiInfo from "../ApiInfo/ApiInfo";
+import Cookies from "js-cookie";
+import SetCookieUser, {LoggedInDetails} from "../Context/SetCookieUser";
 
 export function Login() {
     const [Email,setEmail] = useState("")
@@ -20,8 +24,26 @@ export function Login() {
     function onSignupNameChange(value){
 
     }
-    function OnLoginPress(){
+    async function OnLoginPress(){
         if(Email !== "" && Password !== ""){
+            try {
+                const result = await axios.post(ApiInfo+"/login",{
+                    "email":Email,
+                    "password":Password
+                })
+                SetCookieUser(result.data.token.toString()
+                    ,result.data.user.name.toString()
+                    ,result.data.user.email.toString()
+                    ,result.data.user.avatar.url.toString()
+                    ,result.data.user._id.toString()
+                    ,result.data.user.role.toString()
+                )
+            }catch (e) {
+                if(e.response?.data?.success === false){
+                    Tost(e.response.data.details)
+                    return
+                }
+            }
             Tost('Successfully Logged In')
         }
     }
