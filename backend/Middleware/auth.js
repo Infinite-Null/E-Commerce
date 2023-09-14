@@ -4,7 +4,6 @@ const User = require("../Models/userModel")
 
 exports.isAuthenticatedUser = async (req, res, next) => {
     const {token} = req.cookies
-    console.log(req.cookies)
     if (!token) {
         return next(new ErrorHandler("Please Login To access this route", 401))
     } else {

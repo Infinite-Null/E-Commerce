@@ -62,6 +62,7 @@ export default function LoginPageComponent({onLoginEmailChange,onLoginPasswordCh
                                 </p>
                                 <div className="flex gap-2 justify-end">
                                     <Button
+                                        type={"submit"}
                                         className="bg-gray-800 hover:bg-gray-950"
                                         style={{
                                             borderRadius:"0",
@@ -130,28 +131,7 @@ export default function LoginPageComponent({onLoginEmailChange,onLoginPasswordCh
                                             width:"300px",
                                             height:"60px",color:"white"
                                         }}  variant="flat" onPress={async (e)=>{
-                                            await Cookies.set('token', 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY0ZDczYzZmMjQ3NzBmMWQyNjllMTEzMyIsImlhdCI6MTY5NDYyNjkyOSwiZXhwIjoxNjk3MjE4OTI5fQ.Q2dbnVKSM34xDcyBpg_Tj7dfbeVVi_irdC6XklXOmPI')
-                                            console.log(Cookies.get('token'))
-                                           const result = await axios.post("http://localhost:4000/api/v1/login",{
-                                                "email":"ankit.kum.sha9933@gmail.com",
-                                                "password":"1234567890"
-                                            })
-                                        console.log(result.data)
-                                        try {
-                                            const result1 = await axios.get("http://localhost:4000/api/v1/user/detail",{
-                                                "email":"ankit.kum.sha9933@gmail.com",
-                                                "password":"1234567890"
-                                            },{
-
-                                                withCredentials:true
-                                            })
-                                            console.log(result1)
-                                        }catch (e) {
-                                            console.log("failed")
-                                        }
-
-
-                                        OnSignupPress()
+                                            OnSignupPress()
                                     }}>Signup</Button>
                                 </div>
                             </form>
