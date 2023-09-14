@@ -24,8 +24,11 @@ export function FristLoadCookie(){
     Cookies.set('role',localStorage.getItem('role'))
 }
 export function LoggedInDetails(){
+    function LoggedIn(){
+        return !(Cookies.get('token') === undefined || Cookies.get('token') === null || Cookies.get('token') === "");
+    }
     return {
-        IsLoggedIn:(!(Cookies.get('token') === undefined || Cookies.get('token') === undefined || Cookies.get(''))),
+        IsLoggedIn:LoggedIn(),
         Token:Cookies.get('token'),
         Name:Cookies.get('name'),
         Email:Cookies.get('email'),

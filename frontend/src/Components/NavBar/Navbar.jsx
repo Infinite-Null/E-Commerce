@@ -9,7 +9,7 @@ import {
     Dropdown,
     DropdownMenu,
     Avatar,
-    NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Input
+    NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Input, Button
 } from "@nextui-org/react";
 import 'react-toastify/dist/ReactToastify.css';
 import {Link, useNavigate} from "react-router-dom";
@@ -20,9 +20,10 @@ import {BsFillArrowRightCircleFill, BsSearch} from "react-icons/bs";
 import DropDown from "./DropDown";
 import {Tost} from "../Tost";
 import Context from "../../Context/Context";
+import SetCookieUser, {LoggedInDetails} from "../../Context/SetCookieUser";
 
 export default function NavBar() {
-    const {setSearchValue} = useContext(Context)
+    const {setSearchValue,User,SetUser} = useContext(Context)
 
     const navigate=useNavigate()
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -107,35 +108,45 @@ export default function NavBar() {
                     icon={<TfiShoppingCartFull style={{
                     fontSize:25
                 }}/>} count={"0"}/>
-                <Dropdown placement="bottom-end">
-                    <DropdownTrigger>
-                        <Avatar
-                            isBordered
-                            as="button"
-                            className="transition-transform"
-                            color="secondary"
-                            name="Jason Hughes"
-                            size="sm"
-                            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-                        />
-                    </DropdownTrigger>
-                    <DropdownMenu aria-label="Profile Actions" variant="shadow" onAction={(key)=>{
-                        if(key!==""||key){
-                            navigate(key)
-                        }
-                    }}>
-                        <DropdownItem key="profile" className="h-14 gap-2 b">
-                            <p className="font-semibold">Signed in as</p>
-                            <p className="font-semibold">zoey@example.com</p>
-                        </DropdownItem>
-                        <DropdownItem key="Profile">Your Profile</DropdownItem>
-                        <DropdownItem key="orders">Your Orders</DropdownItem>
-                        <DropdownItem key="Help">Help & Feedback</DropdownItem>
-                        <DropdownItem key="logout" color="danger">
-                            Log Out
-                        </DropdownItem>
-                    </DropdownMenu>
-                </Dropdown>
+                {User.IsLoggedIn &&
+                    <Dropdown placement="bottom-end">
+                        <DropdownTrigger>
+                            <Avatar
+                                isBordered
+                                as="button"
+                                className="transition-transform"
+                                color="secondary"
+                                name="Jason Hughes"
+                                size="sm"
+                                src={User.Avatar}
+                            />
+                        </DropdownTrigger>
+                        <DropdownMenu aria-label="Profile Actions" variant="shadow" onAction={(key)=>{
+                            if(key!==""||key){
+                                navigate(key)
+                            }
+                        }}>
+                            <DropdownItem key="profile" className="h-14 gap-2 b">
+                                <p className="font-semibold">Signed in as</p>
+                                <p className="font-semibold">zoey@example.com</p>
+                            </DropdownItem>
+                            <DropdownItem key="Profile">Your Profile</DropdownItem>
+                            <DropdownItem key="orders">Your Orders</DropdownItem>
+                            <DropdownItem key="Help">Help & Feedback</DropdownItem>
+                            {(User.Role.toLowerCase()==="admin") && <DropdownItem key="/Admin">Admin Page</DropdownItem>}
+                            <DropdownItem key="/" color="danger" onClick={()=>{
+                                SetCookieUser("","","","","","")
+                                SetUser(LoggedInDetails())
+                                navigate("/")
+                            }}>
+                                Log Out
+                            </DropdownItem>
+                        </DropdownMenu>
+                    </Dropdown>
+                }
+                {!User.IsLoggedIn && <Button color="primary" className={"ml-5 mr-5"} onPress={()=>{
+                    navigate("/Login")
+                }}>Login</Button>}
             </NavbarContent>
             <NavbarMenu>
                     <Link to="/" style={{color:"black",marginBottom:"10px"}}>

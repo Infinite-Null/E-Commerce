@@ -1,12 +1,15 @@
 import LoginPageComponent from "../Components/Loginpage/LoginPageComponent";
 import {Tost} from "../Components/Tost";
-import {useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import axios from "axios";
 import ApiInfo from "../ApiInfo/ApiInfo";
-import Cookies from "js-cookie";
 import SetCookieUser, {LoggedInDetails} from "../Context/SetCookieUser";
+import Context from "../Context/Context";
+import {useNavigate} from "react-router-dom";
 
 export function Login() {
+    const {SetUser,User}=useContext(Context)
+    const navigate=useNavigate()
     const [Email,setEmail] = useState("")
     const [Password,setPassword] = useState("")
     function onLoginEmailChange(value){
@@ -38,6 +41,7 @@ export function Login() {
                     ,result.data.user._id.toString()
                     ,result.data.user.role.toString()
                 )
+                SetUser(LoggedInDetails())
             }catch (e) {
                 if(e.response?.data?.success === false){
                     Tost(e.response.data.details)
@@ -50,6 +54,14 @@ export function Login() {
     function OnSignupPress(){
         Tost('Successfully Signed In')
     }
+    useEffect(()=>{
+        if(User.IsLoggedIn===true){
+            navigate(-1)
+        }
+        return ()=>{
+
+        }
+    })
     return (
         <><LoginPageComponent onLoginEmailChange={onLoginEmailChange} onSignupEmailChange={onSignupEmailChange} onSignupPasswordChange={onSignupPasswordChange}
         onSignupNameChange={onSignupNameChange} onLoginPasswordChange={onLoginPasswordChange} OnLoginPress={OnLoginPress} OnSignupPress={OnSignupPress}
