@@ -32,6 +32,7 @@ export function ProductDetails() {
     async function FetchDetails(){
         const result=await axios.get(Api+"/products/"+state)
         setData(result.data.Product)
+        console.log(result.data)
     }
     useEffect(() => {
         window.scrollTo(0, 0)
@@ -59,6 +60,7 @@ export function ProductDetails() {
                getReviewStar={getReviewStar}
                reviews={data.reviews??[]}
                onAddToCart={Pressed}
+               maxStock={data.Stock??0}
                onPostReviewPress={onPostReviewPress}
                key={data}
            />:<LoadingProductDetails/>}

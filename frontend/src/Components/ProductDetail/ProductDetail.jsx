@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useContext, useState} from "react";
 import Rating from "react-rating";
 import {LiaStarSolid} from "react-icons/lia";
 import { InputNumber } from 'antd';
@@ -6,9 +6,13 @@ import {Textarea} from "@nextui-org/react";
 import {motion} from "framer-motion"
 import Review from "./Reviews";
 import {RiSendPlane2Fill} from "react-icons/ri";
+import Context from "../../Context/Context";
+import {useNavigate} from "react-router-dom";
 
-const ProductDetail= ({images,title,averageReview,discountedPrice,totalPrice,discription,onQuntityChange,onReviewTextChange,productId,getReviewStar,reviews,onAddToCart,onPostReviewPress}) => {
+const ProductDetail= ({images,title,averageReview,maxStock,discountedPrice,totalPrice,discription,onQuntityChange,onReviewTextChange,productId,getReviewStar,reviews,onAddToCart,onPostReviewPress}) => {
     const [selectedImage,changeSelected]=useState(images[0].url)
+    const {User} = useContext(Context)
+    const navigate=useNavigate()
     return (
         <>
         <div className="md:flex items-start justify-center py-12 2xl:px-20 md:px-6 px-4">
@@ -126,18 +130,16 @@ const ProductDetail= ({images,title,averageReview,discountedPrice,totalPrice,dis
                             }}
                             defaultValue={1}
                             min={1}
-                            max={5}
+                            max={maxStock}
                         />
                     </div>
 
-
-
-
-                    <button
-                        onClick={()=>{
-                            onAddToCart(productId)
-                        }}
-                        className="
+                    {User.IsLoggedIn===false&&<>
+                        <button
+                            onClick={()=>{
+                                navigate('/Login')
+                            }}
+                            className="
 						focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800
 						text-base
 						flex
@@ -151,15 +153,41 @@ const ProductDetail= ({images,title,averageReview,discountedPrice,totalPrice,dis
 						hover:bg-gray-700
 						mt-5
 					"
-                    >
-                        Add To Cart
-                    </button>
+                        >
+                            Login
+                        </button>
+                        <h1>You need to login to order items</h1>
+                    </>}
+
+
+                    {User.IsLoggedIn===true&&<>
+                        <button
+                            onClick={()=>{
+                                onAddToCart(productId)
+                            }}
+                            className="
+						focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800
+						text-base
+						flex
+						items-center
+						justify-center
+						leading-none
+						text-white
+						bg-gray-800
+						w-full
+						py-4
+						hover:bg-gray-700
+						mt-5
+					"
+                        >
+                            Add To Cart
+                        </button>
 
 
 
-                    {/*Review Post*/}
-                    <h1
-                        className="
+                        {/*Review Post*/}
+                        <h1
+                            className="
                             mt-14
 							lg:text-2xl
 							text-xl
@@ -167,47 +195,48 @@ const ProductDetail= ({images,title,averageReview,discountedPrice,totalPrice,dis
 							lg:leading-6
 							leading-7
 							text-gray-800
-	
-						"
-                    >
-                        Post Your Review:
 
-                    </h1>
-                    <Textarea
-                        onChange={(e)=>{
-                            onReviewTextChange(e.target.value)
-                        }}
-                        style={{
-                            fontSize:"17px"
-                        }}
-                        variant="faded"
-                        placeholder="Enter your review"
-                        description="Enter a concise review of product."
-                        className="max-w-xs"
-                    />
-                   <div className={"flex justify-between items-center w-72"}>
-                       <Rating
-                           onChange={(x)=>{
-                               getReviewStar(x)
-                           }}
-                           initialRating={0}
-                           fullSymbol={<LiaStarSolid style={{
-                               color:"black",
-                               fontSize:"30px"
-                           }}/>}
-                           emptySymbol={<LiaStarSolid style={{
-                               color:"gray",
-                               fontSize:"30px"
-                           }}/>}/>
-                       <RiSendPlane2Fill
-                           onClick={()=>{
-                               onPostReviewPress()
-                           }}
-                           className={"text-gray-800 cursor-pointer hover:text-gray-950 border-1 border-black p-2 rounded-full"}
-                           style={{
-                               fontSize:"38px"
-                           }}/>
-                   </div>
+						"
+                        >
+                            Post Your Review:
+
+                        </h1>
+                        <Textarea
+                            onChange={(e)=>{
+                                onReviewTextChange(e.target.value)
+                            }}
+                            style={{
+                                fontSize:"17px"
+                            }}
+                            variant="faded"
+                            placeholder="Enter your review"
+                            description="Enter a concise review of product."
+                            className="max-w-xs"
+                        />
+                        <div className={"flex justify-between items-center w-72"}>
+                            <Rating
+                                onChange={(x)=>{
+                                    getReviewStar(x)
+                                }}
+                                initialRating={0}
+                                fullSymbol={<LiaStarSolid style={{
+                                    color:"black",
+                                    fontSize:"30px"
+                                }}/>}
+                                emptySymbol={<LiaStarSolid style={{
+                                    color:"gray",
+                                    fontSize:"30px"
+                                }}/>}/>
+                            <RiSendPlane2Fill
+                                onClick={()=>{
+                                    onPostReviewPress()
+                                }}
+                                className={"text-gray-800 cursor-pointer hover:text-gray-950 border-1 border-black p-2 rounded-full"}
+                                style={{
+                                    fontSize:"38px"
+                                }}/>
+                        </div>
+                    </>}
                 </div>
             </div>
         </div>

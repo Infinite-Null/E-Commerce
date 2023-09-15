@@ -18,7 +18,10 @@ import {OrdersDetailsPage} from "./Pages/AdminPage/Orders/OrdersDetailsPage";
 import {UsersAdminPage} from "./Pages/AdminPage/Users/UsersAdminPage";
 import {Login} from "./Pages/Login";
 import {ReviewsPage} from "./Pages/AdminPage/Reviews/ReviewsPage";
+import {useContext} from "react";
+import Context from "./Context/Context";
 function App() {
+    const{User}=useContext(Context)
    return<>
        <NavBar/>
        <Routes>
@@ -29,14 +32,14 @@ function App() {
            <Route path="AboutUs" element={ <ContactUs/> } />
            <Route path="cart" element={ <Cart/> } />
            <Route path="orders" element={ <Orders/> } />
-           <Route path="/Admin" element={ <Dashboard/> } />
-           <Route path="/Admin/Orders" element={ <AdminOrdersPage/> } />
-           <Route path="/Admin/Users" element={ <UsersAdminPage/> } />
-           <Route path="/Admin/Reviews" element={ <ReviewsPage/> } />
-           <Route path="/Admin/Orders/Detail" element={ <OrdersDetailsPage/> } />
-           <Route path="/Admin/Products/AllProduct" element={ <ProductsPageAdmin/> } />
-           <Route path="/Admin/Products/AddProduct" element={ <AddProduct/> } />
-           <Route path="product/:id" element={ <ProductDetails/> } />
+           {(User.Role?.toLowerCase()==='admin')&&<Route path="/Admin" element={<Dashboard/>}/>}
+           {(User.Role?.toLowerCase()==='admin')&&<Route path="/Admin/Orders" element={<AdminOrdersPage/>}/>}
+           {(User.Role?.toLowerCase()==='admin')&&<Route path="/Admin/Users" element={<UsersAdminPage/>}/>}
+           {(User.Role?.toLowerCase()==='admin')&&<Route path="/Admin/Reviews" element={<ReviewsPage/>}/>}
+           {(User.Role?.toLowerCase()==='admin')&&<Route path="/Admin/Orders/Detail" element={<OrdersDetailsPage/>}/>}
+           {(User.Role?.toLowerCase()==='admin')&&<Route path="/Admin/Products/AllProduct" element={<ProductsPageAdmin/>}/>}
+           {(User.Role?.toLowerCase()==='admin')&&<Route path="/Admin/Products/AddProduct" element={<AddProduct/>}/>}
+            <Route path="product/:id" element={ <ProductDetails/> } />
            <Route path="/:id" element={<AllProductWithCategory/>}/>
        </Routes>
        <ToastContainer position="bottom-center" theme="colored" icon={false} limit={2} toastStyle={{
