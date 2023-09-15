@@ -1,12 +1,15 @@
 import {AboutUserComponent} from "../Components/AboutUser/AboutUserComponent";
+import {useContext} from "react";
+import Context from "../Context/Context";
 
 export function AboutUser() {
+    const {User}=useContext(Context)
     return (
         <><AboutUserComponent
-            profile_url_image="https://t3.ftcdn.net/jpg/02/99/04/20/360_F_299042079_vGBD7wIlSeNl7vOevWHiL93G4koMM967.jpg"
-            name="Ankit Kumar Shah"
-            email={"ankit.kum@gmail.com"}
-            join={"2/8/23"}
+            profile_url_image={User.Avatar}
+            name={User.Name}
+            email={User.Email}
+            join={"Thank you for being with us"}
             onEditPress={()=>{
                 
             }}

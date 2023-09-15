@@ -128,7 +128,7 @@ export default function NavBar() {
                         }}>
                             <DropdownItem key="profile" className="h-14 gap-2 b">
                                 <p className="font-semibold">Signed in as</p>
-                                <p className="font-semibold">zoey@example.com</p>
+                                <p className="font-semibold">{User.Email}</p>
                             </DropdownItem>
                             <DropdownItem key="Profile">Your Profile</DropdownItem>
                             <DropdownItem key="orders">Your Orders</DropdownItem>
