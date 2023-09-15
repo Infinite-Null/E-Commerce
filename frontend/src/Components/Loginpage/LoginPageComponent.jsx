@@ -4,9 +4,9 @@ import React, {useState} from "react";
 import {Tabs, Tab, Input, Link, Button, Card, CardBody} from "@nextui-org/react";
 import {TbListDetails} from "react-icons/tb";
 
-export default function LoginPageComponent({onLoginEmailChange,onLoginPasswordChange,onSignupEmailChange,onSignupPasswordChange,onSignupNameChange,OnSignupPress,OnLoginPress}) {
+export default function LoginPageComponent({onLoginEmailChange,onFileSelectChange,onLoginPasswordChange,onSignupEmailChange,onSignupPasswordChange,onSignupNameChange,OnSignupPress,OnLoginPress}) {
     const [selected, setSelected] = React.useState("login");
-    const [selectedImage,setSelectedIamage]=useState("https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png")
+    const [previewImage,setPreviewImage]=useState("/profile.jpg")
     return (
         <div className="flex
         bg-[url('https://i0.wp.com/www.m2w2.com/wp-content/uploads/2022/05/sq-ht-logo-with-photo.png?fit=1000%2C1000&ssl=1')]
@@ -102,13 +102,13 @@ export default function LoginPageComponent({onLoginEmailChange,onLoginPasswordCh
                                    variant={"underlined"}
                                    onChange={(e)=>{
                                        try {
-                                           setSelectedIamage(URL.createObjectURL(e.target.files[0]));
+                                           onFileSelectChange(e.target.files[0])
+                                           setPreviewImage(URL.createObjectURL(e.target.files[0]))
                                        }catch (e) {
-                                            console.log("select Iamge")
+                                            console.log("select Image")
                                        }
-                                       console.log(e.target.value)
                                    }}
-                               /><img alt={"asdhj"} src={selectedImage} style={{
+                               /><img alt={"asdhj"} src={previewImage} style={{
                                    height:"60px",
                                    width:"60px",
                                    objectFit:"cover",

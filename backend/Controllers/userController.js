@@ -1,6 +1,6 @@
 // noinspection JSUnresolvedReference
-
 const User = require("../Models/userModel")
+const cloudinary = require('cloudinary')
 const bcrypt = require("bcryptjs")
 const sendToken = require('../Utils/jwtToken')
 const ErrorHandler = require("../Utils/errorHandling")
@@ -9,23 +9,31 @@ const crypto = require("crypto");
 const JWT = require("jsonwebtoken")
 //Register User
 exports.registerUser = async (req, res) => {
-    const {name, email, password} = req.body
-
-    const user = new User({
-        name, email, password, avatar: {
-            public_id: "This is sample",
-            url: "ProfilePic"
-        }
-    })
-
-    user.save().then((_) => {
-        sendToken(user, 201, res)
-    }).catch((e) => {
-        res.status(500).json({
-            success: false,
-            details: e.message
+    try {
+        const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+            folder: "avatars",
+            width: 150,
+            crop: "scale",
         })
-    })
+        const {name, email, password} = req.body
+        const user = new User({
+            name, email, password, avatar: {
+                public_id: myCloud.public_id,
+                url: myCloud.secure_url,
+            },
+        })
+
+        user.save().then((_) => {
+            sendToken(user, 201, res)
+        }).catch((e) => {
+            res.status(500).json({
+                success: false,
+                details: e.message
+            })
+        })
+    } catch (e) {
+        console.log(e)
+    }
 }
 
 //Login User
