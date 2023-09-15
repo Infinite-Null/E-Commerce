@@ -9,6 +9,14 @@ const crypto = require("crypto");
 const JWT = require("jsonwebtoken")
 //Register User
 exports.registerUser = async (req, res) => {
+    const userData = await User.find({email: req.body.email})
+    if (userData.length !== 0) {
+        res.status(200).json({
+            success: false,
+            message: "Email is connected to another account"
+        })
+        return
+    }
     try {
         const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
             folder: "avatars",

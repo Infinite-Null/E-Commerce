@@ -8,8 +8,10 @@ import ApiInfo from "../ApiInfo/ApiInfo";
 import SetCookieUser, {LoggedInDetails} from "../Context/SetCookieUser";
 import Context from "../Context/Context";
 import {useNavigate} from "react-router-dom";
+import RegisterLoding from "../Components/Loginpage/RegisterLoding";
 
 export function Login() {
+    const [isOpen, setIsOpen] = useState(false);
     const {SetUser,User}=useContext(Context)
     const [user, setUserr] = useState({
         name: "",
@@ -73,6 +75,7 @@ export function Login() {
             Tost('Please select avatar')
             return
         }
+
         const myForm = new FormData();
         myForm.set("name", name);
         myForm.set("email", email);
@@ -80,6 +83,10 @@ export function Login() {
         myForm.set("avatar", avatar);
         const config = { headers: { "Content-Type": "multipart/form-data" } };
         const result = await axios.post(ApiInfo+`/register`, myForm, config);
+        if(result.data.success===false){
+            Tost(result.data.message)
+            return
+        }
         SetCookieUser(result.data.token.toString()
             ,result.data.user.name.toString()
             ,result.data.user.email.toString()
@@ -88,8 +95,9 @@ export function Login() {
             ,result.data.user.role.toString()
         )
         SetUser(LoggedInDetails())
-        navigate(-1)
+        setIsOpen(false)
         Tost('Account successfully created and logged in')
+        navigate(-1)
     }
 
     function onFileSelectChange(file){
@@ -114,6 +122,8 @@ export function Login() {
         <><LoginPageComponent onLoginEmailChange={onLoginEmailChange} onSignupEmailChange={onSignupEmailChange} onSignupPasswordChange={onSignupPasswordChange}
         onSignupNameChange={onSignupNameChange} onLoginPasswordChange={onLoginPasswordChange} OnLoginPress={OnLoginPress} OnSignupPress={OnSignupPress}
         onFileSelectChange={onFileSelectChange}
-        /></>
+        />
+        <RegisterLoding isOpen={isOpen} setIsOpen={setIsOpen}/>
+        </>
     )
 }
