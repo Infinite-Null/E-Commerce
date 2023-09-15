@@ -9,7 +9,6 @@ const ContextState=(props)=>{
     useEffect(()=>{
         FristLoadCookie()
         SetUser(LoggedInDetails())
-        console.log(User)
         return()=>{
             
         }

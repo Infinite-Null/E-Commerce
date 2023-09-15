@@ -1,7 +1,6 @@
 import Cookies from "js-cookie";
 
 export default function SetCookieUser(token,name,email,avatar,id,role){
-    console.log(token,name,email,avatar,id,role)
     Cookies.set('token',token)
     Cookies.set('name',name)
     Cookies.set('email',email)

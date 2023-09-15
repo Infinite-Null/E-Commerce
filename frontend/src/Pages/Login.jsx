@@ -33,7 +33,6 @@ export function Login() {
                     "email":Email,
                     "password":Password
                 })
-                console.log(result.data)
                 SetCookieUser(result.data.token.toString()
                     ,result.data.user.name.toString()
                     ,result.data.user.email.toString()
@@ -80,9 +79,17 @@ export function Login() {
         myForm.set("password", password);
         myForm.set("avatar", avatar);
         const config = { headers: { "Content-Type": "multipart/form-data" } };
-        const { data } = await axios.post(ApiInfo+`/register`, myForm, config);
-        console.log(data)
-        Tost('Successfully Signed In')
+        const result = await axios.post(ApiInfo+`/register`, myForm, config);
+        SetCookieUser(result.data.token.toString()
+            ,result.data.user.name.toString()
+            ,result.data.user.email.toString()
+            ,result.data.user.avatar.url.toString()
+            ,result.data.user._id.toString()
+            ,result.data.user.role.toString()
+        )
+        SetUser(LoggedInDetails())
+        navigate(-1)
+        Tost('Account successfully created and logged in')
     }
 
     function onFileSelectChange(file){
