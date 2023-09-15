@@ -24,7 +24,6 @@ import SetCookieUser, {LoggedInDetails} from "../../Context/SetCookieUser";
 
 export default function NavBar() {
     const {setSearchValue,User,SetUser} = useContext(Context)
-    console.log(User)
 
     const navigate=useNavigate()
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);

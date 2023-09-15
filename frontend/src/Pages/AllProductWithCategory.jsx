@@ -26,7 +26,6 @@ export function AllProductWithCategory() {
     const[data,setData]=useState([])
     const[loading,setLoading]=useState(false)
     async function FetchData(min,max,pageNo){
-        console.log(min,max,pageNo)
         let url=state.category.toLowerCase()
         if(url==="all products"){
             url=""
