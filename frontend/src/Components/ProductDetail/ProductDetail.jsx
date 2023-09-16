@@ -2,14 +2,14 @@ import React, {useContext, useState} from "react";
 import Rating from "react-rating";
 import {LiaStarSolid} from "react-icons/lia";
 import { InputNumber } from 'antd';
-import {Textarea} from "@nextui-org/react";
+import {Spinner, Textarea} from "@nextui-org/react";
 import {motion} from "framer-motion"
 import Review from "./Reviews";
 import {RiSendPlane2Fill} from "react-icons/ri";
 import Context from "../../Context/Context";
 import {useNavigate} from "react-router-dom";
 
-const ProductDetail= ({images,title,averageReview,maxStock,discountedPrice,totalPrice,discription,onQuntityChange,onReviewTextChange,productId,getReviewStar,reviews,onAddToCart,onPostReviewPress}) => {
+const ProductDetail= ({images,title,averageReview,maxStock,Loading,Star,discountedPrice,totalPrice,discription,onQuntityChange,onReviewTextChange,productId,getReviewStar,reviews,onAddToCart,onPostReviewPress}) => {
     const [selectedImage,changeSelected]=useState(images[0].url)
     const {User} = useContext(Context)
     const navigate=useNavigate()
@@ -215,10 +215,11 @@ const ProductDetail= ({images,title,averageReview,maxStock,discountedPrice,total
                         />
                         <div className={"flex justify-between items-center w-72"}>
                             <Rating
+                                quiet={false}
                                 onChange={(x)=>{
                                     getReviewStar(x)
                                 }}
-                                initialRating={0}
+                                initialRating={Star}
                                 fullSymbol={<LiaStarSolid style={{
                                     color:"black",
                                     fontSize:"30px"
@@ -227,14 +228,15 @@ const ProductDetail= ({images,title,averageReview,maxStock,discountedPrice,total
                                     color:"gray",
                                     fontSize:"30px"
                                 }}/>}/>
-                            <RiSendPlane2Fill
+                            {!Loading&&<RiSendPlane2Fill
                                 onClick={()=>{
                                     onPostReviewPress()
                                 }}
                                 className={"text-gray-800 cursor-pointer hover:text-gray-950 border-1 border-black p-2 rounded-full"}
                                 style={{
                                     fontSize:"38px"
-                                }}/>
+                                }}/>}
+                            {Loading&&<Spinner/>}
                         </div>
                     </>}
                 </div>

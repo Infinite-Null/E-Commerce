@@ -66,13 +66,16 @@ export function Login() {
     }
 
     async function OnSignupPress(){
+        setIsOpen(true)
         const {name,email,password}=user
         if(name===""||email===""||password===""){
             Tost('Please fill name email and password fields')
+            setIsOpen(false)
             return
         }
         if(avatar===''){
             Tost('Please select avatar')
+            setIsOpen(false)
             return
         }
 
@@ -84,6 +87,7 @@ export function Login() {
         const config = { headers: { "Content-Type": "multipart/form-data" } };
         const result = await axios.post(ApiInfo+`/register`, myForm, config);
         if(result.data.success===false){
+            setIsOpen(false)
             Tost(result.data.message)
             return
         }
