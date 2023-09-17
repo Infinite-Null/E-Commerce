@@ -2,12 +2,23 @@ import {Billing} from "./Billing";
 import {EachOrderItem} from "./EachOrderItem";
 import Heading from "../Heading/Heading";
 import './CartPage.css'
-import {useContext} from "react";
+import {useContext,}from "react";
 import Context from "../../Context/Context";
 
 export function CartPage({change}) {
     const {Cart,SetCart}=useContext(Context)
-    console.log(Cart)
+    function CalculateTotal(){
+        let sum=0
+        Cart.forEach((e)=>{
+            sum+=(e.quality*e.price)
+        })
+        return sum
+    }
+    function OnDeletePress(id,index){
+        const Dummy=[...Cart]
+        Dummy.splice(index,1)
+        SetCart(Dummy)
+    }
     return (
         <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
             <Heading title="Your Cart" marginTop="0px"/>
@@ -17,12 +28,12 @@ export function CartPage({change}) {
                         className="h-[450px] flex flex-col justify-start items-start bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full overflow-y-scroll scroll">
                         <p className="text-lg md:text-xl font-semibold leading-6 xl:leading-5 text-gray-800">Scroll to
                             view items</p>
-                        {Cart.map((e,i)=><EachOrderItem price={e.price} name={e.name} id={e.id} quantity={e.quality} image={e.image} key={i}/>)}
+                        {Cart.map((e,i)=><EachOrderItem price={e.price} name={e.name} id={e.id} index={i} quantity={e.quality} image={e.image} OnDeletePress={OnDeletePress} key={i}/>)}
                     </div>}
                     {Cart.length===0&&<h1 className={"flex justify-center items-center w-full"}>No item added to cart</h1>}
                     {Cart.length!==0&&<div
                         className="flex justify-center md:flex-row flex-col items-stretch w-full space-y-4 md:space-y-0 md:space-x-6 xl:space-x-8">
-                        <Billing/>
+                        <Billing Total={CalculateTotal()}/>
                         <div
                             className="flex flex-col justify-center px-4 py-6 md:p-6 xl:p-8 w-full bg-gray-50 space-y-6"
                             onClick={() => {
