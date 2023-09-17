@@ -1,29 +1,27 @@
 import ProductDetail from "../Components/ProductDetail/ProductDetail";
-import {useEffect, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import {Tost} from "../Components/Tost";
 import {useLocation} from "react-router-dom";
 import Api from "../ApiInfo/ApiInfo";
 import axios from "axios";
 import {LoadingProductDetails} from "../Components/ProductDetail/LoadingProductDetails";
 import ApiInfo from "../ApiInfo/ApiInfo";
-import Rating from "react-rating";
-
+import Context from "../Context/Context";
 export function ProductDetails() {
+    const {Cart,SetCart}=useContext(Context)
+    const [Quantity,SetQuantity]=useState(1)
     const[Review,setReview]=useState("")
     const[Star,setStar]=useState(0)
     const[Loading,setLoading]=useState(false)
 
     function onQuntityChange(value){
-
+        SetQuantity(value)
     }
     function onReviewTextChange(value){
         setReview(value)
     }
     function getReviewStar(value){
         setStar(value)
-    }
-    function Pressed(id){
-        Tost("Item Added to cart.")
     }
     async function onPostReviewPress(){
         setLoading(true)
@@ -52,7 +50,25 @@ export function ProductDetails() {
     const {state}=useLocation()
     const [loading,setloading]=useState(false)
     const [data,setData]=useState({})
-
+    function Pressed(id){
+        const Dummy = [...Cart];
+        for (let i=0; i<Dummy.length; i++){
+            if(Dummy[i].id===id){
+                Tost("Item Already Added To Cart")
+                return
+            }
+        }
+        Dummy.push({
+                id:data._id,
+                name:data.name,
+                price:data.price,
+                image:data.images[0].url,
+                quality:Quantity,
+                maxQuantity:data.Stock,
+            })
+        SetCart(Dummy)
+        Tost("Item Added to cart.")
+    }
     async function FetchDetails(){
         const result=await axios.get(Api+"/products/"+state)
         setData(result.data.Product)
@@ -75,8 +91,8 @@ export function ProductDetails() {
                images={data.images??[{url:"https://img.freepik.com/free-photo/textured-background-white-tone_53876-128610.jpg"}]}
                title={data.name}
                averageReview={data.ratings}
-               discountedPrice={parseInt(data.price)-100}
-               totalPrice={data.price}
+               discountedPrice={data.price}
+               totalPrice={parseInt(data.price)+100}
                discription={data.discription}
                onReviewTextChange={onReviewTextChange}
                onQuntityChange={onQuntityChange}

@@ -5,7 +5,7 @@ import {FristLoadCookie, LoggedInDetails} from "./SetCookieUser";
 const ContextState=(props)=>{
     const [searchValue,setSearchValue]=useState("")
     const [User,SetUser]=useState(LoggedInDetails())
-
+    const [Cart,SetCart]=useState([])
     useEffect(()=>{
         FristLoadCookie()
         SetUser(LoggedInDetails())
@@ -14,7 +14,7 @@ const ContextState=(props)=>{
         }
     }, [])
 
-    return <Context.Provider value={{searchValue, setSearchValue, User, SetUser}}>
+    return <Context.Provider value={{searchValue, setSearchValue, User, SetUser, Cart, SetCart}}>
         {props.children}
     </Context.Provider>
 }

@@ -23,7 +23,7 @@ import Context from "../../Context/Context";
 import SetCookieUser, {LoggedInDetails} from "../../Context/SetCookieUser";
 
 export default function NavBar() {
-    const {setSearchValue,User,SetUser} = useContext(Context)
+    const {setSearchValue,User,SetUser,Cart} = useContext(Context)
 
     const navigate=useNavigate()
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -107,7 +107,7 @@ export default function NavBar() {
                     navigate={navigate}
                     icon={<TfiShoppingCartFull style={{
                     fontSize:25
-                }}/>} count={"0"}/>
+                }}/>} count={Cart.length.toString()}/>
                 {User.IsLoggedIn &&
                     <Dropdown placement="bottom-end">
                         <DropdownTrigger>
