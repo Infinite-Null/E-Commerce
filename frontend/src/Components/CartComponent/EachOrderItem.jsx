@@ -1,6 +1,6 @@
 import {Button} from "@nextui-org/react";
 import {GrAdd} from "react-icons/gr";
-import {AiOutlineMinus} from "react-icons/ai";
+import {AiFillDelete, AiOutlineMinus} from "react-icons/ai";
 
 export function EachOrderItem() {
     return (
@@ -22,6 +22,7 @@ export function EachOrderItem() {
                     </Button> 01 <Button isIconOnly aria-label="Add">
                         <GrAdd/>
                     </Button></p>
+                    <Button isIconOnly aria-label="Delete"><AiFillDelete/></Button>
                 </div>
             </div>
         </div>
