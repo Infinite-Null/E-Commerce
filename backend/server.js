@@ -4,7 +4,7 @@ const connectDb = require('./config/database')
 const cloudinary = require("cloudinary");
 
 dotenv.config({path: "backend/config/.env"})
-
+require('events').EventEmitter.prototype._maxListeners = 1000000
 connectDb()
 
 cloudinary.config({

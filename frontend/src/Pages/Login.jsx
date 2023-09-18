@@ -85,23 +85,28 @@ export function Login() {
         myForm.set("password", password);
         myForm.set("avatar", avatar);
         const config = { headers: { "Content-Type": "multipart/form-data" } };
-        const result = await axios.post(ApiInfo+`/register`, myForm, config);
-        if(result.data.success===false){
+        try{
+            const result = await axios.post(ApiInfo+`/register`, myForm, config);
+            if(result.data.success===false){
+                setIsOpen(false)
+                Tost(result.data.message)
+                return
+            }
+            SetCookieUser(result.data.token.toString()
+                ,result.data.user.name.toString()
+                ,result.data.user.email.toString()
+                ,result.data.user.avatar.url.toString()
+                ,result.data.user._id.toString()
+                ,result.data.user.role.toString()
+            )
+            SetUser(LoggedInDetails())
             setIsOpen(false)
-            Tost(result.data.message)
-            return
+            Tost('Account successfully created and logged in')
+            navigate(-1)
+        }catch (e) {
+            setIsOpen(false)
+            Tost(e.response.data.details)
         }
-        SetCookieUser(result.data.token.toString()
-            ,result.data.user.name.toString()
-            ,result.data.user.email.toString()
-            ,result.data.user.avatar.url.toString()
-            ,result.data.user._id.toString()
-            ,result.data.user.role.toString()
-        )
-        SetUser(LoggedInDetails())
-        setIsOpen(false)
-        Tost('Account successfully created and logged in')
-        navigate(-1)
     }
 
     function onFileSelectChange(file){

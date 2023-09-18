@@ -6,7 +6,6 @@ const sendToken = require('../Utils/jwtToken')
 const ErrorHandler = require("../Utils/errorHandling")
 const sendEmail = require("../Utils/sendEmail.js")
 const crypto = require("crypto");
-const JWT = require("jsonwebtoken")
 //Register User
 exports.registerUser = async (req, res) => {
     const userData = await User.find({email: req.body.email})
@@ -18,7 +17,7 @@ exports.registerUser = async (req, res) => {
         return
     }
     try {
-        const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+        const myCloud = await cloudinary.v2.uploader.upload_large(req.body.avatar, {
             folder: "avatars",
             width: 150,
             crop: "scale",
@@ -41,6 +40,10 @@ exports.registerUser = async (req, res) => {
         })
     } catch (e) {
         console.log(e)
+        res.status(500).json({
+            success: false,
+            details: "Image is too big"
+        })
     }
 }
 
