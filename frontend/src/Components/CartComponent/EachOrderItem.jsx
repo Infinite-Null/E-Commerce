@@ -1,8 +1,9 @@
 import {Button} from "@nextui-org/react";
 import {GrAdd} from "react-icons/gr";
 import {AiFillDelete, AiOutlineMinus} from "react-icons/ai";
+import {Tost} from "../Tost";
 
-export function EachOrderItem({image,name,price,quantity,id,OnDeletePress,index}) {
+export function EachOrderItem({image,name,price,quantity,id,OnDeletePress,index,maximumQuantity,addPress,minusPress}) {
     return (
         <div className="mt-4 md:mt-6 flex  flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full ">
             <div className="pb-4 md:pb-8 w-full md:w-40">
@@ -17,9 +18,21 @@ export function EachOrderItem({image,name,price,quantity,id,OnDeletePress,index}
                     <p className="text-base xl:text-lg leading-6">
                         {`₹${price}`}
                     </p>
-                    <p className="text-base xl:text-lg leading-6 text-gray-800"><Button isIconOnly aria-label="Add">
+                    <p className="text-base xl:text-lg leading-6 text-gray-800"><Button isIconOnly aria-label="Minus" onClick={()=>{
+                        if(quantity===1) {
+                            return
+                        }
+                        minusPress(id,index)
+                    }}>
                         <AiOutlineMinus/>
-                    </Button> {quantity} <Button isIconOnly aria-label="Add">
+                    </Button> {quantity} <Button isIconOnly aria-label="Add" onClick={()=>{
+                        if(quantity===maximumQuantity) {
+                            Tost("Maximum Stock")
+                            return
+                        }
+                        addPress(id,index)
+
+                    }}>
                         <GrAdd/>
                     </Button></p>
                     <Button isIconOnly aria-label="Delete" onClick={()=>{

@@ -19,6 +19,18 @@ export function CartPage({change}) {
         Dummy.splice(index,1)
         SetCart(Dummy)
     }
+    function addPress(id,index){
+            const Dummy = [...Cart]
+            const quantity = Dummy[index].quality
+            Dummy[index].quality=quantity+1
+            SetCart(Dummy)
+    }
+    function minusPress(id,index){
+        const Dummy = [...Cart]
+        const quantity = Dummy[index].quality
+        Dummy[index].quality=quantity-1
+        SetCart(Dummy)
+    }
     return (
         <div className="py-14 px-4 md:px-6 2xl:px-20 2xl:container 2xl:mx-auto">
             <Heading title="Your Cart" marginTop="0px"/>
@@ -28,7 +40,7 @@ export function CartPage({change}) {
                         className="h-[450px] flex flex-col justify-start items-start bg-gray-50 px-4 py-4 md:py-6 md:p-6 xl:p-8 w-full overflow-y-scroll scroll">
                         <p className="text-lg md:text-xl font-semibold leading-6 xl:leading-5 text-gray-800">Scroll to
                             view items</p>
-                        {Cart.map((e,i)=><EachOrderItem price={e.price} name={e.name} id={e.id} index={i} quantity={e.quality} image={e.image} OnDeletePress={OnDeletePress} key={i}/>)}
+                        {Cart.map((e,i)=><EachOrderItem price={e.price} name={e.name} id={e.id} index={i} quantity={e.quality} image={e.image} OnDeletePress={OnDeletePress} maximumQuantity={e.maxQuantity} minusPress={minusPress} addPress={addPress} key={i}/>)}
                     </div>}
                     {Cart.length===0&&<h1 className={"flex justify-center items-center w-full"}>No item added to cart</h1>}
                     {Cart.length!==0&&<div
