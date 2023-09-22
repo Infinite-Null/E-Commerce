@@ -6,6 +6,13 @@ const ContextState=(props)=>{
     const [searchValue,setSearchValue]=useState("")
     const [User,SetUser]=useState(LoggedInDetails())
     const [Cart,SetCart]=useState([])
+    const [Address,SetAddress]=useState({
+            fristline:"",
+            secondline:"",
+            pincode:"",
+            phone:"",
+            place:"Delhi"
+    })
     useEffect(()=>{
         FristLoadCookie()
         SetUser(LoggedInDetails())
@@ -14,7 +21,7 @@ const ContextState=(props)=>{
         }
     }, [])
 
-    return <Context.Provider value={{searchValue, setSearchValue, User, SetUser, Cart, SetCart}}>
+    return <Context.Provider value={{searchValue, setSearchValue, User, SetUser, Cart, SetCart, Address, SetAddress}}>
         {props.children}
     </Context.Provider>
 }

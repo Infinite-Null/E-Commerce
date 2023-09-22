@@ -1,3 +1,5 @@
+// noinspection JSValidateTypes
+
 import {
     Button,
     Card,
@@ -6,12 +8,14 @@ import {
     Input
 } from "@nextui-org/react";
 import {Select, SelectItem} from "@nextui-org/react";
-import React from "react"
+import React, {useContext} from "react"
 import {AiFillHome} from "react-icons/ai";
 import {SiHomeassistantcommunitystore} from "react-icons/si";
 import {FaPhoneAlt} from "react-icons/fa";
 import {FaLocationDot} from "react-icons/fa6";
 import {MdPlace} from "react-icons/md";
+import context from "../../Context/Context";
+import {Tost} from "../Tost";
 let state = [
     "Andhra Pradesh",
     "Arunachal Pradesh",
@@ -50,6 +54,8 @@ let state = [
     "Lakshadweep",
     "Puducherry"]
 export function AddressForm({change}) {
+    const {Address,SetAddress}=useContext(context)
+    console.log(Address)
     return (
         <div style={{
             width:"99vw",
@@ -69,6 +75,10 @@ export function AddressForm({change}) {
                             fontSize:"15px",
                             fontWeight:"900"
                         }}
+                        onChange={(e)=>{
+                            SetAddress({...Address,"fristline":e.target.value})
+                        }}
+                        name={"fristline"}
                         aria-label={"First Line"}
                         isClearable={true}
                         variant={"bordered"}
@@ -82,6 +92,9 @@ export function AddressForm({change}) {
                             fontSize:"15px",
                             fontWeight:"900"
                         }}
+                        onChange={(e)=>{
+                            SetAddress({...Address,"secondline":e.target.value})
+                        }}
                         aria-label={"Second Line"}
                         isClearable={true}
                         variant={"bordered"}
@@ -92,6 +105,9 @@ export function AddressForm({change}) {
                     />
                     <Input
                         type="number"
+                        onChange={(e)=>{
+                            SetAddress({...Address,"pincode":e.target.value})
+                        }}
                         style={{
                             fontSize:"15px",
                             fontWeight:"900"
@@ -110,6 +126,9 @@ export function AddressForm({change}) {
                             fontSize:"15px",
                             fontWeight:"900",
                         }}
+                        onChange={(e)=>{
+                            SetAddress({...Address,"phone":e.target.value})
+                        }}
                         aria-label={"Phone Number"}
                         isClearable={true}
                         variant={"bordered"}
@@ -120,7 +139,7 @@ export function AddressForm({change}) {
                     />
                     <Select
                         onChange={(e)=>{
-
+                            SetAddress({...Address,"place":e.target.value})
                         }}
                         startContent={<MdPlace style={{fontSize:"25px",marginRight:"5px"}}/>}
                         variant={"bordered"}
@@ -147,6 +166,22 @@ export function AddressForm({change}) {
                         Prev
                     </Button>
                     <Button onPress={()=>{
+                        if(Address.fristline==="") {
+                            Tost("Fill the frist line of address")
+                            return
+                        }
+                        else if(Address.secondline==="") {
+                            Tost("Fill the second line of address")
+                            return
+                        }
+                        else if(Address.pincode==="") {
+                            Tost("Fill the pincode")
+                            return
+                        }
+                        else if(Address.phone==="") {
+                            Tost("Fill the phone number")
+                            return
+                        }
                         change(2)
                     }}>
                         Next
