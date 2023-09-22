@@ -7,6 +7,7 @@ a{
     text-decoration:none
 }
 .header{
+    width: 100vw;
     position:relative;
     overflow:hidden;
     display:flex;
@@ -17,7 +18,7 @@ a{
     height:50vw;
     min-height:400px;
     max-height:550px;
-    min-width:300px;
+    min-width:100vw;
     color:#eee;
 }
 .header:after{

@@ -11,9 +11,8 @@ export function Cart() {
     }
     return (
             <>
-                <MultiStep step={step}/>
+                <div><MultiStep step={step}/></div>
                 {(step===0)?<CartPage change={changeStep}/>:(step===1)?<AddressForm change={changeStep}/>:<PaymentForm change={changeStep}/>}
-
             </>
     )
 }

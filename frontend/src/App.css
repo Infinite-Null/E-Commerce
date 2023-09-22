@@ -1,4 +1,8 @@
+html{
+    width: 100vw;
+    overflow-x:hidden;
+}
 body{
-    width: 99vw;
+    width: 100vw;
     overflow-x: hidden;
 }
