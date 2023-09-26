@@ -16,7 +16,7 @@ export function PaymentForm({change}) {
             display:"flex",
             alignItems:"center",
             justifyContent:"center",
-            height:"80vh",
+            height:"50vh",
             flexDirection:"column",
         }}>
             <Card className="max-w-full w-[350px]  border-2 border-black" style={{
