@@ -21,6 +21,7 @@ export function AboutUser() {
     const {User}=useContext(Context)
     const [name,setName]=useState(User.Name)
     function onChangePress(){
+        console.log(Image)
         if(name===""){
             Tost("Type a name")
             return
@@ -32,9 +33,20 @@ export function AboutUser() {
 
     }
 
+    const updateProfileDataChange = (e) => {
+        const reader = new FileReader();
+
+        reader.onload = () => {
+            if (reader.readyState === 2) {
+                setImage(reader.result);
+            }
+        };
+
+        reader.readAsDataURL(e.target.files[0]);
+    };
     return (
         <>
-            <ModalOfEdit isOpen={isOpen} onChangePress={onChangePress} onOpenChange={onOpenChange} User={User} setImage={setImage} key={key} setKey={setKey} name={name} setName={setName}/>
+            <ModalOfEdit isOpen={isOpen} updateProfileDataChange={updateProfileDataChange} onChangePress={onChangePress} onOpenChange={onOpenChange} User={User} setImage={setImage} key={key} setKey={setKey} name={name} setName={setName}/>
             <AboutUserComponent
             profile_url_image={User.Avatar}
             name={User.Name}
@@ -51,7 +63,7 @@ export function AboutUser() {
     )
 }
 
-function ModalOfEdit({isOpen, onOpenChange, User, setImage, key, setKey, onChangePress, setName, name}) {
+function ModalOfEdit({isOpen, onOpenChange, User, setImage, key, setKey, onChangePress, setName, name, updateProfileDataChange}) {
     const [previewImage,setPreviewImage]=useState(User.Avatar)
     return (
             <Modal isOpen={isOpen} onOpenChange={onOpenChange} className={'flex flex-col justify-center items-center w-72'} size={"xs"} key={key}>
@@ -80,7 +92,10 @@ function ModalOfEdit({isOpen, onOpenChange, User, setImage, key, setKey, onChang
                                     variant={"underlined"}
                                     onChange={(e)=>{
                                         try {
-                                            setImage(e.target.files[0])
+                                            if(e.target.files[0].size>900000) {
+                                                Tost("File size too big")
+                                            }
+                                            updateProfileDataChange(e)
                                             setPreviewImage(URL.createObjectURL(e.target.files[0]))
                                         }catch (e) {
                                             console.log("select Image")
