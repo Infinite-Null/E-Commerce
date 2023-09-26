@@ -12,16 +12,29 @@ import {
     useDisclosure,
     Input
 } from "@nextui-org/react";
+import {Tost} from "../Components/Tost";
 
 export function AboutUser() {
     const [key,setKey]=useState(Math.random())
-    const [Image,setImage]=useState({})
+    const [Image,setImage]=useState(undefined)
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const {User}=useContext(Context)
-    console.log(Image)
+    const [name,setName]=useState(User.Name)
+    function onChangePress(){
+        if(name===""){
+            Tost("Type a name")
+            return
+        }
+        if(name===User.Name&&Image===undefined){
+            Tost("No change in profile")
+            return
+        }
+
+    }
+
     return (
         <>
-            <ModalOfEdit isOpen={isOpen} onOpenChange={onOpenChange} User={User} setImage={setImage} key={key} setKey={setKey}/>
+            <ModalOfEdit isOpen={isOpen} onChangePress={onChangePress} onOpenChange={onOpenChange} User={User} setImage={setImage} key={key} setKey={setKey} name={name} setName={setName}/>
             <AboutUserComponent
             profile_url_image={User.Avatar}
             name={User.Name}
@@ -38,7 +51,7 @@ export function AboutUser() {
     )
 }
 
-function ModalOfEdit({isOpen, onOpenChange, User, setImage, key, setKey}) {
+function ModalOfEdit({isOpen, onOpenChange, User, setImage, key, setKey, onChangePress, setName, name}) {
     const [previewImage,setPreviewImage]=useState(User.Avatar)
     return (
             <Modal isOpen={isOpen} onOpenChange={onOpenChange} className={'flex flex-col justify-center items-center w-72'} size={"xs"} key={key}>
@@ -48,12 +61,16 @@ function ModalOfEdit({isOpen, onOpenChange, User, setImage, key, setKey}) {
                             <ModalHeader className="flex flex-col gap-1">Edit Profile</ModalHeader>
                             <ModalBody>
                                 <Input
+                                    value={name}
                                     isClearable
+                                    onChange={(e)=>{
+                                        setName(e.target.value)
+                                    }}
                                     type="text"
                                     label="Name"
                                     variant={"underlined"}
                                     placeholder="Enter your name"
-                                    defaultValue={User.name}
+                                    defaultValue={User.Name}
                                     className="max-w-xs"
                                 />
                                 <label>Choose Avater</label>
@@ -87,6 +104,7 @@ function ModalOfEdit({isOpen, onOpenChange, User, setImage, key, setKey}) {
                                 </Button>
                                 <Button color="primary" onPress={()=>{
                                     setKey(Math.random())
+                                    onChangePress()
                                     onClose()
                                 }}>
                                     Change
