@@ -5,7 +5,7 @@ import {Modal, ModalContent, ModalHeader, ModalBody, ModalFooter, Button, useDis
 export default function RegisterLoding({isOpen, setIsOpen}) {
     return (
         <>
-            <Modal isOpen={isOpen} isDismissable={false} hideCloseButton={true} backdrop={"opaque"}>
+            <Modal isOpen={isOpen} isDismissable={false} isKeyboardDismissDisabled={false} hideCloseButton={true} backdrop={"opaque"}>
                 <ModalContent>
                     {(onClose) => (
                         <>

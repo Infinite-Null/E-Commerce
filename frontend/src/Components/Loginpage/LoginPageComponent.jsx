@@ -3,6 +3,7 @@
 import React, {useState} from "react";
 import {Tabs, Tab, Input, Link, Button, Card, CardBody} from "@nextui-org/react";
 import {TbListDetails} from "react-icons/tb";
+import {Tost} from "../Tost";
 
 export default function LoginPageComponent({onLoginEmailChange,onFileSelectChange,onLoginPasswordChange,onSignupEmailChange,onSignupPasswordChange,onSignupNameChange,OnSignupPress,OnLoginPress}) {
     const [selected, setSelected] = React.useState("login");
@@ -102,6 +103,10 @@ export default function LoginPageComponent({onLoginEmailChange,onFileSelectChang
                                    variant={"underlined"}
                                    onChange={(e)=>{
                                        try {
+                                           if(e.target.files[0].size>900000) {
+                                               Tost("File size too big")
+                                               return
+                                           }
                                            onFileSelectChange(e.target.files[0])
                                            setPreviewImage(URL.createObjectURL(e.target.files[0]))
                                        }catch (e) {

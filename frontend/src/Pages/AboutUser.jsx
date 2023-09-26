@@ -15,14 +15,15 @@ import {
 import {Tost} from "../Components/Tost";
 import axios from "axios";
 import ApiInfo from "../ApiInfo/ApiInfo";
+import SetCookieUser, {LoggedInDetails} from "../Context/SetCookieUser";
 
 export function AboutUser() {
     const [key,setKey]=useState(Math.random())
     const [Image,setImage]=useState("")
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
-    const {User}=useContext(Context)
+    const {User,SetUser}=useContext(Context)
     const [name,setName]=useState(User.Name)
-    console.log(User.Email)
+    const [Loading,setLoading]=useState(false)
     async function onChangePress(){
         if(name===""){
             Tost("Type a name")
@@ -33,13 +34,22 @@ export function AboutUser() {
             return
         }
         const myForm = new FormData();
-        console.log("Lodimg....")
+        setLoading(true)
         myForm.set("name", name);
         myForm.set("email", User.Email);
         myForm.set("avatar", Image);
         const config = { headers: { "Content-Type": "multipart/form-data" },withCredentials:true };
         const result=await axios.put(ApiInfo+"/user/update",myForm, config)
-        console.log(result.data)
+        SetCookieUser(
+            User.Token.toString()
+            ,result.data.data.name.toString()
+            ,result.data.data.email.toString()
+            ,result.data.data.avatar.url.toString()
+            ,result.data.data._id.toString()
+            ,result.data.data.role.toString()
+        )
+        SetUser(LoggedInDetails())
+        setLoading(false)
     }
 
     const updateProfileDataChange = (e) => {
@@ -55,6 +65,7 @@ export function AboutUser() {
     };
     return (
         <>
+            <LodingModal Loading={Loading}/>
             <ModalOfEdit isOpen={isOpen} updateProfileDataChange={updateProfileDataChange} onChangePress={onChangePress} onOpenChange={onOpenChange} User={User} setImage={setImage} key={key} setKey={setKey} name={name} setName={setName}/>
             <AboutUserComponent
             profile_url_image={User.Avatar}
@@ -103,6 +114,7 @@ function ModalOfEdit({isOpen, onOpenChange, User, setImage, key, setKey, onChang
                                         try {
                                             if(e.target.files[0].size>900000) {
                                                 Tost("File size too big")
+                                                return
                                             }
                                             updateProfileDataChange(e)
                                             setPreviewImage(URL.createObjectURL(e.target.files[0]))
@@ -128,8 +140,8 @@ function ModalOfEdit({isOpen, onOpenChange, User, setImage, key, setKey, onChang
                                 </Button>
                                 <Button color="primary" onPress={()=>{
                                     setKey(Math.random())
-                                    onChangePress()
                                     onClose()
+                                    onChangePress()
                                 }}>
                                     Change
                                 </Button>
@@ -138,5 +150,23 @@ function ModalOfEdit({isOpen, onOpenChange, User, setImage, key, setKey, onChang
                     )}
                 </ModalContent>
             </Modal>
+    );
+}
+function LodingModal({Loading}) {
+    return (
+        <>
+            <Modal isOpen={Loading} isKeyboardDismissDisabled={false} isDismissable={false} size={"xs"}>
+                <ModalContent>
+                    {(_) => (
+                        <>
+                            <ModalHeader className="flex flex-col gap-1">Please Wait...</ModalHeader>
+                            <ModalBody>
+                            <img src={"/update_loading.gif"} alt={"no"} className={"h-full w-full"}/>
+                            </ModalBody>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
+        </>
     );
 }
