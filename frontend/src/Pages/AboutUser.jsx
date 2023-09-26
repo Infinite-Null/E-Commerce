@@ -13,24 +13,33 @@ import {
     Input
 } from "@nextui-org/react";
 import {Tost} from "../Components/Tost";
+import axios from "axios";
+import ApiInfo from "../ApiInfo/ApiInfo";
 
 export function AboutUser() {
     const [key,setKey]=useState(Math.random())
-    const [Image,setImage]=useState(undefined)
+    const [Image,setImage]=useState("")
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
     const {User}=useContext(Context)
     const [name,setName]=useState(User.Name)
-    function onChangePress(){
-        console.log(Image)
+    console.log(User.Email)
+    async function onChangePress(){
         if(name===""){
             Tost("Type a name")
             return
         }
-        if(name===User.Name&&Image===undefined){
+        if(name===User.Name&&Image===""){
             Tost("No change in profile")
             return
         }
-
+        const myForm = new FormData();
+        console.log("Lodimg....")
+        myForm.set("name", name);
+        myForm.set("email", User.Email);
+        myForm.set("avatar", Image);
+        const config = { headers: { "Content-Type": "multipart/form-data" },withCredentials:true };
+        const result=await axios.put(ApiInfo+"/user/update",myForm, config)
+        console.log(result.data)
     }
 
     const updateProfileDataChange = (e) => {
@@ -112,7 +121,7 @@ function ModalOfEdit({isOpen, onOpenChange, User, setImage, key, setKey, onChang
                             <ModalFooter>
                                 <Button color="danger" variant="light" onPress={()=>{
                                     setKey(Math.random())
-                                    setImage({})
+                                    setImage("")
                                     onClose()
                                 }}>
                                     Close
