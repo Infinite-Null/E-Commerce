@@ -227,9 +227,10 @@ exports.updateProfile = async (req, res) => {
         new: true,
         runValidators: true,
         useFindAndModify: false,
-    }).then((_) => {
+    }).then((e) => {
         res.status(200).json({
             success: true,
+            data: e,
         })
     }).catch((e) => {
         res.status(500).json({
