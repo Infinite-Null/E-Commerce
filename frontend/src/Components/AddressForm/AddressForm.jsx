@@ -69,9 +69,8 @@ export function AddressForm({change}) {
             flexDirection:"column",
             overflowX:"hidden",
             marginBottom:"10px",
-            height:"50vh",
         }}>
-            <Card className="max-w-full w-[350px]  border-2 border-black" style={{
+            <Card className="max-w-full w-[350px] h-[500px]  border-2 border-black" style={{
                 boxShadow:"0px 0px 20px 2px rgba(0,0,0,0.25)",
             }}>
                 <CardHeader>Address Details</CardHeader>
