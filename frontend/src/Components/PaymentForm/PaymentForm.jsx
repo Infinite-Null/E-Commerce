@@ -6,10 +6,22 @@ import {
     Input
 } from "@nextui-org/react";
 import {AiFillCreditCard} from "react-icons/ai";
-import React from "react";
+import React, {useContext} from "react";
 import {MdDateRange, MdVpnKey} from "react-icons/md";
+import {usePaymentInputs} from "react-payment-inputs";
+import {Tost} from "../Tost";
+import Context from "../../Context/Context";
 
 export function PaymentForm({change}) {
+    const { meta, getCardNumberProps, getExpiryDateProps, getCVCProps } = usePaymentInputs();
+    const {Cart}=useContext(Context)
+    function CalculateTotal(){
+        let sum=0
+        Cart.forEach((e)=>{
+            sum+=(e.quality*e.price)
+        })
+        return sum
+    }
     return (
         <div style={{
             width:"99vw",
@@ -37,6 +49,9 @@ export function PaymentForm({change}) {
                         label={<span style={{fontSize:"15px",marginBottom:"5px"}}>Card Number</span>}
                         placeholder="Enter your card number"
                         startContent={<AiFillCreditCard style={{fontSize:"25px",marginRight:"5px"}}/>}
+                        {...getCardNumberProps({ onChange:(e)=>{
+
+                            } })}
                     />
                     <Input
                         style={{
@@ -50,6 +65,9 @@ export function PaymentForm({change}) {
                         label={<span style={{fontSize:"15px",marginBottom:"5px"}}>Expiry Date</span>}
                         placeholder="Enter your card's expiry date"
                         startContent={<MdDateRange style={{fontSize:"25px",marginRight:"5px"}}/>}
+                        {...getExpiryDateProps({ onChange:(e)=>{
+
+                            } })}
                     />
                     <Input
                         type="number"
@@ -57,13 +75,16 @@ export function PaymentForm({change}) {
                             fontSize:"15px",
                             fontWeight:"900"
                         }}
-                        aria-label={"Pin code"}
+                        aria-label={"cvc"}
                         isClearable={true}
                         variant={"bordered"}
                         isRequired
                         label={<span style={{fontSize:"15px",marginBottom:"5px"}}>CVC number</span>}
                         placeholder="Enter your cvc number"
                         startContent={<MdVpnKey style={{fontSize:"25px",marginRight:"5px"}}/>}
+                        {...getCVCProps({ onChange:(e)=>{
+
+                            } })}
                     />
 
                 </CardBody>
@@ -77,6 +98,14 @@ export function PaymentForm({change}) {
                         Prev
                     </Button>
                     <Button onPress={()=>{
+                            if(meta.erroredInputs.cardNumber!==undefined) {
+                                Tost(meta.erroredInputs.cardNumber)
+                            }
+                            else if(meta.erroredInputs.expiryDate!==undefined) {
+                                Tost(meta.erroredInputs.expiryDate)
+                            }else if(meta.erroredInputs.cvc!==undefined) {
+                                Tost(meta.erroredInputs.cvc)
+                            }
                     }}>
                         Pay
                     </Button>
@@ -86,7 +115,7 @@ export function PaymentForm({change}) {
                     justifyContent:"center",
                     fontSize:"25px"
                 }}>
-                    <h1>Total - ₹1200</h1>
+                    <h1 className={"text-[23px]"}>{`Total - ₹${CalculateTotal()}`}</h1>
                 </CardFooter>
             </Card>
         </div>
