@@ -4,16 +4,31 @@
     font-weight: 900;
     color: #4d4d4d;
     text-align: center;
-    text-decoration: underline;
+    padding: 10px;
+    padding-left: 70px;
+    padding-right: 70px;
+}
+@media (max-width: 968px) {
+    .EachHeading{
+        padding-left: 30px;
+        padding-right: 30px;
+    }
 }
 
+@media (max-width: 576px) {
+    .EachHeading{
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}
 @media screen and (max-width: 1200px) {
     .EachHeading{
-        font-size: 5vw;
+        font-size: 4vw;
     }
 }
 @media screen and (max-width: 540px) {
     .EachHeading{
-        font-size: 10vw;
+        font-size: 8vw;
     }
 }
+

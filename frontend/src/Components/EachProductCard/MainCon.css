@@ -1,0 +1,26 @@
+#MainConatiner{
+    display: grid;
+    padding-left: 70px;
+    padding-right: 70px;
+    grid-template-columns: repeat(4, 1fr);
+    column-gap: 20px;
+    row-gap: 50px;
+}
+@media (max-width: 968px) {
+    #MainConatiner{
+        grid-template-columns: repeat(3, 1fr);
+        column-gap: 10px;
+        row-gap: 40px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+@media (max-width: 576px) {
+    #MainConatiner{
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 30px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+}

@@ -1,40 +1,46 @@
 import "./Product.css"
+import "./MainCon.css"
 import {Button} from "@nextui-org/react";
 import {TbListDetails} from "react-icons/tb";
 import {useNavigate} from "react-router-dom";
+
 export default function ProductCard(props) {
     const navigate = useNavigate()
     return (
-        <div className="group group-hover:bg-opacity-60 transition duration-500 relative bg-gray-50 flex justify-center items-center m-10">
-            <div className="card">
-                <div className="photo">
-                    <img className="Imageproduct" src={props.link} alt="Not Found"/>
-                </div>
-                <div className="description">
-                    <h2 className="ProductTitle">{props.title}</h2>
-                    <h1 className="ProductPrice"><sapn className="ProductDupliPrice">{"₹"+props.orignalPrice}</sapn>{"₹"+props.discountPrice}</h1>
-                    <Button
-                        className="bg-gray-800 hover:bg-gray-950"
-                        style={{
-                            borderRadius:"0",
-                            width:"300px",
-                            height:"60px",color:"white"
-                        }}  variant="flat" startContent={<TbListDetails/>} onPress={()=>{
-                        navigate("/product/"+props.id,{state:props.id})
-                    }}>Details</Button>
-                </div>
+        <div className="product-card-container">
+            <img
+                src={"https://images.unsplash.com/photo-1575936123452-b67c3203c357?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D"}
+                alt={`$`}/>
+            <div className="product-card-details">
+                <span className="name">{"Shoe"}</span>
+                <span className="price">₹{"500"}</span>
             </div>
         </div>
     )
 }
 
-export function ProductLayout(props){
-    return<div className="mx-auto container">
-        <div className="flex flex-col">
-            <div className="mt-10 grid lg:grid-cols-3 items-center">
-                {props.children}
-            </div>
-        </div>
+export function ProductLayout(props) {
+    return <div id="MainConatiner">
+        {props.children}
     </div>
 
+
 }
+
+// export const ProductsContainer = styled.div`
+//   display: grid;
+//   grid-template-columns: repeat(4, 1fr);
+//   column-gap: 20px;
+//   row-gap: 50px;
+//
+//   @media (max-width: 768px) {
+//     grid-template-columns: repeat(3, 1fr);
+//     column-gap: 10px;
+//     row-gap: 40px;
+//   }
+//
+//   @media (max-width: 576px) {
+//     grid-template-columns: repeat(2, 1fr);
+//     row-gap: 30px;
+//   }
+// `;
