@@ -2,15 +2,32 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    height: 360px;
-    background: #fbffdc;
+    height: fit-content;
+    background: rgba(251, 255, 220, 0);
     align-items: center;
     position: relative;
+
+}
+.priceConatiner{
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 17px;
+}
+.actualprice{
+    text-decoration: line-through;
+}
+.price{
+    color: green;
+}
+.name{
+    font-size: 20px;
+    text-align: center;
 }
 
 .product-card-container img {
     width: 100%;
-    height: 90%;
+    height: 360px;
     object-fit: cover;
     margin-bottom: 5px;
 }
@@ -35,27 +52,30 @@
 .product-card-container .product-card-details {
     width: 90%;
     height: 5%;
+    font-size: 28px;
     display: flex;
-    justify-content: space-between;
-    font-size: 18px;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 70px;
 }
 
-.product-card-container .product-card-details .name {
-    width: 80%;
-    margin-bottom: 15px;
+@media (max-width: 1500px){
+    .priceConatiner{
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        font-size: 15px;
+    }
+    .name{
+        font-size: 20px;
+    }
 }
 
-.product-card-container .product-card-details .price {
-    width: 15%;
-}
 
 @media (max-width: 768px) {
-    .product-card-container {
-        height: 310px;
-    }
 
     .product-card-container img {
-        height: 85%;
+        height:250px;
     }
 
     .product-card-container .inverted-add-to-cart {
@@ -63,15 +83,40 @@
     }
 
     .product-card-container .product-card-details {
-        font-size: 15px;
+        font-size: 20px;
+        height: 20%;
+    }
+    .name{
+        font-size: 17px;
+    }
+
+}
+@media (max-width: 400px) {
+    .product-card-container {
+        background-color: #1B2030;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        height: 360px;
+        background: rgba(251, 255, 220, 0);
+        align-items: center;
+        position: relative;
+
+    }
+    .product-card-container img {
+        height:100%;
+    }
+
+    .product-card-container .inverted-add-to-cart {
+        top: 210px;
+    }
+
+    .product-card-container .product-card-details {
+        font-size: 20px;
         height: 10%;
     }
-
-    .product-card-container .product-card-details .name {
-        width: 77%;
+    .name{
+        font-size: 17px;
     }
 
-    .product-card-container .product-card-details .price {
-        width: 20%;
-    }
 }

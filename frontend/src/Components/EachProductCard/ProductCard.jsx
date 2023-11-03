@@ -9,17 +9,19 @@ export default function ProductCard(props) {
     return (
         <div className="product-card-container">
             <img
-                src={"https://images.unsplash.com/photo-1575936123452-b67c3203c357?auto=format&fit=crop&q=60&w=500&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D"}
+                src={props.link}
                 alt={`$`}/>
             <div className="product-card-details">
-                <span className="name">{"Shoe"}</span>
-                <span className="price">₹{"500"}</span>
+                <div className="name">{props.title}</div>
+                <div className={"priceConatiner"}><div className="actualprice">₹{props.orignalPrice}</div>
+                    <div className="price">₹{props.discountPrice}</div></div>
             </div>
         </div>
     )
 }
 
 export function ProductLayout(props) {
+    console.log(props)
     return <div id="MainConatiner">
         {props.children}
     </div>

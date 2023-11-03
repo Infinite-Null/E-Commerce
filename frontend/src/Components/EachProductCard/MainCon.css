@@ -2,9 +2,18 @@
     display: grid;
     padding-left: 70px;
     padding-right: 70px;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     column-gap: 20px;
-    row-gap: 50px;
+    row-gap: 10px;
+}
+@media (max-width: 1390px) {
+    #MainConatiner{
+        grid-template-columns: repeat(4, 1fr);
+        column-gap: 10px;
+        row-gap: 40px;
+        padding-left: 30px;
+        padding-right: 30px;
+    }
 }
 @media (max-width: 968px) {
     #MainConatiner{
