@@ -107,7 +107,7 @@ export default function NavBar() {
                             marginRight: 10
                         }}/>
                     </motion.div>
-                    <div style={{
+                    {searchResults !== undefined && <div style={{
                         backgroundColor: "white",
                         maxHeight: "50vh",
                         overflowY: "scroll",
@@ -117,7 +117,7 @@ export default function NavBar() {
                                                                         id={e._id} navigate={navigate}
                                                                         setOpenSearch={setOpenSearch}
                                                                         setsearchResults={setsearchResults}/>)}
-                    </div>
+                    </div>}
                 </div>
             }
             <Navbar
