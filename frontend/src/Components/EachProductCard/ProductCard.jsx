@@ -7,16 +7,20 @@ import {useNavigate} from "react-router-dom";
 export default function ProductCard(props) {
     const navigate = useNavigate()
     return (
-        <div className="product-card-container">
-            <img
-                src={props.link}
-                alt={`$`}/>
-            <div className="product-card-details">
-                <div className="name">{props.title}</div>
-                <div className={"priceConatiner"}><div className="actualprice">₹{props.orignalPrice}</div>
-                    <div className="price">₹{props.discountPrice}</div></div>
-            </div>
-        </div>
+       <div className={"mainProduct"} onClick={() => {
+           navigate("/product/" + props.id, {state: props.id})
+       }}>
+           <div className={"discountProduct"}>
+               50% off
+           </div>
+       <div className={"productImage"}>
+           <img alt={"h"} className={"imageOfproduct"} src={props.link}/>
+       </div>
+       <div className={"productDetails"}>
+            <h1 className={"productTitle"}>{props.title}</h1>
+           <div className={"productPrice"}><span className={"discountpriceproduct"}>₹1000</span><span className={"actualpriceproduct"}>{"₹"+props.orignalPrice}</span></div>
+       </div>
+       </div>
     )
 }
 

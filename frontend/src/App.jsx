@@ -24,6 +24,7 @@ import Context from "./Context/Context";
 function App() {
     const {User} = useContext(Context)
     return <>
+
         <NavBar/>
         <Routes>
             <Route path="/" element={<Home/>}/>
