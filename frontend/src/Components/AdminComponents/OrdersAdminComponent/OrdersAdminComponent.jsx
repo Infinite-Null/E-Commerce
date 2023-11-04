@@ -4,86 +4,90 @@ import {useNavigate} from "react-router-dom";
 import {Alert, Space} from "antd";
 import {useState} from "react";
 
-export function OrdersAdminComponent({OnDeletePress,list}) {
+export function OrdersAdminComponent({OnDeletePress, list}) {
     return (
         <>
-                <Card className={"m-5 border-black border-1"} isHoverable={true}>
-                    <CardBody className="flex-row justify-between items-center">
-                        <div style={{
-                            width:"25%",
-                            display:"flex",
-                            alignItems:"center",
-                            justifyContent:"center"
-                        }}><p>ORDER ID</p></div>
-                        <div style={{
-                            width:"25%",
-                            display:"flex",
-                            alignItems:"center",
-                            justifyContent:"center"
-                        }}><p>STATUS</p></div>
-                        <div style={{
-                            width:"25%",
-                            display:"flex",
-                            alignItems:"center",
-                            justifyContent:"center"
-                        }}><p>QUANTITY</p></div>
-                        <div style={{
-                            width:"25%",
-                            display:"flex",
-                            alignItems:"center",
-                            justifyContent:"center"
-                        }}><p>AMOUNT</p></div>
-                        <div style={{
-                            width:"25%",
-                            display:"flex",
-                            alignItems:"center",
-                            justifyContent:"center"
-                        }}><div>ACTION</div></div>
-                    </CardBody>
-                    {list.map((e,i)=><EachOrderComponent OrderId={e.OrderId} Status={e.Status} Quantity={e.Quantity} Amount={e.Amount} OnDeletePress={OnDeletePress}/>)}
-                </Card>
+            <Card className={"m-5 border-black border-1"} isHoverable={true}>
+                <CardBody className="flex-row justify-between items-center">
+                    <div style={{
+                        width: "25%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }}><p>ORDER ID</p></div>
+                    <div style={{
+                        width: "25%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }}><p>STATUS</p></div>
+                    <div style={{
+                        width: "25%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }}><p>QUANTITY</p></div>
+                    <div style={{
+                        width: "25%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }}><p>AMOUNT</p></div>
+                    <div style={{
+                        width: "25%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
+                    }}>
+                        <div>ACTION</div>
+                    </div>
+                </CardBody>
+                {list.map((e, i) => <EachOrderComponent OrderId={e.OrderId} Status={e.Status} Quantity={e.Quantity}
+                                                        Amount={e.Amount} OnDeletePress={OnDeletePress}/>)}
+            </Card>
         </>
     )
 }
-function EachOrderComponent({OrderId,Status,Quantity,Amount,OnDeletePress}){
+
+function EachOrderComponent({OrderId, Status, Quantity, Amount, OnDeletePress}) {
     const [visible, setVisible] = useState(false);
 
     const handleClose = () => {
         setVisible(false);
     };
-    const navigate=useNavigate()
+    const navigate = useNavigate()
     return <>
         <CardBody className="flex-row justify-between items-center">
             <div style={{
-                width:"25%",
-                display:"flex",
-                alignItems:"center",
-                justifyContent:"center"
+                width: "25%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
             }}><p>{OrderId}</p></div>
             <div style={{
-                width:"25%",
-                display:"flex",
-                alignItems:"center",
-                justifyContent:"center",
-                color:"blueviolet"
+                width: "25%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: (Status.toString().toLowerCase() === "delivered") ? "green" : (Status.toString().toLowerCase() === "processing") ? "red" : "blueviolet"
             }}><p>{Status}</p></div>
             <div style={{
-                width:"25%",
-                display:"flex",
-                alignItems:"center",
-                justifyContent:"center"
+                width: "25%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
             }}><p>{Quantity}</p></div>
             <div style={{
-                width:"25%",
-                display:"flex",
-                alignItems:"center",
-                justifyContent:"center"
+                width: "25%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
             }}><p>{Amount}</p></div>
             <div style={{
-                width:"25%",
-                display:"flex",
-                alignItems:"center",
-                justifyContent:"center"
+                width: "25%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
             }}>
                 <Dropdown>
                     <DropdownTrigger>
@@ -96,10 +100,10 @@ function EachOrderComponent({OrderId,Status,Quantity,Amount,OnDeletePress}){
                         </Button>
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Static Actions">
-                        <DropdownItem key="new" onPress={()=>{
-                            navigate('/Admin/Orders/Detail',{state:"1234"})
+                        <DropdownItem key="new" onPress={() => {
+                            navigate('/Admin/Orders/Detail', {state: "1234"})
                         }}>Edit</DropdownItem>
-                        <DropdownItem key="delete" className="text-danger" color="danger" onClick={()=>{
+                        <DropdownItem key="delete" className="text-danger" color="danger" onClick={() => {
                             setVisible(true)
                         }
                         }>
@@ -109,14 +113,14 @@ function EachOrderComponent({OrderId,Status,Quantity,Amount,OnDeletePress}){
                 </Dropdown>
             </div>
         </CardBody>
-        {visible&&<Alert
+        {visible && <Alert
             className="ml-10 mr-10 text-lg"
             message={"Are you sure you want to delete Order Id: " + OrderId + "?"}
             type="info"
             action={
                 <Space>
-                    <Button color={"danger"}  onPress={()=>{
-                        OnDeletePress()
+                    <Button color={"danger"} onPress={() => {
+                        OnDeletePress(OrderId)
                         handleClose()
                     }}>
                         Yes
