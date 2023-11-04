@@ -11,14 +11,16 @@ export function PieChart({InStock, OutOfStock}) {
         datasets: [
             {
                 label: 'Stock',
-                data: [InStock, OutOfStock],
+                data: [OutOfStock,InStock],
                 backgroundColor: [
-                    'rgba(94,47,190,0.3)',
                     'rgb(253,174,86,0.3)',
+                    'rgba(94,47,190,0.3)',
+
                 ],
                 borderColor: [
-                    'rgb(94,47,190)',
                     'rgb(253,174,86)',
+                    'rgb(94,47,190)',
+
                 ],
                 borderWidth: 1.5,
             },

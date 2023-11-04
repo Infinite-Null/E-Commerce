@@ -8,7 +8,6 @@ import {ProductDetails} from "./Pages/ProductDetails";
 import {AllProductWithCategory} from "./Pages/AllProductWithCategory";
 import {ToastContainer} from "react-toastify";
 import {ContactUs} from "./Pages/ContactUs";
-import {AboutUser} from "./Pages/AboutUser";
 import {HelpandFeedback} from "./Pages/HelpandFeedback";
 import {Dashboard} from "./Pages/AdminPage/Dashboard/Dashboard";
 import {ProductsPageAdmin} from "./Pages/AdminPage/Products/AllProducts";
@@ -30,7 +29,7 @@ function App() {
         <Routes>
             <Route path="/" element={<Home/>}/>
             <Route path="/Help" element={<HelpandFeedback/>}/>
-            <Route path="Profile" element={<AboutUser/>}/>
+            {/*<Route path="Profile" element={<AboutUser/>}/>*/}
             <Route path="Login" element={<Login/>}/>
             <Route path="AboutUs" element={<ContactUs/>}/>
             <Route path="cart" element={<Cart/>}/>
