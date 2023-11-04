@@ -27,6 +27,9 @@ import {GiCancel} from "react-icons/gi";
 import {RxCross1} from "react-icons/rx";
 import {AiFillCaretDown, AiOutlineDown} from "react-icons/ai";
 import {ChangeNameModal} from "./ChangeNameModal";
+import axios from "axios";
+import Api from "../../ApiInfo/ApiInfo";
+import {IoSend} from "react-icons/io5";
 
 export default function NavBar() {
     const {setSearchValue, User, SetUser, Cart} = useContext(Context)
@@ -35,56 +38,87 @@ export default function NavBar() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [search, setSearch] = React.useState("")
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const [searchResults, setsearchResults] = useState([])
+
+    async function searching(val) {
+        const result = await axios.get(Api + "/search?keyword=" + val)
+        console.log(result.data.products)
+        setsearchResults(result.data.products)
+    }
+
     return (
         <div>
             <ChangeNameModal onOpenChange={onOpenChange} isOpen={isOpen} onOpen={onOpen} name={User.Name}/>
             {
-                openSearch && <motion.div initial={{
-                    y: -20
-                }} animate={{
-                    y: 0
-                }} style={{
+                openSearch && <div style={{
                     position: "absolute",
-                    zIndex: 9999999,
                     width: "100%",
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    backgroundColor: "white"
+                    zIndex: 9999999,
                 }}>
-                    <input autoFocus={true} onChange={(e) => {
-                        setSearch(e.target.value)
+                    <motion.div initial={{
+                        y: -20
+                    }} animate={{
+                        y: 0
                     }} style={{
-                        height: "80px",
-                        width: "100%",
-                        paddingLeft: 10,
                         zIndex: 9999999,
-                        fontSize: "30px",
-                        outline: "none",
-                        borderBottom: "2px solid black",
-                        marginLeft: 10
-                    }}/>
-                    <BiSearchAlt onClick={() => {
-                        if (search === "") {
-                            Tost("Please Type something!!")
-                            return
-                        }
-                        setSearchValue(search)
-                        navigate("/" + search, {state: {category: search}})
-                    }} style={{
-                        fontSize: 45,
-                        cursor: "pointer",
-                        marginRight: 10
-                    }}/>
-                    <RxCross1 onClick={() => {
-                        setOpenSearch(false)
-                    }} style={{
-                        fontSize: 35,
-                        cursor: "pointer",
-                        marginLeft: 10,
-                        marginRight: 10
-                    }}/>
-                </motion.div>
+                        width: "100%",
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        backgroundColor: "white"
+                    }}>
+                        <input autoFocus={true} onChange={(e) => {
+                            if (e.target.value === "") {
+                                setsearchResults([])
+                                return
+                            }
+                            setSearch(e.target.value)
+                            searching(e.target.value)
+                        }} style={{
+                            height: "80px",
+                            width: "100%",
+                            paddingLeft: 10,
+                            zIndex: 9999999,
+                            fontSize: "30px",
+                            outline: "none",
+                            borderBottom: "2px solid black",
+                            marginLeft: 10
+                        }}/>
+                        <IoSend onClick={() => {
+                            setsearchResults([])
+                            if (search === "") {
+                                Tost("Please Type something!!")
+                                return
+                            }
+                            setSearchValue(search)
+                            navigate("/" + search, {state: {category: search}})
+                        }} style={{
+                            fontSize: 45,
+                            cursor: "pointer",
+                            marginRight: 10,
+                            color: "rgb(74,100,187)"
+                        }}/>
+                        <RxCross1 onClick={() => {
+                            setOpenSearch(false)
+                        }} style={{
+                            fontSize: 35,
+                            cursor: "pointer",
+                            marginLeft: 10,
+                            marginRight: 10
+                        }}/>
+                    </motion.div>
+                    <div style={{
+                        backgroundColor: "white",
+                        maxHeight: "50vh",
+                        overflowY: "scroll",
+                        overflowX: "hidden"
+                    }}>
+                        {searchResults.map((e, i) => <EachSearchElement key={i} name={e.name} image={e.images[0].url}
+                                                                        id={e._id} navigate={navigate}
+                                                                        setOpenSearch={setOpenSearch}
+                                                                        setsearchResults={setsearchResults}/>)}
+                    </div>
+                </div>
             }
             <Navbar
                 shouldHideOnScroll
@@ -137,6 +171,7 @@ export default function NavBar() {
 
                     <BiSearchAlt onClick={() => {
                         setOpenSearch(true)
+                        setsearchResults([])
                     }} style={{
                         fontSize: 25,
                         cursor: "pointer"
@@ -232,4 +267,34 @@ export default function NavBar() {
             </Navbar>
         </div>
     );
+}
+
+function EachSearchElement({
+                               name, image, id, navigate, setOpenSearch,
+                               setsearchResults
+                           }) {
+    return <motion.div id={"EachSearchResult"} onClick={() => {
+        setOpenSearch(false)
+        setsearchResults([])
+        navigate("/product/" + id, {state: id})
+    }} initial={{
+        opacity: 0,
+        x: 50
+    }} animate={{
+        opacity: 1,
+        x: 0
+    }} transition={{
+        duration: 0.4,
+        delay: 0.2
+    }}>
+        <h1>{name}</h1>
+        <img alt={"p"} src={image}
+             style={{
+                 height: "95%",
+                 marginLeft: 20,
+                 width: "65px",
+                 objectFit: "cover",
+                 borderRadius: 10
+             }}/>
+    </motion.div>
 }

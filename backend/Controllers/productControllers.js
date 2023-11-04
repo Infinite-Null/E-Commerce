@@ -87,7 +87,7 @@ exports.searchProduct = async (req, res, next) => {
     Product.find({category: {
             $regex: req.query.keyword.toString(),
             $options: "i"
-        }}).select("name").then((e)=>{
+        }}).select("name images.url").then((e)=>{
         res.status(200).json({
                 products:e
         })
