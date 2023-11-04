@@ -119,6 +119,11 @@ a{
 .heading{
     font-size:50px;
 }
+@media screen and (max-width: 1067px) {
+    .header:before{
+        background: #1B2030 url(../../Images/Main1.jpg) no-repeat fixed 100% 20%;
+    }
+}
 @media screen and (max-width: 581px) {
     .SubHeading{
         font-size:20px;

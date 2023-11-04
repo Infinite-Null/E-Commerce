@@ -1,110 +1,117 @@
 import ProductDetail from "../Components/ProductDetail/ProductDetail";
 import {useContext, useEffect, useState} from "react";
 import {Tost} from "../Components/Tost";
-import {useLocation} from "react-router-dom";
+import {useLocation, useParams} from "react-router-dom";
 import Api from "../ApiInfo/ApiInfo";
 import axios from "axios";
 import {LoadingProductDetails} from "../Components/ProductDetail/LoadingProductDetails";
 import ApiInfo from "../ApiInfo/ApiInfo";
 import Context from "../Context/Context";
-export function ProductDetails() {
-    const {Cart,SetCart}=useContext(Context)
-    const [Quantity,SetQuantity]=useState(1)
-    const[Review,setReview]=useState("")
-    const[Star,setStar]=useState(0)
-    const[Loading,setLoading]=useState(false)
 
-    function onQuntityChange(value){
+export function ProductDetails() {
+    const {Cart, SetCart} = useContext(Context)
+    const [Quantity, SetQuantity] = useState(1)
+    const [Review, setReview] = useState("")
+    const [Star, setStar] = useState(0)
+    const [Loading, setLoading] = useState(false)
+
+    function onQuntityChange(value) {
         SetQuantity(value)
     }
-    function onReviewTextChange(value){
+
+    function onReviewTextChange(value) {
         setReview(value)
     }
-    function getReviewStar(value){
+
+    function getReviewStar(value) {
         setStar(value)
     }
-    async function onPostReviewPress(){
+
+    async function onPostReviewPress() {
         setLoading(true)
-        if(Review===""){
+        if (Review === "") {
             Tost("Please fill review")
             setLoading(false)
             return
         }
-        if(Star===0){
+        if (Star === 0) {
             Tost("Please select star for product")
             setLoading(false)
             return
         }
-        await axios.put(ApiInfo+"/review",{
-            "productId":state,
-            "comment":Review,
+        await axios.put(ApiInfo + "/review", {
+            "productId": id,
+            "comment": Review,
             "rating": Star
-        },{
-            withCredentials:true
+        }, {
+            withCredentials: true
         })
         setLoading(false)
         Tost("Thank you for your review.")
         await FetchDetails()
     }
 
-    const {state}=useLocation()
-    const [loading,setloading]=useState(false)
-    const [data,setData]=useState({})
-    function Pressed(id){
+    const {id} = useParams()
+    const [loading, setloading] = useState(false)
+    const [data, setData] = useState({})
+
+    function Pressed(id) {
         const Dummy = [...Cart];
-        for (let i=0; i<Dummy.length; i++){
-            if(Dummy[i].id===id){
+        for (let i = 0; i < Dummy.length; i++) {
+            if (Dummy[i].id === id) {
                 Tost("Item Already Added To Cart")
                 return
             }
         }
         Dummy.push({
-                id:data._id,
-                name:data.name,
-                price:data.price,
-                image:data.images[0].url,
-                quality:Quantity,
-                maxQuantity:data.Stock,
-            })
+            id: data._id,
+            name: data.name,
+            price: data.price,
+            image: data.images[0].url,
+            quality: Quantity,
+            maxQuantity: data.Stock,
+        })
         SetCart(Dummy)
         Tost("Item Added to cart.")
     }
-    async function FetchDetails(){
-        const result=await axios.get(Api+"/products/"+state)
+
+    async function FetchDetails() {
+        const result = await axios.get(Api + "/products/" + id)
         setData(result.data.Product)
     }
+
     useEffect(() => {
         window.scrollTo(0, 0)
         setloading(true)
-        FetchDetails().then((_)=>{
+        FetchDetails().then((_) => {
             setloading(false)
         })
-        return ()=>{
+        return () => {
 
         }
-    }, [])
+    }, [id])
 
     return (
-       <>
-           {(loading===false)?<ProductDetail
-               productId={state}
-               images={data.images??[{url:"https://img.freepik.com/free-photo/textured-background-white-tone_53876-128610.jpg"}]}
-               title={data.name}
-               averageReview={data.ratings}
-               discountedPrice={data.price}
-               totalPrice={parseInt(data.price)+100}
-               discription={data.discription}
-               onReviewTextChange={onReviewTextChange}
-               onQuntityChange={onQuntityChange}
-               getReviewStar={getReviewStar}
-               reviews={data.reviews??[]}
-               onAddToCart={Pressed}
-               maxStock={data.Stock??0}
-               onPostReviewPress={onPostReviewPress}
-               Star={Star}
-               Loading={Loading}
-               key={data}
-           />:<LoadingProductDetails/>}
-       </>
+        <>
+            {(loading === false) ? <ProductDetail
+                productId={id}
+                images={data.images ?? [{url: "https://img.freepik.com/free-photo/textured-background-white-tone_53876-128610.jpg"}]}
+                title={data.name}
+                averageReview={data.ratings}
+                discountedPrice={data.price}
+                totalPrice={parseInt(data.price) + 100}
+                discription={data.discription}
+                onReviewTextChange={onReviewTextChange}
+                onQuntityChange={onQuntityChange}
+                getReviewStar={getReviewStar}
+                reviews={data.reviews ?? []}
+                onAddToCart={Pressed}
+                maxStock={data.Stock ?? 0}
+                onPostReviewPress={onPostReviewPress}
+                Star={Star}
+                Loading={Loading}
+                key={data}
+            /> : <LoadingProductDetails/>}
+        </>
     )
 }
