@@ -82,6 +82,23 @@ exports.getAllProducts = async (req, res, next) => {
     })
 }
 
+exports.searchProduct = async (req, res, next) => {
+    console.log(req.query.keyword)
+    Product.find({category: {
+            $regex: req.query.keyword.toString(),
+            $options: "i"
+        }}).select("name").then((e)=>{
+        res.status(200).json({
+                products:e
+        })
+    }).catch((e)=>{
+        res.status(200).json({
+            error:e.message
+        })
+    })
+
+}
+
 //Create review or update review
 exports.createProductReview = async (req, res) => {
     const {rating, comment, productId} = req.body
