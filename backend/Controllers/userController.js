@@ -1,6 +1,5 @@
 // noinspection JSUnresolvedReference
 const User = require("../Models/userModel")
-const cloudinary = require('cloudinary')
 const bcrypt = require("bcryptjs")
 const sendToken = require('../Utils/jwtToken')
 const ErrorHandler = require("../Utils/errorHandling")

@@ -2,9 +2,11 @@
 
 const Order = require("../Models/orderModel")
 const Product = require('../Models/productModel')
+const User = require("../Models/userModel")
 
 // Create new Order
 exports.newOrder = async (req, res) => {
+
     const {
         shippingInfo,
         orderItems,
@@ -14,7 +16,6 @@ exports.newOrder = async (req, res) => {
         shippingPrice,
         totalPrice
     } = req.body
-
     const order = new Order({
         shippingInfo,
         orderItems,
@@ -26,11 +27,44 @@ exports.newOrder = async (req, res) => {
         paidAt: Date.now(),
         user: req.user._id
     })
-    order.save().then((order) => {
+    order.save().then(async (e) => {
+        const order = await Order.findById(e.id)
+        for (const ord of order.orderItems) {
+            await updateStock(ord.product, ord.quantity)
+        }
         res.status(201).json({
             success: true,
-            order
+            order:e
         })
+    })
+}
+
+
+// update Order status --Admin
+exports.updateOrderStatus = async (req, res) => {
+    const order = await Order.findById(req.params.id)
+    if (!order) {
+        return res.status(404).json({
+            success: false,
+            message: "Order Not Found"
+        })
+    }
+    if (order.orderStatus === "Delivered") {
+        return res.status(400).json({
+            success: false,
+            message: "Already Delivered"
+        })
+    }
+
+    order.orderStatus = req.body.status
+
+    if (req.body.status === "Delivered") {
+        order.deliveredAt = Date.now()
+    }
+
+    await order.save({validateBeforeSave: false})
+    res.status(200).json({
+        success: true
     })
 }
 
@@ -69,7 +103,6 @@ exports.getLoggedInUserOrders = async (req, res) => {
             order
         })
     }).catch((e) => {
-        console.log(req.user._id)
         res.status(500).json({
             success: false,
             message: e.message
@@ -103,37 +136,7 @@ exports.getAllOrders = async (req, res) => {
     })
 }
 
-// update Order status --Admin
-exports.updateOrderStatus = async (req, res) => {
-    const order = await Order.findById(req.params.id)
-    if (!order) {
-        return res.status(404).json({
-            success: false,
-            message: "Order Not Found"
-        })
-    }
-    if (order.orderStatus === "Delivered") {
-        return res.status(400).json({
-            success: false,
-            message: "Already Delivered"
-        })
-    }
 
-    for (const ord of order.orderItems) {
-        await updateStock(ord.product, ord.quantity)
-    }
-
-    order.orderStatus = req.body.status
-
-    if (req.body.status === "Delivered") {
-        order.deliveredAt = Date.now()
-    }
-
-    await order.save({validateBeforeSave: false})
-    res.status(200).json({
-        success: true
-    })
-}
 
 async function updateStock(id, quantity) {
     const product = await Product.findById(id)
@@ -153,6 +156,29 @@ exports.deleteOrders = async (req, res) => {
     }).catch((e) => {
         res.status(500).json({
             success: false,
+            message: e.message
+        })
+    })
+}
+
+exports.Dashboard = async (req, res) => {
+    const TotalUsers = await User.countDocuments()
+    Order.find().select("totalPrice").then((e) => {
+        Product.find().select("Stock").then((p) => {
+            res.status(200).json({
+                TotalProducts: p.length,
+                TotalOrders: e.length,
+                TotalUsers,
+                Orders: e,
+                Products: p
+            })
+        }).catch((e) => {
+            res.status(500).json({
+                message: e.message
+            })
+        })
+    }).catch((e) => {
+        res.status(500).json({
             message: e.message
         })
     })

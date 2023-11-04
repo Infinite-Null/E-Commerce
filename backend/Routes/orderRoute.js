@@ -6,12 +6,13 @@ const {
     getLoggedInUserOrders,
     getAllOrders,
     updateOrderStatus,
-    deleteOrders
+    deleteOrders, Dashboard
 } = require("../Controllers/orderController");
 
 const Router = express.Router()
 
 Router.route("/order/all").get(isAuthenticatedUser, authorizeRoles("admin"), getAllOrders)
+Router.route("/dashboard").get(isAuthenticatedUser, authorizeRoles("admin"), Dashboard)
 Router.route("/order/me").get(isAuthenticatedUser, getLoggedInUserOrders)
 Router.route("/order/new").post(isAuthenticatedUser, newOrder)
 Router.route("/order/single/:id").get(isAuthenticatedUser, getSingleOrder)
