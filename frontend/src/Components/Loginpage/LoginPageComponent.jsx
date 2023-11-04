@@ -25,12 +25,12 @@ export default function LoginPageComponent({
                  className={'md:inline hidden '}
                  style={{
                      width: "300px",
-                     height: "520px",
+                     height: "420px",
                      borderLeft: "1px solid black",
                      borderBottom: "1px solid black",
                      borderTop: "1px solid black",
                  }}/>
-            <Card className="max-w-full w-[340px] h-[520px] drop-shadow-md rounded-[0px]" style={{
+            <Card className="max-w-full w-[340px] h-[420px] drop-shadow-md rounded-[0px]" style={{
                 borderRight: "1px solid black",
                 borderBottom: "1px solid black",
                 borderTop: "1px solid black",

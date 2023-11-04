@@ -18,7 +18,6 @@ export function Login() {
         email: "",
         password: "",
     })
-    const [avatar, setAvatar] = useState("")
     const navigate = useNavigate()
     const [Email, setEmail] = useState("")
     const [Password, setPassword] = useState("")
@@ -38,6 +37,7 @@ export function Login() {
                     "email": Email,
                     "password": Password
                 })
+                console.log(result.data.user.role)
                 SetCookieUser(result.data.token.toString()
                     , result.data.user.name.toString()
                     , result.data.user.email.toString()

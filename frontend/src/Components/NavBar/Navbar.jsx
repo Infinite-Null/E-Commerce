@@ -10,7 +10,7 @@ import {
     Dropdown,
     DropdownMenu,
     Avatar,
-    NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Input, Button
+    NavbarMenu, NavbarMenuItem, NavbarMenuToggle, Input, Button, useDisclosure
 } from "@nextui-org/react";
 import 'react-toastify/dist/ReactToastify.css';
 import {Link, useNavigate} from "react-router-dom";
@@ -26,6 +26,7 @@ import {BiSearchAlt} from "react-icons/bi";
 import {GiCancel} from "react-icons/gi";
 import {RxCross1} from "react-icons/rx";
 import {AiFillCaretDown, AiOutlineDown} from "react-icons/ai";
+import {ChangeNameModal} from "./ChangeNameModal";
 
 export default function NavBar() {
     const {setSearchValue, User, SetUser, Cart} = useContext(Context)
@@ -33,8 +34,10 @@ export default function NavBar() {
     const navigate = useNavigate()
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
     const [search, setSearch] = React.useState("")
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
     return (
         <div>
+            <ChangeNameModal onOpenChange={onOpenChange} isOpen={isOpen} onOpen={onOpen} name={User.Name}/>
             {
                 openSearch && <motion.div initial={{
                     y: -20
@@ -92,7 +95,7 @@ export default function NavBar() {
                 maxWidth="2xl"
                 className={"z-[999]"}
             >
-                <NavbarContent className="z-[999] sm:hidden " justify="center" >
+                <NavbarContent className="z-[999] sm:hidden " justify="center">
                     <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"}/>
                 </NavbarContent>
 
@@ -146,14 +149,16 @@ export default function NavBar() {
                     {User.IsLoggedIn &&
                         <Dropdown placement="bottom-end">
                             <DropdownTrigger>
-                                <Button color={"primary"} className={"text-[14px] p-[8px] h-fit"} endContent={<AiFillCaretDown/>}>{'Profile'}</Button>
+                                <Button color={"primary"} className={"text-[14px] p-[8px] h-fit"}
+                                        endContent={<AiFillCaretDown/>}>{'Profile'}</Button>
                             </DropdownTrigger>
                             <DropdownMenu aria-label="Profile Actions" variant="shadow" onAction={(key) => {
-                                if (key==="profile") {
-                                return
+                                if (key === "profile") {
+                                    return
                                 }
-                                if (key==="Profile"){
-
+                                if (key === "Profile") {
+                                    onOpen()
+                                    return;
                                 }
                                 if (key !== "" || key) {
                                     navigate(key)
