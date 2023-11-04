@@ -12,41 +12,43 @@ import RegisterLoding from "../Components/Loginpage/RegisterLoding";
 
 export function Login() {
     const [isOpen, setIsOpen] = useState(false);
-    const {SetUser,User}=useContext(Context)
+    const {SetUser, User} = useContext(Context)
     const [user, setUserr] = useState({
         name: "",
         email: "",
         password: "",
     })
     const [avatar, setAvatar] = useState("")
-    const navigate=useNavigate()
-    const [Email,setEmail] = useState("")
-    const [Password,setPassword] = useState("")
-    function onLoginEmailChange(value){
+    const navigate = useNavigate()
+    const [Email, setEmail] = useState("")
+    const [Password, setPassword] = useState("")
+
+    function onLoginEmailChange(value) {
         setEmail(value)
     }
-    function onLoginPasswordChange(value){
+
+    function onLoginPasswordChange(value) {
         setPassword(value)
     }
-    async function OnLoginPress(){
-        if(Email !== "" && Password !== ""){
+
+    async function OnLoginPress() {
+        if (Email !== "" && Password !== "") {
             try {
-                const result = await axios.post(ApiInfo+"/login",{
-                    "email":Email,
-                    "password":Password
+                const result = await axios.post(ApiInfo + "/login", {
+                    "email": Email,
+                    "password": Password
                 })
                 SetCookieUser(result.data.token.toString()
-                    ,result.data.user.name.toString()
-                    ,result.data.user.email.toString()
-                    ,result.data.user.avatar.url.toString()
-                    ,result.data.user._id.toString()
-                    ,result.data.user.role.toString()
+                    , result.data.user.name.toString()
+                    , result.data.user.email.toString()
+                    , result.data.user._id.toString()
+                    , result.data.user.role.toString()
                 )
                 SetUser(LoggedInDetails())
                 navigate(-1)
                 Tost('Successfully Logged In')
-            }catch (e) {
-                if(e.response?.data?.success === false){
+            } catch (e) {
+                if (e.response?.data?.success === false) {
                     Tost(e.response.data.details)
                     return
                 }
@@ -55,26 +57,23 @@ export function Login() {
         }
     }
 
-    function onSignupEmailChange(value){
-        setUserr({...user,"email":value})
-    }
-    function onSignupPasswordChange(value){
-        setUserr({...user,"password":value})
-    }
-    function onSignupNameChange(value){
-        setUserr({...user,"name":value})
+    function onSignupEmailChange(value) {
+        setUserr({...user, "email": value})
     }
 
-    async function OnSignupPress(){
+    function onSignupPasswordChange(value) {
+        setUserr({...user, "password": value})
+    }
+
+    function onSignupNameChange(value) {
+        setUserr({...user, "name": value})
+    }
+
+    async function OnSignupPress() {
         setIsOpen(true)
-        const {name,email,password}=user
-        if(name===""||email===""||password===""){
+        const {name, email, password} = user
+        if (name === "" || email === "" || password === "") {
             Tost('Please fill name email and password fields')
-            setIsOpen(false)
-            return
-        }
-        if(avatar===''){
-            Tost('Please select avatar')
             setIsOpen(false)
             return
         }
@@ -82,57 +81,48 @@ export function Login() {
         const myForm = new FormData();
         myForm.set("name", name);
         myForm.set("email", email);
+
+
         myForm.set("password", password);
-        myForm.set("avatar", avatar);
-        const config = { headers: { "Content-Type": "multipart/form-data" } };
-        try{
-            const result = await axios.post(ApiInfo+`/register`, myForm, config);
-            if(result.data.success===false){
+        const config = {headers: {"Content-Type": "multipart/form-data"}};
+        try {
+            const result = await axios.post(ApiInfo + `/register`, myForm, config);
+            if (result.data.success === false) {
                 setIsOpen(false)
                 Tost(result.data.message)
                 return
             }
             SetCookieUser(result.data.token.toString()
-                ,result.data.user.name.toString()
-                ,result.data.user.email.toString()
-                ,result.data.user.avatar.url.toString()
-                ,result.data.user._id.toString()
-                ,result.data.user.role.toString()
+                , result.data.user.name.toString()
+                , result.data.user.email.toString()
+                , result.data.user._id.toString()
+                , result.data.user.role.toString()
             )
             SetUser(LoggedInDetails())
             setIsOpen(false)
             Tost('Account successfully created and logged in')
             navigate(-1)
-        }catch (e) {
+        } catch (e) {
             setIsOpen(false)
             Tost(e.response.data.details)
         }
     }
 
-    function onFileSelectChange(file){
-        const reader = new FileReader();
-        reader.onload = () => {
-            if (reader.readyState === 2) {
-                setAvatar(reader.result)
-            }
-        };
-
-        reader.readAsDataURL(file);
-    }
-    useEffect(()=>{
-        if(User.IsLoggedIn===true){
+    useEffect(() => {
+        if (User.IsLoggedIn === true) {
             navigate(-1)
         }
-        return ()=>{
+        return () => {
 
         }
     })
     return (
-        <><LoginPageComponent onLoginEmailChange={onLoginEmailChange} onSignupEmailChange={onSignupEmailChange} onSignupPasswordChange={onSignupPasswordChange}
-        onSignupNameChange={onSignupNameChange} onLoginPasswordChange={onLoginPasswordChange} OnLoginPress={OnLoginPress} OnSignupPress={OnSignupPress}
-        onFileSelectChange={onFileSelectChange}
+        <><LoginPageComponent onLoginEmailChange={onLoginEmailChange} onSignupEmailChange={onSignupEmailChange}
+                              onSignupPasswordChange={onSignupPasswordChange}
+                              onSignupNameChange={onSignupNameChange} onLoginPasswordChange={onLoginPasswordChange}
+                              OnLoginPress={OnLoginPress} OnSignupPress={OnSignupPress}
         />
-        <RegisterLoding isOpen={isOpen} setIsOpen={setIsOpen}/>
+            <RegisterLoding isOpen={isOpen} setIsOpen={setIsOpen}/>
         </>
     )
 }
