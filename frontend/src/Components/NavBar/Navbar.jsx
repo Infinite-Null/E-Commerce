@@ -149,15 +149,21 @@ export default function NavBar() {
                                 <Button color={"primary"} className={"text-[14px] p-[8px] h-fit"} endContent={<AiFillCaretDown/>}>{'Profile'}</Button>
                             </DropdownTrigger>
                             <DropdownMenu aria-label="Profile Actions" variant="shadow" onAction={(key) => {
+                                if (key==="profile") {
+                                return
+                                }
+                                if (key==="Profile"){
+
+                                }
                                 if (key !== "" || key) {
                                     navigate(key)
                                 }
                             }}>
                                 <DropdownItem key="profile" className="h-14 gap-2 b">
                                     <p className="font-semibold">Signed in as</p>
-                                    <p className="font-semibold">{User.Email}</p>
+                                    <p className="font-semibold">{User.Name}</p>
                                 </DropdownItem>
-                                <DropdownItem key="Profile">Your Profile</DropdownItem>
+                                <DropdownItem key="Profile">Change Name</DropdownItem>
                                 <DropdownItem key="orders">Your Orders</DropdownItem>
                                 <DropdownItem key="Help">Help & Feedback</DropdownItem>
                                 {(User.Role.toLowerCase() === "admin") &&

@@ -105,30 +105,6 @@ function ModalOfEdit({isOpen, onOpenChange, User, setImage, key, setKey, onChang
                                     defaultValue={User.Name}
                                     className="max-w-xs"
                                 />
-                                <label>Choose Avater</label>
-                                <div className={"flex"}> <Input
-                                    isRequired
-                                    type="file"
-                                    variant={"underlined"}
-                                    onChange={(e)=>{
-                                        try {
-                                            if(e.target.files[0].size>900000) {
-                                                Tost("File size too big")
-                                                return
-                                            }
-                                            updateProfileDataChange(e)
-                                            setPreviewImage(URL.createObjectURL(e.target.files[0]))
-                                        }catch (e) {
-                                            console.log("select Image")
-                                        }
-                                    }}
-                                /><img alt={"no"} src={previewImage} style={{
-                                    height:"60px",
-                                    width:"60px",
-                                    objectFit:"cover",
-                                    border:"2px solid black",
-                                    borderRadius:"100%"
-                                }}/></div>
                             </ModalBody>
                             <ModalFooter>
                                 <Button color="danger" variant="light" onPress={()=>{

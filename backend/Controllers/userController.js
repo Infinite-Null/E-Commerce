@@ -16,35 +16,18 @@ exports.registerUser = async (req, res) => {
         })
         return
     }
-    try {
-        const myCloud = await cloudinary.v2.uploader.upload_large(req.body.avatar, {
-            folder: "avatars",
-            width: 150,
-            crop: "scale",
-        })
-        const {name, email, password} = req.body
-        const user = new User({
-            name, email, password, avatar: {
-                public_id: myCloud.public_id,
-                url: myCloud.secure_url,
-            },
-        })
-
-        user.save().then((_) => {
-            sendToken(user, 201, res)
-        }).catch((e) => {
-            res.status(500).json({
-                success: false,
-                details: e.message
-            })
-        })
-    } catch (e) {
-        console.log(e)
+    const {name, email, password} = req.body
+    const user = new User({
+        name, email, password
+    })
+    user.save().then((_) => {
+        sendToken(user, 201, res)
+    }).catch((e) => {
         res.status(500).json({
             success: false,
-            details: "Image is too big"
+            details: e.message
         })
-    }
+    })
 }
 
 //Login User
@@ -204,24 +187,6 @@ exports.updateProfile = async (req, res) => {
     const newUserData = {
         name: req.body.name,
         email: req.body.email
-    }
-    if (req.body.avatar !== "") {
-        const user = await User.findById(req.user.id);
-
-        const imageId = user.avatar.public_id;
-
-        await cloudinary.v2.uploader.destroy(imageId);
-
-        const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-            folder: "avatars",
-            width: 150,
-            crop: "scale",
-        });
-
-        newUserData.avatar = {
-            public_id: myCloud.public_id,
-            url: myCloud.secure_url,
-        };
     }
     User.findByIdAndUpdate(req.user._id, newUserData, {
         new: true,

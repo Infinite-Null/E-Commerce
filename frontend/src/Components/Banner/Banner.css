@@ -42,7 +42,7 @@ a{
     -webkit-transform: translateZ(0); backface-visibility: hidden;
     transform: translateZ(0);
     background-size:100%;
-    background: #1B2030 url(../../Images/cloth.jpg) no-repeat fixed 100% 20%;
+    background: #1B2030 url(../../Images/Main.jpg) no-repeat fixed 100% 20%;
     animation: grow 120s  linear 10ms infinite;
     transition:all 0.4s ease-in-out;
     z-index:-2
