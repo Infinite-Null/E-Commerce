@@ -61,7 +61,7 @@ exports.getSingleProduct = (req, res, next) => {
 }
 
 exports.getAllProducts = async (req, res, next) => {
-    const resultPerPage = 6
+    const resultPerPage = 10
     const productCount = await Product.countDocuments()
     const apifeature = new ApiFeatures(Product.find(), req.query)
         .search()

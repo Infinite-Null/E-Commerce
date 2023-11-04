@@ -1,26 +1,25 @@
 import "./Product.css"
 import "./MainCon.css"
-import {Button} from "@nextui-org/react";
-import {TbListDetails} from "react-icons/tb";
 import {useNavigate} from "react-router-dom";
 
 export default function ProductCard(props) {
     const navigate = useNavigate()
     return (
-       <div className={"mainProduct"} onClick={() => {
-           navigate("/product/" + props.id, {state: props.id})
-       }}>
-           <div className={"discountProduct"}>
-               50% off
-           </div>
-       <div className={"productImage"}>
-           <img alt={"h"} className={"imageOfproduct"} src={props.link}/>
-       </div>
-       <div className={"productDetails"}>
-            <h1 className={"productTitle"}>{props.title}</h1>
-           <div className={"productPrice"}><span className={"discountpriceproduct"}>₹1000</span><span className={"actualpriceproduct"}>{"₹"+props.orignalPrice}</span></div>
-       </div>
-       </div>
+        <div className={"mainProduct"} onClick={() => {
+            navigate("/product/" + props.id, {state: props.id})
+        }}>
+            <div className={"discountProduct"}>
+                50% off
+            </div>
+            <div className={"productImage"}>
+                <img alt={"h"} className={"imageOfproduct"} src={props.link}/>
+            </div>
+            <div className={"productDetails"}>
+                <h1 className={"productTitle"}>{props.title}</h1>
+                <div className={"productPrice"}><span className={"discountpriceproduct"}>₹1000</span><span
+                    className={"actualpriceproduct"}>{"₹" + props.orignalPrice}</span></div>
+            </div>
+        </div>
     )
 }
 
