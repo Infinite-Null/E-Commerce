@@ -101,7 +101,7 @@ function EachOrderComponent({OrderId, Status, Quantity, Amount, OnDeletePress}) 
                     </DropdownTrigger>
                     <DropdownMenu aria-label="Static Actions">
                         <DropdownItem key="new" onPress={() => {
-                            navigate('/Admin/Orders/Detail', {state: "1234"})
+                            navigate('/Admin/Orders/Detail', {state: OrderId})
                         }}>Edit</DropdownItem>
                         <DropdownItem key="delete" className="text-danger" color="danger" onClick={() => {
                             setVisible(true)

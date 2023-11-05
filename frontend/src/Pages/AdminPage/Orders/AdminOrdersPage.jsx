@@ -21,18 +21,23 @@ export function AdminOrdersPage() {
     async function GetOrdes() {
         setLoading(true)
         const config = {headers: {"Content-Type": "multipart/form-data"}, withCredentials: true}
-        const result = await axios.get(ApiInfo + "/order/all", config)
-        const Listt = []
-        result.data.order?.forEach((e) => {
-            const data = {
-                OrderId: e._id,
-                Status: e.orderStatus,
-                Quantity: e.orderItems.length,
-                Amount: e.totalPrice
-            }
-            Listt.push(data)
-        })
-        setList(Listt.reverse())
+        try{
+            const result = await axios.get(ApiInfo + "/order/all", config)
+            const Listt = []
+            result.data.order?.forEach((e) => {
+                const data = {
+                    OrderId: e._id,
+                    Status: e.orderStatus,
+                    Quantity: e.orderItems.length,
+                    Amount: e.totalPrice
+                }
+                Listt.push(data)
+            })
+            setList(Listt.reverse())
+        }catch (e) {
+            setList([])
+        }
+
         setLoading(false)
     }
 
