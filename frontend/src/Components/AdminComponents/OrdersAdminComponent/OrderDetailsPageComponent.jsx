@@ -4,8 +4,20 @@ import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, Button, Textarea}
 import {MdOutlineCategory} from "react-icons/md";
 import {AiFillCaretDown} from "react-icons/ai";
 
-export function OrderDetailsPageComponent({name, phone, address, orderStatus, cartItems, OnUpdatePress, totalPrice}) {
+export function OrderDetailsPageComponent({
+                                              name,
+                                              phone,
+                                              address,
+                                              orderStatus,
+                                              cartItems,
+                                              OnUpdateStatusPress,
+                                              totalPrice,
+                                              comment,
+                                              id,
+                                              OnUpdateCommentPress
+                                          }) {
     const [selectedKey, setSelectedKey] = useState("Processing")
+    const [commentUp, setCommentUp] = useState("")
     return (
         <div className="flex flex-col-reverse xl:flex-row xl:flex">
             <div className="w-[100vw] xl:w-[70vw] pl-10 pt-10 xl:border-r-1 border-r-black">
@@ -47,7 +59,7 @@ export function OrderDetailsPageComponent({name, phone, address, orderStatus, ca
                 {cartItems.map((e, i) => <CartItems image={e.image} name={e.name} price={e.price} quantity={e.quantity}
                                                     key={i}/>)}
             </div>
-            <div className="xl:w-[30vw] xl:h-[500px] flex flex-col items-center w-[100vw] h-fit mb-14">
+            <div className="xl:w-[30vw] xl:h-fit flex flex-col items-center w-[100vw] h-fit mb-14">
                 <h1 className={"text-5xl font-[100] mb-5 mt-14 underline"}>Update Status</h1>
                 <DropDown selectedKey={selectedKey} setSelectedKey={setSelectedKey}/>
                 <Button
@@ -57,10 +69,13 @@ export function OrderDetailsPageComponent({name, phone, address, orderStatus, ca
                         width: "300px",
                         height: "60px", color: "white"
                     }} variant="flat" onPress={() => {
-                    OnUpdatePress(selectedKey)
+                    OnUpdateStatusPress(selectedKey, id)
                 }}>Update</Button>
                 <h1 className={"text-5xl font-[100] mb-5 mt-14 underline"}>Add Details</h1>
-                <Textarea placeholder={"Details Like Tracking Id etc"} className={"w-[90%] border-2 border-black"}/>
+                <Textarea placeholder={"Details Like Tracking Id etc"} className={"w-[90%] border-2 border-black"}
+                          onChange={(e) => {
+                              setCommentUp(e.target.value)
+                          }}/>
                 <Button
                     className="bg-gray-800 hover:bg-gray-950 mt-5"
                     style={{
@@ -68,7 +83,10 @@ export function OrderDetailsPageComponent({name, phone, address, orderStatus, ca
                         width: "300px",
                         height: "60px", color: "white"
                     }} variant="flat" onPress={() => {
+                    OnUpdateCommentPress(commentUp, id)
                 }}>Send</Button>
+                <h1 className={"text-5xl font-[100] mb-5 mt-14 underline"}>Previous Comment</h1>
+                <h1>{comment}</h1>
             </div>
         </div>
     )

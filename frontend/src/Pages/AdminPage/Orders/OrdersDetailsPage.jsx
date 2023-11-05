@@ -7,28 +7,43 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import ApiInfo from "../../../ApiInfo/ApiInfo";
 import {Spinner} from "@nextui-org/react";
+import {Tost} from "../../../Components/Tost";
 
 export function OrdersDetailsPage() {
     const {state} = useLocation()
     const [data, SetData] = useState({})
     const [loading, setLoading] = useState(false)
-    // const cartItems = [
-    //     {
-    //         name: "Temp Item",
-    //         image: "https://img.freepik.com/free-photo/skin-products-arrangement-wooden-blocks_23-2148761445.jpg",
-    //         price: "200",
-    //         quantity: "1"
-    //     },
-    //     {
-    //         name: "Temp Item",
-    //         image: "https://img.freepik.com/free-photo/skin-products-arrangement-wooden-blocks_23-2148761445.jpg",
-    //         price: "200",
-    //         quantity: "1"
-    //     }
-    // ]
 
-    function OnUpdatePress(value) {
+    async function OnUpdateStatusPress(value, id) {
+        let data = {
+            "status": value
+        };
+        const config = {headers: {"Content-Type": "multipart/form-data"}, withCredentials: true}
+        try {
+            await axios.put(ApiInfo + "/order/update/" + id, data, config)
+        } catch (e) {
+            Tost("Already Delivered")
+            return
+        }
 
+        await GetOrder()
+        Tost("Successfully Updated")
+    }
+
+    async function OnUpdateCommentPress(value, id) {
+        let data = {
+            "comment": value
+        };
+        const config = {headers: {"Content-Type": "multipart/form-data"}, withCredentials: true}
+        try {
+            await axios.put(ApiInfo + "/order/comment/" + id, data, config)
+        } catch (e) {
+            Tost("Already Delivered")
+            return
+        }
+
+        await GetOrder()
+        Tost("Successfully Added Comment")
     }
 
     function GetFullAddress(e) {
@@ -66,8 +81,10 @@ export function OrdersDetailsPage() {
             {!loading && (Object.keys(data).length !== 0) &&
                 <OrderDetailsPageComponent name={data.user?.name ?? ""} phone={data.shippingInfo?.phoneNo ?? ""}
                                            orderStatus={data.orderStatus} cartItems={data?.orderItems ?? []}
-                                           address={GetFullAddress(data.shippingInfo)} OnUpdatePress={OnUpdatePress}
-                                           totalPrice={data?.totalPrice}/>
+                                           address={GetFullAddress(data.shippingInfo)}
+                                           OnUpdateStatusPress={OnUpdateStatusPress}
+                                           totalPrice={data?.totalPrice} comment={data?.comment} id={data._id}
+                                           OnUpdateCommentPress={OnUpdateCommentPress}/>
             }
             {loading && <div style={{
                 height: "100%",
