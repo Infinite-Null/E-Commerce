@@ -90,7 +90,7 @@ const orderSchema = new mongoose.Schema({
         type: Date,
         default: Date.now()
     },
-    comments:{
+    comment:{
         type: String,
         default:""
     }

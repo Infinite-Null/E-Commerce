@@ -39,7 +39,28 @@ exports.newOrder = async (req, res) => {
     })
 }
 // update Comments --Admin
+exports.updateComment = async (req,res) => {
+    const order = await Order.findById(req.params.id)
+    if (!order) {
+        return res.status(404).json({
+            success: false,
+            message: "Order Not Found"
+        })
+    }
+    if (order.orderStatus === "Delivered") {
+        return res.status(400).json({
+            success: false,
+            message: "Already Delivered"
+        })
+    }
 
+    order.comment = req.body.comment
+
+    await order.save({validateBeforeSave: false})
+    res.status(200).json({
+        success: true
+    })
+}
 
 // update Order status --Admin
 exports.updateOrderStatus = async (req, res) => {
