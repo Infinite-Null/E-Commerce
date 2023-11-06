@@ -54,7 +54,7 @@ export function AdminOrdersPage() {
             }}>
                 All Orders
             </h1>
-            {!loading && <OrdersAdminComponent OnDeletePress={OnDeletePress} list={list ?? []}/>}
+            {!loading && <OrdersAdminComponent OnDeletePress={OnDeletePress} list={list ?? []} key={Math.random()}/>}
             {loading && <div style={{
                 height: "100%",
                 width: "100%",

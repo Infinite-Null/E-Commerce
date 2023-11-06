@@ -4,10 +4,11 @@ import axios from "axios";
 import ApiInfo from "../../../ApiInfo/ApiInfo";
 import {Tost} from "../../../Components/Tost";
 import {useEffect, useState} from "react";
+import {Spinner} from "@nextui-org/react";
 
 export function UsersAdminPage() {
     const [Users, setUsers] = useState([])
-
+    const [Loading,setLoading]=useState(false)
     async function OnUpdatePressed(UserId, Role) {
         console.log(UserId, Role.toLowerCase())
         let data = {
@@ -39,6 +40,7 @@ export function UsersAdminPage() {
     }
 
     async function GetUser() {
+        setLoading(true)
         const config = {headers: {"Content-Type": "multipart/form-data"}, withCredentials: true}
         try {
             const res = await axios.get(ApiInfo + "/admin/users", config)
@@ -46,8 +48,8 @@ export function UsersAdminPage() {
             setUsers(res.data.users)
         } catch (e) {
             Tost("Something went wrong")
-            return
         }
+        setLoading(false)
     }
 
     useEffect(() => {
@@ -64,7 +66,16 @@ export function UsersAdminPage() {
             }}>
                 All Users
             </h1>
-            <UsersAdminComponent OnUpdatePressed={OnUpdatePressed} DeleteUser={DeleteUser} List={Users}/>
+            {!Loading&&<UsersAdminComponent OnUpdatePressed={OnUpdatePressed} DeleteUser={DeleteUser} List={Users}/>}
+            {Loading && <div style={{
+                height: "100%",
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center"
+            }}>
+                <Spinner/>
+            </div>}
         </>
     )
 }

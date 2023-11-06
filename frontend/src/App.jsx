@@ -22,7 +22,6 @@ import Context from "./Context/Context";
 
 function App() {
     const {User} = useContext(Context)
-    console.log(User.Role)
     return <>
 
         <NavBar/>

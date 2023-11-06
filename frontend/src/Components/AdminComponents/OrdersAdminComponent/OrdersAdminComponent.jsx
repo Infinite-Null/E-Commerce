@@ -42,7 +42,7 @@ export function OrdersAdminComponent({OnDeletePress, list}) {
                         <div>ACTION</div>
                     </div>
                 </CardBody>
-                {list.map((e, i) => <EachOrderComponent OrderId={e.OrderId} Status={e.Status} Quantity={e.Quantity}
+                {list.map((e, i) => <EachOrderComponent key={i} OrderId={e.OrderId} Status={e.Status} Quantity={e.Quantity}
                                                         Amount={e.Amount} OnDeletePress={OnDeletePress}/>)}
             </Card>
         </>
