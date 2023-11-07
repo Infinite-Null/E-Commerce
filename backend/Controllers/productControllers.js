@@ -60,6 +60,18 @@ exports.getSingleProduct = (req, res, next) => {
     })
 }
 
+exports.getAllProductsAdmin = async (req, res) => {
+    Product.find().select("name price Stock").then((e) => {
+        res.status(200).json({
+            products: e
+        })
+    }).catch(e => {
+        res.status(400).json({
+            error: e.message
+        })
+    })
+}
+
 exports.getAllProducts = async (req, res, next) => {
     const resultPerPage = 10
     const productCount = await Product.countDocuments()
@@ -84,16 +96,18 @@ exports.getAllProducts = async (req, res, next) => {
 
 exports.searchProduct = async (req, res, next) => {
     console.log(req.query.keyword)
-    Product.find({category: {
+    Product.find({
+        category: {
             $regex: req.query.keyword.toString(),
-            $options: "i"
-        }}).select("name images.url").then((e)=>{
+            $options: "xi"
+        }
+    }).select("name images.url Stock price").then((e) => {
         res.status(200).json({
-                products:e
+            products: e
         })
-    }).catch((e)=>{
+    }).catch((e) => {
         res.status(200).json({
-            error:e.message
+            error: e.message
         })
     })
 
@@ -187,7 +201,7 @@ exports.deleteProductReview = async (req, res) => {
     const ratings = avg / reviews.length
     const numOfReviews = reviews.length
 
-    await Product.findByIdAndUpdate(req.query.productId,{
+    await Product.findByIdAndUpdate(req.query.productId, {
         reviews,
         ratings,
         numOfReviews
