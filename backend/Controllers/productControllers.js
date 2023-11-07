@@ -3,23 +3,90 @@
 const Product = require('../Models/productModel')
 const ApiFeatures = require('../Utils/apifeatures')
 const ErrorHandler = require('../Utils/errorHandling')
+const cloudinary = require("cloudinary")
 
 
 //Admin route
+function Upload(buffer) {
+    return new Promise(function (resolve, reject) {
+        cloudinary.v2.uploader.upload_stream({
+            resource_type: "image",
+            folder: "Ecommerce"
+        }, onDone).end(buffer)
+
+        function onDone(error, result) {
+            if (error) {
+                reject(error)
+                return
+            }
+            resolve(result)
+            // console.log(result)
+            // res.status(200).json({
+            //     message: result
+            // })
+        }
+    })
+}
+
+
 exports.createProduct = async (req, res, _) => {
     req.body.user = req.user.id
     const product = new Product(req.body)
-    product.save().then((doc) => {
-        res.status(201).json({
-            success: true,
-            product: doc
+    product.images = []
+    if (req.files.File[0] === undefined) {
+        console.log(req.files.File.data)
+        const result = await Upload(req.files.File.data)
+        const Re = {
+            public_id: result.public_id,
+            url: result.url
+        }
+        product.images.push(Re)
+        product.save().then((e) => {
+            res.status(200).json({
+                message: "Success",
+                data: e
+            })
+        }).catch(e => {
+            res.status(500).json({
+                message: "Failed",
+                error: e.message
+            })
         })
-    }).catch((e) => {
-        res.status(500).json({
-            success: false,
-            details: e.message
+        console.log("single file")
+    } else {
+        let i = 0
+        for (i; i < req.files.File.length; i++) {
+            const result = await Upload(req.files.File[i].data)
+            const Re = {
+                public_id: result.public_id,
+                url: result.url
+            }
+            product.images.push(Re)
+        }
+        product.save().then((e) => {
+            res.status(200).json({
+                message: "Success",
+                data: e
+            })
+        }).catch(e => {
+            res.status(500).json({
+                message: "Failed",
+                error: e.message
+            })
         })
-    })
+    }
+    // console.log(product.images)
+    // product.save().then((doc) => {
+    //     res.status(201).json({
+    //         success: true,
+    //         product: doc
+    //     })
+    // }).catch((e) => {
+    //     res.status(500).json({
+    //         success: false,
+    //         details: e.message
+    //     })
+    // })
 }
 
 
@@ -215,3 +282,38 @@ exports.deleteProductReview = async (req, res) => {
         success: true,
     })
 }
+
+
+// exports.SendFile = async (req, res) => {
+// const file = req.files.File
+// console.log(req.files)
+// const arrayBuffer = await file.arrayBuffer();
+// const buffer = Buffer.from(file.data) //  <-- convert to Buffer
+// console.log(buffer)
+// cloudinary.v2.uploader.upload_stream({resource_type: "image",folder:"Ecommerce"}, onDone).end(buffer)
+//
+// function onDone(error, result) {
+//     if (error) {
+//         res.status(200).json({
+//             message: "error"
+//         })
+//         return
+//     }
+//     console.log(result)
+//     res.status(200).json({
+//         message: "Hi"
+//     })
+// }
+
+// cloudinary.v2.uploader.upload(req.files.File,
+//     {
+//         quality_analysis: true,
+//         folder: "Practice",
+//     },
+//     function (error, result) {
+//         res.status(200).json({
+//             message: "Hi"
+//         })
+//         console.log(result);
+//     })
+// }

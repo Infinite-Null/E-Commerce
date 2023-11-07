@@ -32,6 +32,7 @@ export function AllProductWithCategory() {
         }
         const result = await axios.get(ApiInfo + "/products?price[gte]=" + min + "&page=" + pageNo.toString() + "&price[lte]=" + max + "&category=" + url.split(" ").join(""))
         setData(result.data)
+        console.log(result.data)
     }
 
     useEffect(() => {

@@ -38,14 +38,13 @@ export function ProductsPageAdmin() {
     async function onDeletePress(productId) {
         setLoading(true)
         const config = {headers: {"Content-Type": "multipart/form-data"}, withCredentials: true}
-        try{
-            await axios.delete(ApiInfo + "/admin/products/"+productId, config)
+        try {
+            await axios.delete(ApiInfo + "/admin/products/" + productId, config)
             GetAllData()
             Tost("Successfully Deleted")
-        }
-        catch (e) {
+        } catch (e) {
             Tost("Something went wrong")
-        }finally {
+        } finally {
             setLoading(false)
         }
     }
