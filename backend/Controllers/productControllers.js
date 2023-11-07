@@ -105,6 +105,12 @@ exports.updateProduct = async (req, res) => {
 
 //Admin route
 exports.deleteProduct = async (req, res) => {
+    const product = await Product.findById(req.params.id)
+    product.images.map((e)=>{
+        cloudinary.uploader
+            .destroy(e.public_id)
+            .then(result => console.log(result));
+    })
     Product.deleteOne({_id: req.params.id}).then((e) => {
         res.status(200).json({
             success: true,
