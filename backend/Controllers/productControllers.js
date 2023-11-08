@@ -136,7 +136,7 @@ exports.UpdateWithImage = async (req, res) => {
             }
             product.images.push(Re)
         }
-        product.save().then((e) => {
+        product.save().then((_) => {
             Product.updateOne({_id: req.params.id}, req.body).then((doc) => {
                 res.status(200).json({
                     success: true,
