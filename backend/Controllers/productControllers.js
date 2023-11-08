@@ -106,7 +106,7 @@ exports.updateProduct = async (req, res) => {
 //Admin route
 exports.deleteProduct = async (req, res) => {
     const product = await Product.findById(req.params.id)
-    product.images.map((e)=>{
+    product.images.map((e) => {
         cloudinary.uploader
             .destroy(e.public_id)
             .then(result => console.log(result));
@@ -134,7 +134,7 @@ exports.getSingleProduct = (req, res, next) => {
 }
 
 exports.getAllProductsAdmin = async (req, res) => {
-    Product.find().select("name price Stock").then((e) => {
+    Product.find().select("name price Stock category description").then((e) => {
         res.status(200).json({
             products: e
         })

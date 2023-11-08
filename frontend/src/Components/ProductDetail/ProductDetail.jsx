@@ -25,7 +25,7 @@ const ProductDetail = ({
                            getReviewStar,
                            reviews,
                            onAddToCart,
-                           onPostReviewPress
+                           onPostReviewPress,
                        }) => {
     const [selectedImage, changeSelected] = useState(images[0].url)
     const {User} = useContext(Context)
@@ -47,7 +47,10 @@ const ProductDetail = ({
                         }}
                         transition={{duration: 0.5}}
                         className="xl:w-[600px] xl:h-[600px] lg:w-[50vw] lg:h-[50vw]" style={{
-                        objectFit: "cover"
+                        objectFit: "cover",
+                        width:"600px",
+                        height:"550px",
+                        borderRadius:"10px"
                     }} alt="product" src={selectedImage}/>
                     <div
                         className="flex items-center justify-start mt-3 space-x-4 md:space-x-0 w-full overflow-x-scroll gap-4">
@@ -57,9 +60,16 @@ const ProductDetail = ({
                                 height: "50px",
                                 width: "50px",
                                 objectFit: "cover",
-                                overflow: "hidden"
+                                overflow: "hidden",
                             }}>
-                            <img alt="img-tag-one" className="md:w-48 md:h-48 w-48" style={{objectFit: "cover"}}
+                            <img alt="img-tag-one"
+                                 style={{
+                                     border: "1px solid black",
+                                     objectFit: "cover",
+                                     width: "50px",
+                                     height: "50px",
+                                     borderRadius: "10000px"
+                                 }}
                                  src={e.url} key={i} onClick={() => {
                                 changeSelected(e.url)
                             }}/>
@@ -79,7 +89,8 @@ const ProductDetail = ({
                         }}
                         transition={{duration: 0.5}}
                         className="w-full h-96" style={{
-                        objectFit: "cover"
+                        objectFit: "cover",
+                        borderRadius: "10px",
                     }} alt="product" src={selectedImage}/>
                     <div
                         className="flex items-center justify-start mt-3 space-x-4 md:space-x-0 w-full overflow-x-scroll">
@@ -91,7 +102,9 @@ const ProductDetail = ({
                                 objectFit: "cover",
                                 overflow: "hidden"
                             }}>
-                            <img alt="img-tag-one" className="md:w-48 md:h-48 w-48" src={e.url} key={i} onClick={() => {
+                            <img alt="img-tag-one"
+                                 style={{objectFit: "cover", width: "50px", height: "50px", border: "1px solid black",borderRadius: "10000px"}}
+                                 src={e.url} key={i} onClick={() => {
                                 changeSelected(e.url)
                             }}/>
                         </div>)}
@@ -126,7 +139,7 @@ const ProductDetail = ({
                             emptySymbol={<LiaStarSolid style={{
                                 color: "gray",
                                 fontSize: "30px"
-                            }}/>}/><h1 className="text-xl ml-2">{averageReview}</h1>
+                            }}/>}/>
                     </div>
                     <div className="text-4xl mt-2"><h1 style={{
                         display: "inline",
@@ -139,28 +152,35 @@ const ProductDetail = ({
                     <div>
 
                         {/*increment decrement button*/}
-                        <div className="mt-5 text-2xl">
-                            Quantity:&nbsp;&nbsp;
-                            <InputNumber
-                                onChange={(value) => {
-                                    onQuntityChange(value)
-                                }}
-                                style={{
-                                    fontSize: "20px",
-                                    padding: "0px"
-                                }}
-                                defaultValue={1}
-                                min={1}
-                                max={maxStock}
-                            />
-                        </div>
+                        {maxStock<1&&<h1 style={{
+                            fontSize:"30px",
+                            color:"red",
+                            marginTop:"30px",
+                            marginBottom:"30px",
+                        }}>Out of Stock!!</h1>}
+                        {maxStock>=1&&<>
+                            <div className="mt-5 text-2xl mb-5">
+                                Quantity:&nbsp;&nbsp;
+                                <InputNumber
+                                    onChange={(value) => {
+                                        onQuntityChange(value)
+                                    }}
+                                    style={{
+                                        fontSize: "20px",
+                                        padding: "0px"
+                                    }}
+                                    defaultValue={1}
+                                    min={1}
+                                    max={maxStock}
+                                />
+                            </div>
 
-                        {User.IsLoggedIn === false && <>
-                            <button
-                                onClick={() => {
-                                    navigate('/Login')
-                                }}
-                                className="
+                            {User.IsLoggedIn === false && <>
+                                <button
+                                    onClick={() => {
+                                        navigate('/Login')
+                                    }}
+                                    className="
 						focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800
 						text-base
 						flex
@@ -172,37 +192,44 @@ const ProductDetail = ({
 						w-full
 						py-4
 						hover:bg-gray-700
-						mt-5
+						mt-5,
 					"
-                            >
-                                Login
-                            </button>
-                            <h1>You need to login to order items</h1>
+                                    style={{
+                                        borderRadius:"10px"
+                                    }}
+                                >
+                                    Login
+                                </button>
+                                <h1>You need to login to order items</h1>
+                            </>}
+
+
+                            {User.IsLoggedIn === true && <>
+                                <button
+                                    onClick={() => {
+                                        onAddToCart(productId)
+                                    }}
+                                    className="
+						focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800
+						text-base
+						flex
+						items-center
+						justify-center
+						leading-none
+						text-white
+						bg-gray-800
+						w-full
+						py-4
+						hover:bg-gray-700
+						mt-5,
+					"
+                                    style={{
+                                        borderRadius:"10px"
+                                    }}
+                                >
+                                    Add To Cart
+                                </button>
                         </>}
-
-
-                        {User.IsLoggedIn === true && <>
-                            <button
-                                onClick={() => {
-                                    onAddToCart(productId)
-                                }}
-                                className="
-						focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800
-						text-base
-						flex
-						items-center
-						justify-center
-						leading-none
-						text-white
-						bg-gray-800
-						w-full
-						py-4
-						hover:bg-gray-700
-						mt-5
-					"
-                            >
-                                Add To Cart
-                            </button>
 
 
                             {/*Review Post*/}
@@ -221,44 +248,44 @@ const ProductDetail = ({
                                 Post Your Review:
 
                             </h1>
-                            <Textarea
-                                onChange={(e) => {
-                                    onReviewTextChange(e.target.value)
-                                }}
-                                style={{
-                                    fontSize: "17px"
-                                }}
-                                variant="faded"
-                                placeholder="Enter your review"
-                                description="Enter a concise review of product."
-                                className="max-w-xs"
-                            />
-                            <div className={"flex justify-between items-center w-72"}>
-                                <Rating
-                                    quiet={false}
-                                    onChange={(x) => {
-                                        getReviewStar(x)
-                                    }}
-                                    initialRating={Star}
-                                    fullSymbol={<LiaStarSolid style={{
-                                        color: "black",
-                                        fontSize: "30px"
-                                    }}/>}
-                                    emptySymbol={<LiaStarSolid style={{
-                                        color: "gray",
-                                        fontSize: "30px"
-                                    }}/>}/>
-                                {!Loading && <RiSendPlane2Fill
-                                    onClick={() => {
-                                        onPostReviewPress()
-                                    }}
-                                    className={"text-gray-800 cursor-pointer hover:text-gray-950 border-1 border-black p-2 rounded-full"}
-                                    style={{
-                                        fontSize: "38px"
-                                    }}/>}
-                                {Loading && <Spinner/>}
-                            </div>
                         </>}
+                        <Textarea
+                            onChange={(e) => {
+                                onReviewTextChange(e.target.value)
+                            }}
+                            style={{
+                                fontSize: "17px"
+                            }}
+                            variant="faded"
+                            placeholder="Enter your review"
+                            description="Enter a concise review of product."
+                            className="max-w-xs"
+                        />
+                        <div className={"flex justify-between items-center w-72"}>
+                            <Rating
+                                quiet={false}
+                                onChange={(x) => {
+                                    getReviewStar(x)
+                                }}
+                                initialRating={Star}
+                                fullSymbol={<LiaStarSolid style={{
+                                    color: "black",
+                                    fontSize: "30px"
+                                }}/>}
+                                emptySymbol={<LiaStarSolid style={{
+                                    color: "gray",
+                                    fontSize: "30px"
+                                }}/>}/>
+                            {!Loading && <RiSendPlane2Fill
+                                onClick={() => {
+                                    onPostReviewPress()
+                                }}
+                                className={"text-gray-800 cursor-pointer hover:text-gray-950 border-1 border-black p-2 rounded-full"}
+                                style={{
+                                    fontSize: "38px"
+                                }}/>}
+                            {Loading && <Spinner/>}
+                        </div>
                     </div>
                 </div>
             </div>

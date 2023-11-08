@@ -85,7 +85,7 @@ export function AllProductsComponent({onUpdatePress, onDeletePress, Products, Se
                     </div>
                 </CardBody>
                 {Products.map((e, i) => <EachItem productId={e._id} name={e.name} price={e.price} stock={e.Stock}
-                                                  onUpdatePress={onUpdatePress} onDeletePress={onDeletePress}
+                                                  category={e.category} discription={e.description} onUpdatePress={onUpdatePress} onDeletePress={onDeletePress}
                                                   key={i}/>)}
             </Card>}
             {Loading&&<div style={{alignItems:"center",justifyContent:"center",display:"flex"}}><Spinner/></div>}
@@ -152,6 +152,7 @@ function EachItem({productId, name, stock, price, discription, category, onUpdat
                                 }}
                             />
                             <Input
+                                defaultValue={UpdateCategory}
                                 className={"mb-5"}
                                 label="Category"
                                 placeholder={"Enter Category Separated with space"}
@@ -160,6 +161,7 @@ function EachItem({productId, name, stock, price, discription, category, onUpdat
                                     setCategory(e.target.value)
                                 }}
                             />
+                            <h1>Note: If you want to change photo you need to recreate product</h1>
                         </ModalBody>
                         <ModalFooter>
                             <Button color="danger" variant="light" onPress={onClose}>

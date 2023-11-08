@@ -77,6 +77,7 @@ export function ProductDetails() {
 
     async function FetchDetails() {
         const result = await axios.get(Api + "/products/" + id)
+        console.log(result.data.Product)
         setData(result.data.Product)
     }
 
@@ -100,7 +101,7 @@ export function ProductDetails() {
                 averageReview={data.ratings}
                 discountedPrice={data.price}
                 totalPrice={parseInt(data.price) + 100}
-                discription={data.discription}
+                discription={data.description}
                 onReviewTextChange={onReviewTextChange}
                 onQuntityChange={onQuntityChange}
                 getReviewStar={getReviewStar}

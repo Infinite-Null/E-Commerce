@@ -4,7 +4,6 @@ import {Tost} from "../../../Components/Tost";
 import axios from "axios";
 import ApiInfo from "../../../ApiInfo/ApiInfo";
 import {useState} from "react";
-import {Spinner} from "@nextui-org/react";
 
 export function AddProduct() {
     const [Loading, setLoading] = useState(false)

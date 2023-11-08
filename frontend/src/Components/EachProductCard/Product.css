@@ -38,6 +38,7 @@
 .productTitle{
     font-size: 20px;
     text-align: center;
+    font-weight: lighter;
 }
 .productPrice{
       font-size: 17px;
@@ -85,7 +86,7 @@
         height: 280px;
     }
     .productTitle{
-        font-size: 14px;
+        font-size: 15.5px;
     }
     .productImage{
         height: 75%;

@@ -31,7 +31,17 @@ export function ProductsPageAdmin() {
         GetAllData()
     }, [])
 
-    function onUpdatePress(name, price, discription, stock, productId, category) {
+    async function onUpdatePress(name, price, discription, stock, productId, category) {
+        // console.log(name, price, discription, stock, productId, category)
+        const config = {
+            headers: {"Content-Type": "multipart/form-data"},  withCredentials: true
+        }
+        setLoading(true)
+        await axios.patch(ApiInfo + "/admin/products/" + productId,{
+            name, price, description: discription, Stock: stock, category
+        }, config)
+        await GetAllData()
+        // console.log(result.data)
         Tost("Successfully Updated")
     }
 

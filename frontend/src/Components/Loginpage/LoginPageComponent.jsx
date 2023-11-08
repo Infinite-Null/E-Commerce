@@ -30,7 +30,7 @@ export default function LoginPageComponent({
                      borderBottom: "1px solid black",
                      borderTop: "1px solid black",
                  }}/>
-            <Card className="max-w-full w-[340px] h-[420px] drop-shadow-md rounded-[0px]" style={{
+            <Card className="max-w-full w-[340px] h-[420px] drop-shadow-md rounded-[10px]" style={{
                 borderRight: "1px solid black",
                 borderBottom: "1px solid black",
                 borderTop: "1px solid black",
@@ -73,7 +73,7 @@ export default function LoginPageComponent({
                                         type={"submit"}
                                         className="bg-gray-800 hover:bg-gray-950"
                                         style={{
-                                            borderRadius: "0",
+                                            borderRadius: "10px",
                                             width: "300px",
                                             height: "60px", color: "white"
                                         }} variant="flat" startContent={<TbListDetails/>} onClick={(e) => {
@@ -117,7 +117,7 @@ export default function LoginPageComponent({
                                         type={"submit"}
                                         className="bg-gray-800 hover:bg-gray-950"
                                         style={{
-                                            borderRadius: "0",
+                                            borderRadius: "10px",
                                             width: "300px",
                                             height: "60px", color: "white"
                                         }} variant="flat" onClick={async (e) => {
