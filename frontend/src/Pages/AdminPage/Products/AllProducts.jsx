@@ -9,6 +9,7 @@ export function ProductsPageAdmin() {
     const [Products, SetProducts] = useState([])
     const [Search, SetSearch] = useState("")
     const [Loading, setLoading] = useState(false)
+    const [imageLoading, setImageLoading] = useState(false)
 
     async function GetAllData() {
         setLoading(true)
@@ -31,9 +32,9 @@ export function ProductsPageAdmin() {
         GetAllData()
     }, [])
 
-    async function onUpdatePress(name, price, discription, stock, productId, category, image) {
-        console.log(image.length)
-        if (image.length === 0) {
+    async function onUpdatePress(name, price, discription, stock, productId, category, Images) {
+        console.log(Images.length)
+        if (Images.length === 0) {
             const config = {
                 headers: {"Content-Type": "multipart/form-data"}, withCredentials: true
             }
@@ -44,6 +45,40 @@ export function ProductsPageAdmin() {
             await GetAllData()
             // console.log(result.data)
             Tost("Successfully Updated")
+        } else {
+            setImageLoading(true)
+            let data = new FormData();
+            data.append('File', Images);
+            let i = 0
+            for (i; i < Images.length; i++) {
+                console.log(Images.item(i).name)
+                data.append("File", Images.item(i));
+            }
+            data.append('name', name);
+            data.append('Stock', stock);
+            data.append('price', price);
+            data.append('description', discription);
+            data.append('category', category);
+            let config = {
+                method: 'patch',
+                maxBodyLength: Infinity,
+                url: ApiInfo + "/admin/productsWithImage/" + productId,
+                headers: {"Content-Type": "multipart/form-data"},
+                data: data,
+                withCredentials: true
+            };
+            axios.request(config)
+                .then(async (response) => {
+                    await GetAllData()
+                    console.log(JSON.stringify(response.data));
+                })
+                .catch((error) => {
+                    console.log(error);
+                }).finally(() => {
+                setImageLoading(false)
+                setLoading(false)
+                Tost("Product Created Successfully")
+            })
         }
         // console.log(name, price, discription, stock, productId, category)
 
