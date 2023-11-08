@@ -32,7 +32,7 @@ export function ProductsPageAdmin() {
         GetAllData()
     }, [])
 
-    async function onUpdatePress(name, price, discription, stock, productId, category, Images) {
+    async function onUpdatePress(name, price, discription, stock, productId, category, Images, discount) {
         console.log(Images.length)
         if (Images.length === 0) {
             const config = {
@@ -40,7 +40,7 @@ export function ProductsPageAdmin() {
             }
             setLoading(true)
             await axios.patch(ApiInfo + "/admin/products/" + productId, {
-                name, price, description: discription, Stock: stock, category
+                name, price, description: discription, Stock: stock, category, discount
             }, config)
             await GetAllData()
             // console.log(result.data)
@@ -59,6 +59,7 @@ export function ProductsPageAdmin() {
             data.append('price', price);
             data.append('description', discription);
             data.append('category', category);
+            data.append("discount", discount)
             let config = {
                 method: 'patch',
                 maxBodyLength: Infinity,

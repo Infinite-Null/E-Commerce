@@ -20,7 +20,7 @@ import {FcSearch} from "react-icons/fc";
 
 export function AllProductsComponent({onUpdatePress, onDeletePress, Products, SetSearch, Loading}) {
 
-
+    console.log(Products)
     return (
         <>
             <SideBar/>
@@ -87,7 +87,7 @@ export function AllProductsComponent({onUpdatePress, onDeletePress, Products, Se
                     </div>
                 </CardBody>
                 {Products.map((e, i) => <EachItem productId={e._id} name={e.name} price={e.price} stock={e.Stock}
-                                                  category={e.category} discription={e.description} onUpdatePress={onUpdatePress} onDeletePress={onDeletePress}
+                                                  category={e.category} discription={e.description} discount={e.discount} onUpdatePress={onUpdatePress} onDeletePress={onDeletePress}
                                                   key={i}/>)}
             </Card>}
             {Loading&&<div style={{alignItems:"center",justifyContent:"center",display:"flex"}}><Spinner/></div>}
@@ -95,7 +95,7 @@ export function AllProductsComponent({onUpdatePress, onDeletePress, Products, Se
     )
 }
 
-function EachItem({productId, name, stock, price, discription, category, onUpdatePress, onDeletePress}) {
+function EachItem({productId, name, stock, price, discription, discount, category, onUpdatePress, onDeletePress}) {
     const [visible, setVisible] = useState(false);
     const handleClose = () => {
         setVisible(false);
@@ -107,6 +107,7 @@ function EachItem({productId, name, stock, price, discription, category, onUpdat
     const [UpdatePrice, setPrice] = useState(price)
     const [UpdateDiscription, setDiscription] = useState(discription)
     const [UpdateCategory, setCategory] = useState(category)
+    const [Discount, setDiscount] = useState(discount)
     const [selectedFile, setSelectedFile] = useState([])
     function ChipReturn() {
         let i = 0
@@ -152,6 +153,16 @@ function EachItem({productId, name, stock, price, discription, category, onUpdat
                                     setPrice(e.target.value)
                                 }}
                             />
+                            <Input
+                                type={"number"}
+                                classNames={"p-5"}
+                                label="Discount"
+                                variant="bordered"
+                                defaultValue={discount}
+                                onChange={(e) => {
+                                    setDiscount(e.target.value)
+                                }}
+                            />
                             <Textarea
                                 label="Description"
                                 variant="bordered"
@@ -185,7 +196,7 @@ function EachItem({productId, name, stock, price, discription, category, onUpdat
                             <Input
                                 type={"file"}
                                 multiple={true}
-                                accept='image/png'
+                                accept=".png, .jpg, .jpeg"
                                 className={"mb-5"}
                                 variant="underlined"
                                 onChange={(e) => {
@@ -208,7 +219,7 @@ function EachItem({productId, name, stock, price, discription, category, onUpdat
                                 Close
                             </Button>
                             <Button color="primary" onPress={() => {
-                                onUpdatePress(UpdateName, UpdatePrice, UpdateDiscription, UpdateStock, productId, UpdateCategory,selectedFile)
+                                onUpdatePress(UpdateName, UpdatePrice, UpdateDiscription, UpdateStock, productId, UpdateCategory, selectedFile, Discount)
                                 onClose()
                             }}>
                                 Update

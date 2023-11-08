@@ -76,7 +76,7 @@ export function Home() {
                                             orignalPrice={e.price + 100}
                                             link={e.images[0].url}
                                             discountPrice={e.price}
-                                            key={i} id={e._id}/>
+                                            key={i} id={e._id} discount={e.discount}/>
                     } else {
                         return <></>
                     }
@@ -97,7 +97,7 @@ export function Home() {
                                             orignalPrice={e.price + 100}
                                             link={e.images[0].url}
                                             discountPrice={e.price}
-                                            key={i} id={e._id}/>
+                                            key={i} id={e._id} discount={e.discount}/>
                     } else {
                         return <></>
                     }
@@ -118,7 +118,7 @@ export function Home() {
                                             orignalPrice={e.price + 100}
                                             link={e.images[0].url}
                                             discountPrice={e.price}
-                                            key={i} id={e._id}/>
+                                            key={i} id={e._id} discount={e.discount}/>
                     } else {
                         return <></>
                     }
@@ -139,7 +139,7 @@ export function Home() {
                                             orignalPrice={e.price + 100}
                                             link={e.images[0].url}
                                             discountPrice={e.price}
-                                            key={i} id={e._id}/>
+                                            key={i} id={e._id} discount={e.discount}/>
                     } else {
                         return <></>
                     }

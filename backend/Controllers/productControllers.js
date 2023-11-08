@@ -199,7 +199,7 @@ exports.getSingleProduct = (req, res, next) => {
 }
 
 exports.getAllProductsAdmin = async (req, res) => {
-    Product.find().select("name price Stock category description").then((e) => {
+    Product.find().select("name price Stock category description discount").then((e) => {
         res.status(200).json({
             products: e
         })

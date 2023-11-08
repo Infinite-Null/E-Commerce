@@ -92,7 +92,7 @@ export function AddProductComponent({onCreatePress}) {
                 <Input
                     type={"file"}
                     multiple={true}
-                    accept='image/png'
+                    accept=".png, .jpg, .jpeg"
                     className={"mb-5"}
                     variant="underlined"
                     onChange={(e) => {

@@ -3,21 +3,24 @@ import "./MainCon.css"
 import {useNavigate} from "react-router-dom";
 
 export default function ProductCard(props) {
+    function GetDiscountedPrice(price,discount) {
+        return parseInt(price-(price * discount) / 100)
+    }
     const navigate = useNavigate()
     return (
         <div className={"mainProduct"} onClick={() => {
             navigate("/product/" + props.id, {state: props.id})
         }}>
             <div className={"discountProduct"}>
-                50% off
+                {props.discount + "% off"}
             </div>
             <div className={"productImage"}>
                 <img alt={"h"} className={"imageOfproduct"} src={props.link}/>
             </div>
             <div className={"productDetails"}>
                 <h1 className={"productTitle"}>{props.title}</h1>
-                <div className={"productPrice"}><span className={"discountpriceproduct"}>₹1000</span><span
-                    className={"actualpriceproduct"}>{"₹" + props.orignalPrice}</span></div>
+                <div className={"productPrice"}><span className={"discountpriceproduct"}>{"₹" + props.orignalPrice}</span><span
+                    className={"actualpriceproduct"}>{"₹" + GetDiscountedPrice(props.orignalPrice, parseInt(props.discount))}</span></div>
             </div>
         </div>
     )
