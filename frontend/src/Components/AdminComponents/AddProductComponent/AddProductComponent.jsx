@@ -8,6 +8,7 @@ export function AddProductComponent({onCreatePress}) {
     const [UpdatePrice, setPrice] = useState("")
     const [UpdateDiscription, setDiscription] = useState("")
     const [UpdateCategory, setCategory] = useState("")
+    const [UpdateDiscount, setUpdateDiscount]=useState("")
     const [selectedFile, setSelectedFile] = useState([])
 
     function ChipReturn() {
@@ -47,6 +48,15 @@ export function AddProductComponent({onCreatePress}) {
                     variant="bordered"
                     onChange={(e) => {
                         setPrice(e.target.value)
+                    }}
+                />
+                <Input
+                    type={"number"}
+                    className={"mb-5"}
+                    label="Discount"
+                    variant="bordered"
+                    onChange={(e) => {
+                        setUpdateDiscount(e.target.value)
                     }}
                 />
                 <Textarea
@@ -103,7 +113,7 @@ export function AddProductComponent({onCreatePress}) {
                 }}>{ChipReturn()}</div>
                 <CardFooter>
                     <Button color="primary" className={"w-full"} onPress={() => {
-                        onCreatePress(UpdateName, UpdatePrice, UpdateDiscription, UpdateStock, UpdateCategory, selectedFile)
+                        onCreatePress(UpdateName, UpdatePrice, UpdateDiscription, UpdateStock, UpdateCategory, selectedFile, UpdateDiscount)
                     }}>Create</Button>
                 </CardFooter>
             </Card>

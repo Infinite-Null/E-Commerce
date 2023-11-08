@@ -8,7 +8,7 @@ import {useState} from "react";
 export function AddProduct() {
     const [Loading, setLoading] = useState(false)
 
-    async function onCreatePress(name, price, discription, stock, category, Images) {
+    async function onCreatePress(name, price, discription, stock, category, Images, discount) {
         if (Images?.length === 0 || name === "" || price === "" || discription === "" || stock === "" || category === "") {
             Tost("Fill all the fields")
         } else {
@@ -24,6 +24,7 @@ export function AddProduct() {
             data.append('price', price);
             data.append('description', discription);
             data.append('category', category);
+            data.append('discount', discount);
             let config = {
                 method: 'post',
                 maxBodyLength: Infinity,
