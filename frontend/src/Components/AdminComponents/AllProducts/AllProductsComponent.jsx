@@ -2,7 +2,7 @@ import SideBar from "../../../Components/AdminComponents/SideBar/SideBar";
 import {
     Button,
     Card,
-    CardBody,
+    CardBody, Chip,
     Dropdown,
     DropdownItem,
     DropdownMenu,
@@ -19,6 +19,8 @@ import {IoMdSend} from "react-icons/io";
 import {FcSearch} from "react-icons/fc";
 
 export function AllProductsComponent({onUpdatePress, onDeletePress, Products, SetSearch, Loading}) {
+
+
     return (
         <>
             <SideBar/>
@@ -105,6 +107,25 @@ function EachItem({productId, name, stock, price, discription, category, onUpdat
     const [UpdatePrice, setPrice] = useState(price)
     const [UpdateDiscription, setDiscription] = useState(discription)
     const [UpdateCategory, setCategory] = useState(category)
+    const [selectedFile, setSelectedFile] = useState([])
+    function ChipReturn() {
+        let i = 0
+        const FileandIndex = []
+        for (i; i < selectedFile.length; i++) {
+            const data = {
+                name: selectedFile.item(i).name,
+                index: i
+            }
+            FileandIndex.push(data)
+        }
+        return FileandIndex.map((e, i) => {
+            return <Chip className={"min-w-[90px]"} key={i} isCloseable={false} variant="bordered">
+                {e.name.slice(0, 10)}
+            </Chip>
+
+        })
+
+    }
     return <>
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             <ModalContent>
@@ -161,14 +182,33 @@ function EachItem({productId, name, stock, price, discription, category, onUpdat
                                     setCategory(e.target.value)
                                 }}
                             />
-                            <h1>Note: If you want to change photo you need to recreate product</h1>
+                            <Input
+                                type={"file"}
+                                multiple={true}
+                                accept='image/png'
+                                className={"mb-5"}
+                                variant="underlined"
+                                onChange={(e) => {
+                                    try {
+                                        setSelectedFile(e.target.files)
+                                    } catch (e) {
+                                        console.log("Select File")
+                                    }
+
+                                }}
+                            />
+                            {<div style={{
+                                display:"flex",
+                                flexWrap:"wrap",
+                                gap:10
+                            }}>{ChipReturn()}</div>}
                         </ModalBody>
                         <ModalFooter>
                             <Button color="danger" variant="light" onPress={onClose}>
                                 Close
                             </Button>
                             <Button color="primary" onPress={() => {
-                                onUpdatePress(UpdateName, UpdatePrice, UpdateDiscription, UpdateStock, productId, UpdateCategory)
+                                onUpdatePress(UpdateName, UpdatePrice, UpdateDiscription, UpdateStock, productId, UpdateCategory,selectedFile)
                                 onClose()
                             }}>
                                 Update

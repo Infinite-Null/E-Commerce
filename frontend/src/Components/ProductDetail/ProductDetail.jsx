@@ -48,9 +48,9 @@ const ProductDetail = ({
                         transition={{duration: 0.5}}
                         className="xl:w-[600px] xl:h-[600px] lg:w-[50vw] lg:h-[50vw]" style={{
                         objectFit: "cover",
-                        width:"600px",
-                        height:"550px",
-                        borderRadius:"10px"
+                        width: "600px",
+                        height: "550px",
+                        borderRadius: "10px"
                     }} alt="product" src={selectedImage}/>
                     <div
                         className="flex items-center justify-start mt-3 space-x-4 md:space-x-0 w-full overflow-x-scroll gap-4">
@@ -103,7 +103,13 @@ const ProductDetail = ({
                                 overflow: "hidden"
                             }}>
                             <img alt="img-tag-one"
-                                 style={{objectFit: "cover", width: "50px", height: "50px", border: "1px solid black",borderRadius: "10000px"}}
+                                 style={{
+                                     objectFit: "cover",
+                                     width: "50px",
+                                     height: "50px",
+                                     border: "1px solid black",
+                                     borderRadius: "10000px"
+                                 }}
                                  src={e.url} key={i} onClick={() => {
                                 changeSelected(e.url)
                             }}/>
@@ -152,13 +158,13 @@ const ProductDetail = ({
                     <div>
 
                         {/*increment decrement button*/}
-                        {maxStock<1&&<h1 style={{
-                            fontSize:"30px",
-                            color:"red",
-                            marginTop:"30px",
-                            marginBottom:"30px",
+                        {maxStock < 1 && <h1 style={{
+                            fontSize: "30px",
+                            color: "red",
+                            marginTop: "30px",
+                            marginBottom: "30px",
                         }}>Out of Stock!!</h1>}
-                        {maxStock>=1&&<>
+                        {maxStock >= 1 && <>
                             <div className="mt-5 text-2xl mb-5">
                                 Quantity:&nbsp;&nbsp;
                                 <InputNumber
@@ -195,7 +201,7 @@ const ProductDetail = ({
 						mt-5,
 					"
                                     style={{
-                                        borderRadius:"10px"
+                                        borderRadius: "10px"
                                     }}
                                 >
                                     Login
@@ -224,12 +230,12 @@ const ProductDetail = ({
 						mt-5,
 					"
                                     style={{
-                                        borderRadius:"10px"
+                                        borderRadius: "10px"
                                     }}
                                 >
                                     Add To Cart
                                 </button>
-                        </>}
+                            </>}
 
 
                             {/*Review Post*/}

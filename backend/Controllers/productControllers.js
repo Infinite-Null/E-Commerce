@@ -89,19 +89,73 @@ exports.createProduct = async (req, res, _) => {
     // })
 }
 
-
-//Admin route
-exports.updateProduct = async (req, res) => {
-    Product.updateOne({_id: req.params.id}, req.body).then((doc) => {
-        res.status(200).json({
-            success: true,
-            details: doc
-        })
-    }).catch((e) => {
-        return next(new ErrorHandler("Product Not Found", 404))
+//Update One with image
+exports.UpdateWithImage = async (req, res) => {
+    const product = await Product.findById(req.params.id)
+    product.images.map((e) => {
+        cloudinary.uploader
+            .destroy(e.public_id)
+            .then(result => console.log(result));
     })
-}
+    product.images = []
 
+    if (req.files.File[0] === undefined) {
+        console.log(req.files.File.data)
+        const result = await Upload(req.files.File.data)
+        const Re = {
+            public_id: result.public_id,
+            url: result.url
+        }
+        product.images.push(Re)
+        product.save().then((e) => {
+            Product.updateOne({_id: req.params.id}, req.body).then((doc) => {
+                res.status(200).json({
+                    success: true,
+                    details: doc
+                })
+            }).catch((e) => {
+                res.status(500).json({
+                    message: "Failed",
+                    error: e.message
+                })
+            })
+        }).catch(e => {
+            res.status(500).json({
+                message: "Failed",
+                error: e.message
+            })
+        })
+        console.log("single file")
+    } else {
+        let i = 0
+        for (i; i < req.files.File.length; i++) {
+            const result = await Upload(req.files.File[i].data)
+            const Re = {
+                public_id: result.public_id,
+                url: result.url
+            }
+            product.images.push(Re)
+        }
+        product.save().then((e) => {
+            Product.updateOne({_id: req.params.id}, req.body).then((doc) => {
+                res.status(200).json({
+                    success: true,
+                    details: doc
+                })
+            }).catch((e) => {
+                res.status(500).json({
+                    message: "Failed",
+                    error: e.message
+                })
+            })
+        }).catch(e => {
+            res.status(500).json({
+                message: "Failed",
+                error: e.message
+            })
+        })
+    }
+}
 
 //Admin route
 exports.deleteProduct = async (req, res) => {
@@ -121,6 +175,17 @@ exports.deleteProduct = async (req, res) => {
     })
 }
 
+//Admin route
+exports.updateProduct = async (req, res) => {
+    Product.updateOne({_id: req.params.id}, req.body).then((doc) => {
+        res.status(200).json({
+            success: true,
+            details: doc
+        })
+    }).catch((e) => {
+        return next(new ErrorHandler("Product Not Found", 404))
+    })
+}
 
 exports.getSingleProduct = (req, res, next) => {
     Product.findOne({_id: req.params.id}).populate("reviews.user", "avatar").then((doc) => {

@@ -31,18 +31,22 @@ export function ProductsPageAdmin() {
         GetAllData()
     }, [])
 
-    async function onUpdatePress(name, price, discription, stock, productId, category) {
-        // console.log(name, price, discription, stock, productId, category)
-        const config = {
-            headers: {"Content-Type": "multipart/form-data"},  withCredentials: true
+    async function onUpdatePress(name, price, discription, stock, productId, category, image) {
+        console.log(image.length)
+        if (image.length === 0) {
+            const config = {
+                headers: {"Content-Type": "multipart/form-data"}, withCredentials: true
+            }
+            setLoading(true)
+            await axios.patch(ApiInfo + "/admin/products/" + productId, {
+                name, price, description: discription, Stock: stock, category
+            }, config)
+            await GetAllData()
+            // console.log(result.data)
+            Tost("Successfully Updated")
         }
-        setLoading(true)
-        await axios.patch(ApiInfo + "/admin/products/" + productId,{
-            name, price, description: discription, Stock: stock, category
-        }, config)
-        await GetAllData()
-        // console.log(result.data)
-        Tost("Successfully Updated")
+        // console.log(name, price, discription, stock, productId, category)
+
     }
 
     async function onDeletePress(productId) {
