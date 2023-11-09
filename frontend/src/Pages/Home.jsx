@@ -73,7 +73,7 @@ export function Home() {
             return Featured && Featured.Products ? Featured.Products.map((e, i) => {
                     if (i < 5) {
                         return <ProductCard title={e.name}
-                                            orignalPrice={e.price + 100}
+                                            orignalPrice={e.price }
                                             link={e.images[0].url}
                                             discountPrice={e.price}
                                             key={i} id={e._id} discount={e.discount}/>
@@ -94,7 +94,7 @@ export function Home() {
             return Trending && Trending.Products ? Trending.Products.map((e, i) => {
                     if (i < 5) {
                         return <ProductCard title={e.name}
-                                            orignalPrice={e.price + 100}
+                                            orignalPrice={e.price }
                                             link={e.images[0].url}
                                             discountPrice={e.price}
                                             key={i} id={e._id} discount={e.discount}/>
@@ -115,7 +115,7 @@ export function Home() {
             return Arrival && Arrival.Products ? Arrival.Products.map((e, i) => {
                     if (i < 5) {
                         return <ProductCard title={e.name}
-                                            orignalPrice={e.price + 100}
+                                            orignalPrice={e.price }
                                             link={e.images[0].url}
                                             discountPrice={e.price}
                                             key={i} id={e._id} discount={e.discount}/>
@@ -136,7 +136,7 @@ export function Home() {
             return Best && Best.Products ? Best.Products.map((e, i) => {
                     if (i < 5) {
                         return <ProductCard title={e.name}
-                                            orignalPrice={e.price + 100}
+                                            orignalPrice={e.price }
                                             link={e.images[0].url}
                                             discountPrice={e.price}
                                             key={i} id={e._id} discount={e.discount}/>

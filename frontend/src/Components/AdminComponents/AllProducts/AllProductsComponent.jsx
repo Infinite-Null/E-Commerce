@@ -51,7 +51,12 @@ export function AllProductsComponent({onUpdatePress, onDeletePress, Products, Se
                     }} variant={"underlined"} placeholder={"search product"} color={"primary"} fullWidth={false}/>
                 </div>
             </div>
-            {!Loading&& <Card className={"m-5 border-black border-1"} isHoverable={true}>
+            <h1 style={{
+                padding: 20,
+                fontSize: 20
+            }}>Note: To add product to New Arrivals type newarrivals, to add to Best Seller type bestseller, for
+                Trending type trending and for Featured type featured in Category feild </h1>
+            {!Loading && <Card className={"m-5 border-black border-1"} isHoverable={true}>
                 <CardBody className="flex-row justify-between items-center">
                     <div style={{
                         width: "25%",
@@ -87,10 +92,12 @@ export function AllProductsComponent({onUpdatePress, onDeletePress, Products, Se
                     </div>
                 </CardBody>
                 {Products.map((e, i) => <EachItem productId={e._id} name={e.name} price={e.price} stock={e.Stock}
-                                                  category={e.category} discription={e.description} discount={e.discount} onUpdatePress={onUpdatePress} onDeletePress={onDeletePress}
+                                                  category={e.category} discription={e.description}
+                                                  discount={e.discount} onUpdatePress={onUpdatePress}
+                                                  onDeletePress={onDeletePress}
                                                   key={i}/>)}
             </Card>}
-            {Loading&&<div style={{alignItems:"center",justifyContent:"center",display:"flex"}}><Spinner/></div>}
+            {Loading && <div style={{alignItems: "center", justifyContent: "center", display: "flex"}}><Spinner/></div>}
         </>
     )
 }
@@ -109,6 +116,7 @@ function EachItem({productId, name, stock, price, discription, discount, categor
     const [UpdateCategory, setCategory] = useState(category)
     const [Discount, setDiscount] = useState(discount)
     const [selectedFile, setSelectedFile] = useState([])
+
     function ChipReturn() {
         let i = 0
         const FileandIndex = []
@@ -127,6 +135,7 @@ function EachItem({productId, name, stock, price, discription, discount, categor
         })
 
     }
+
     return <>
         <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
             <ModalContent>
@@ -193,6 +202,7 @@ function EachItem({productId, name, stock, price, discription, discount, categor
                                     setCategory(e.target.value)
                                 }}
                             />
+                            <h1>If you don't want to change image don't select any image</h1>
                             <Input
                                 type={"file"}
                                 multiple={true}
@@ -209,9 +219,9 @@ function EachItem({productId, name, stock, price, discription, discount, categor
                                 }}
                             />
                             {<div style={{
-                                display:"flex",
-                                flexWrap:"wrap",
-                                gap:10
+                                display: "flex",
+                                flexWrap: "wrap",
+                                gap: 10
                             }}>{ChipReturn()}</div>}
                         </ModalBody>
                         <ModalFooter>

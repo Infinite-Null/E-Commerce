@@ -6,7 +6,7 @@ export const AllProductCategory = ({data, onRangeChange, products, totalProducts
         <>
 
             <ProductLayout>
-                {products.map((e, i) => <ProductCard title={e.name} id={e._id} orignalPrice={parseInt(e.price) + 100}
+                {products.map((e, i) => <ProductCard title={e.name} id={e._id} orignalPrice={parseInt(e.price)}
                                                      link={e.images[0].url} discountPrice={e.price} key={i} discount={e.discount}/>
                 )}
             </ProductLayout>

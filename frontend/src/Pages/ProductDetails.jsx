@@ -99,8 +99,8 @@ export function ProductDetails() {
                 images={data.images ?? [{url: "https://img.freepik.com/free-photo/textured-background-white-tone_53876-128610.jpg"}]}
                 title={data.name}
                 averageReview={data.ratings}
-                discountedPrice={data.price}
-                totalPrice={parseInt(data.price) + 100}
+                discountedPrice={data.price - ((data.price * data.discount) / 100)}
+                totalPrice={data.price}
                 discription={data.description}
                 onReviewTextChange={onReviewTextChange}
                 onQuntityChange={onQuntityChange}

@@ -57,6 +57,12 @@ export function AddProduct() {
             }}>
                 Add Product
             </h1>
+            <h1 style={{
+                padding: 20,
+                fontSize: 20,
+                textAlign:"center"
+            }}>Note: To add product to New Arrivals type newarrivals, to add to Best Seller type bestseller, for
+                Trending type trending and for Featured type featured in Category feild </h1>
             {!Loading && <AddProductComponent onCreatePress={onCreatePress}/>}
             {Loading && <div style={{
                 display: "flex",

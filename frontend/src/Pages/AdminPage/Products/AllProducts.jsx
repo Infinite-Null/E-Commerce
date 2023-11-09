@@ -78,7 +78,7 @@ export function ProductsPageAdmin() {
                 }).finally(() => {
                 setImageLoading(false)
                 setLoading(false)
-                Tost("Product Created Successfully")
+                Tost("Product Updated Successfully")
             })
         }
         // console.log(name, price, discription, stock, productId, category)
@@ -106,6 +106,31 @@ export function ProductsPageAdmin() {
         }
         searching(Search)
     }, [Search]);
-    return <AllProductsComponent onUpdatePress={onUpdatePress} onDeletePress={onDeletePress} Products={Products}
-                                 SetSearch={SetSearch} Loading={Loading}/>
+    return <>
+        {!imageLoading &&
+            <AllProductsComponent onUpdatePress={onUpdatePress} onDeletePress={onDeletePress} Products={Products}
+                                  SetSearch={SetSearch} Loading={Loading}/>}
+        {imageLoading && <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
+            position: "fixed",
+            top: "0px",
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0,0,0,0.33)",
+            backdropFilter: "blur(5px)"
+        }}>
+            <img src={require("../../../Images/Wating.gif")} style={{
+                height: "300px",
+                width: "300px",
+                borderRadius: "100%"
+            }}/>
+            <h1 style={{
+                fontSize: "30px",
+                color: "white"
+            }}>Please wait this may take a while</h1>
+        </div>}
+    </>
 }
