@@ -70,6 +70,7 @@ export function ProductDetails() {
             image: data.images[0].url,
             quality: Quantity,
             maxQuantity: data.Stock,
+            discount: data.discount
         })
         SetCart(Dummy)
         Tost("Item Added to cart.")
@@ -99,7 +100,7 @@ export function ProductDetails() {
                 images={data.images ?? [{url: "https://img.freepik.com/free-photo/textured-background-white-tone_53876-128610.jpg"}]}
                 title={data.name}
                 averageReview={data.ratings}
-                discountedPrice={data.price - ((data.price * data.discount) / 100)}
+                discountedPrice={data.price - parseInt((data.price * data.discount) / 100)}
                 totalPrice={data.price}
                 discription={data.description}
                 onReviewTextChange={onReviewTextChange}
