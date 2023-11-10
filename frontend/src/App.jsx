@@ -19,6 +19,7 @@ import {Login} from "./Pages/Login";
 import {ReviewsPage} from "./Pages/AdminPage/Reviews/ReviewsPage";
 import {useContext} from "react";
 import Context from "./Context/Context";
+import {Verify} from "./Pages/Verify";
 
 function App() {
     const {User} = useContext(Context)
@@ -43,6 +44,7 @@ function App() {
                 <Route path="/Admin/Products/AllProduct" element={<ProductsPageAdmin/>}/>}
             {(User.Role?.toLowerCase() === 'admin') &&
                 <Route path="/Admin/Products/AddProduct" element={<AddProduct/>}/>}
+            <Route path="verify/:id" element={<Verify/>}/>
             <Route path="product/:id" element={<ProductDetails/>}/>
             <Route path="/:id" element={<AllProductWithCategory/>}/>
         </Routes>

@@ -5,13 +5,23 @@ const sendToken = require('../Utils/jwtToken')
 const ErrorHandler = require("../Utils/errorHandling")
 const sendEmail = require("../Utils/sendEmail.js")
 const crypto = require("crypto");
+const nodeMailer = require("nodemailer");
+const {SendVerificationMail} = require("../Utils/Email");
 //Register User
 exports.registerUser = async (req, res) => {
     const userData = await User.find({email: req.body.email})
     if (userData.length !== 0) {
+        if (!userData[0].isVerified) {
+            await SendVerificationMail(userData[0]._id, userData[0].email)
+            res.status(200).json({
+                success: false,
+                message: "You need to verify yourself, Mail has been sent to your mail please verify yourself"
+            })
+            return
+        }
         res.status(200).json({
             success: false,
-            message: "Email is connected to another account"
+            message: "Email is connected to another account and verified, Please Login"
         })
         return
     }
@@ -19,8 +29,11 @@ exports.registerUser = async (req, res) => {
     const user = new User({
         name, email, password
     })
-    user.save().then((_) => {
-        sendToken(user, 201, res)
+    user.save().then(async (e) => {
+        await SendVerificationMail(e._id, e.email)
+        res.status(200).json({
+            message: 'Mail has been sent to your e-mail please verify yourself'
+        })
     }).catch((e) => {
         res.status(500).json({
             success: false,
@@ -29,8 +42,42 @@ exports.registerUser = async (req, res) => {
     })
 }
 
-//Login User
+//Verify User
+exports.VerifyUser = async (req, res) => {
 
+    try {
+        const user = await User.findById(req.params.id)
+        if (user.isVerified) {
+            res.status(200).json({
+                success: false,
+                details: "You are already verified!"
+            })
+            return
+        }
+        user.isVerified = true
+        user.save().then((_) => {
+            res.status(200).json({
+                success: true,
+                details: "Verified Successfully"
+            })
+        }).catch((e) => {
+            res.status(500).json({
+                success: false,
+                details: e.message
+            })
+        })
+
+    } catch (e) {
+        res.status(500).json({
+            success: false,
+            details: "Wrong Verification"
+        })
+    }
+
+}
+
+
+//Login User
 exports.loginUser = async (req, res) => {
     const {email, password} = req.body
     if (!email || !password) {
@@ -46,6 +93,14 @@ exports.loginUser = async (req, res) => {
                 details: "No user with given email"
             })
         } else {
+            if (!doc.isVerified) {
+                await SendVerificationMail(doc._id, doc.email)
+                res.status(404).json({
+                    success: false,
+                    details: "You are registered but not verified, Mail has been sent to your mail please verify yourself"
+                })
+                return
+            }
             //compared the encrypted password
             try {
                 const login = await bcrypt.compare(password, doc.password)
@@ -204,6 +259,7 @@ exports.updateProfile = async (req, res) => {
     })
 }
 
+
 // Get all user admin
 exports.getAllUser = async (req, res) => {
     User.find().then((users) => {
@@ -267,5 +323,29 @@ exports.deleteUser = async (req, res) => {
             success: false,
             message: e.message
         })
+    })
+}
+
+
+exports.mailtest = async (req, res) => {
+    const transporter = nodeMailer.createTransport({
+        service: process.env.SMPT_SERVICE,
+        secure: true,
+        auth: {
+            user: process.env.SMPT_MAIL,
+            pass: process.env.SMPT_PASSWORD
+        }
+    })
+    const mailOptions = {
+        from: process.env.SMPT_MAIL,
+        to: req.body.email,
+        subject: req.body.subject,
+        html: '<div style="height: 400px;background-color: white"><center><img src="https://media.istockphoto.com/id/1135899660/vector/set-of-colorful-shopping-bags-and-packages.jpg?s=612x612&w=0&k=20&c=DOndmXAcN1M77k3rrlFrYNnsw8hxHGxmJv57tXyyJaQ=" style="height: 200px;width: 200px"/></center><h1 style="color: #00aced;text-align: center">Click Link Below To Verify Yourself</h1>' +
+            '<center><a style="background-color: rgb(255, 165, 47);padding: 20px;padding-left: 50px;padding-right: 50px;color: #efefef; border-radius: 10px;margin-top: 20px;">Click Me</a></center></div>'
+    }
+
+    await transporter.sendMail(mailOptions)
+    res.status(200).json({
+        message: "mail sent"
     })
 }

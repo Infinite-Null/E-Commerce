@@ -1,7 +1,7 @@
 // noinspection JSCheckFunctionSignatures
 
 import React, {useState} from "react";
-import {Tabs, Tab, Input, Link, Button, Card, CardBody} from "@nextui-org/react";
+import {Tabs, Tab, Input, Link, Button, Card, CardBody, Spinner} from "@nextui-org/react";
 import {TbListDetails} from "react-icons/tb";
 import {Tost} from "../Tost";
 
@@ -12,7 +12,8 @@ export default function LoginPageComponent({
                                                onSignupPasswordChange,
                                                onSignupNameChange,
                                                OnSignupPress,
-                                               OnLoginPress
+                                               OnLoginPress,
+                                               Loading
                                            }) {
     const [selected, setSelected] = React.useState("login");
     return (
@@ -69,7 +70,7 @@ export default function LoginPageComponent({
                                     </Link>
                                 </p>
                                 <div className="flex gap-2 justify-end">
-                                    <Button
+                                    {!Loading && <Button
                                         type={"submit"}
                                         className="bg-gray-800 hover:bg-gray-950"
                                         style={{
@@ -79,7 +80,14 @@ export default function LoginPageComponent({
                                         }} variant="flat" startContent={<TbListDetails/>} onClick={(e) => {
                                         e.preventDefault()
                                         OnLoginPress()
-                                    }}>Login</Button>
+                                    }}>Login</Button>}
+                                    {Loading && <Button
+                                        className="bg-gray-800 hover:bg-gray-950"
+                                        style={{
+                                            borderRadius: "10px",
+                                            width: "300px",
+                                            height: "60px", color: "white"
+                                        }} variant="flat"><Spinner/></Button>}
                                 </div>
                             </form>
                         </Tab>
