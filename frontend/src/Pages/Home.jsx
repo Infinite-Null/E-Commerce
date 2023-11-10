@@ -21,6 +21,7 @@ import Api from "../ApiInfo/ApiInfo";
 import LodingSkeletion from "../Components/LodingSkeletion/LodingSkeletion";
 import {Button} from "@nextui-org/react";
 import {AiOutlineArrowRight} from "react-icons/ai";
+import {Swiper, SwiperComponent} from "../Components/Swiper/Swiper";
 
 export function Home() {
     const navigate = useNavigate()
@@ -259,7 +260,8 @@ export function Home() {
     }, [])
     return <>
 
-        <Banner/>
+        {/*<Banner/>*/}
+        <SwiperComponent/>
         <Heading title={"Featured"} show={true} value={{state: {category: "featured"}}}/>
         <ProductLayout>
             {IsLodingFeatured()}

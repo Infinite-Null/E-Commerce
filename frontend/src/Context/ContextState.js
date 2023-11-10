@@ -2,22 +2,22 @@ import Context from "./Context";
 import React, {useEffect, useState} from "react";
 import {FristLoadCookie, LoggedInDetails} from "./SetCookieUser";
 
-const ContextState=(props)=>{
-    const [searchValue,setSearchValue]=useState("")
-    const [User,SetUser]=useState(LoggedInDetails())
-    const [Cart,SetCart]=useState([])
-    const [Address,SetAddress]=useState({
-            fristline:"",
-            secondline:"",
-            pincode:"",
-            phone:"",
-            place:"Delhi"
+const ContextState = (props) => {
+    const [searchValue, setSearchValue] = useState("")
+    const [User, SetUser] = useState(LoggedInDetails())
+    const [Cart, SetCart] = useState([])
+    const [Address, SetAddress] = useState({
+        fristline: "",
+        secondline: "",
+        pincode: "",
+        phone: "",
+        place: "Delhi"
     })
-    useEffect(()=>{
+    useEffect(() => {
         FristLoadCookie()
         SetUser(LoggedInDetails())
-        return()=>{
-            
+        return () => {
+
         }
     }, [])
 
@@ -26,7 +26,7 @@ const ContextState=(props)=>{
     </Context.Provider>
 }
 
-export default  ContextState
+export default ContextState
 
 
 // const result = await axios.post("http://localhost:4000/api/v1/login",{

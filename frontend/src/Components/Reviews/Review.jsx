@@ -1,63 +1,111 @@
-/* eslint-disable jsx-a11y/img-redundant-alt */
-export function Review() {
-    return (
-        <div style={{
-            display:"flex",
-            alignItems:"center",
-            justifyContent:"center",
-        }}>
-            <div className="p-5 m-3 shadow-[0px_0px_30px_5px_#cbd5e0] grid mb-8 border border-black rounded-lg dark:border-gray-700 md:mb-12 md:grid-cols-2">
-                <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-black rounded-t-lg md:rounded-t-none md:rounded-tl-lg md:border-r dark:bg-gray-800 dark:border-gray-700">
-                    <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Very easy this was to integrate</h3>
-                        <p className="my-4">If you care for your time, I hands down would go with this."</p>
-                    </blockquote>
-                    <figcaption className="flex items-center justify-center space-x-3">
-                        <img className="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png" alt="profile picture"/>
-                            <div className="space-y-0.5 font-medium dark:text-white text-left">
-                                <div>Bonnie Green</div>
+import React, {useRef, useState} from 'react';
+// Import Swiper React components
+import {Swiper, SwiperSlide} from 'swiper/react';
 
-                            </div>
-                    </figcaption>
-                </figure>
-                <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-black rounded-tr-lg dark:bg-gray-800 dark:border-gray-700">
-                    <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Solid foundation for any project</h3>
-                        <p className="my-4">Designing with Figma components that can be easily translated to the utility classes of Tailwind CSS is a huge timesaver!"</p>
-                    </blockquote>
-                    <figcaption className="flex items-center justify-center space-x-3">
-                        {/* eslint-disable-next-line */}
-                        <img className="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/roberta-casas.png" alt="profile picture"/>
-                            <div className="space-y-0.5 font-medium dark:text-white text-left">
-                                <div>Roberta Casas</div>
-                            </div>
-                    </figcaption>
-                </figure>
-                <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-b border-black rounded-bl-lg md:border-b-0 md:border-r dark:bg-gray-800 dark:border-gray-700">
-                    <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Mindblowing workflow</h3>
-                        <p className="my-4">Aesthetically, the well designed components are beautiful and will undoubtedly level up your next application."</p>
-                    </blockquote>
-                    <figcaption className="flex items-center justify-center space-x-3">
-                        <img className="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png" alt="profile picture"/>
-                            <div className="space-y-0.5 font-medium dark:text-white text-left">
-                                <div>Jese Leos</div>
-                            </div>
-                    </figcaption>
-                </figure>
-                <figure className="flex flex-col items-center justify-center p-8 text-center bg-white border-black rounded-b-lg md:rounded-br-lg dark:bg-gray-800 dark:border-gray-700">
-                    <blockquote className="max-w-2xl mx-auto mb-4 text-gray-500 lg:mb-8 dark:text-gray-400">
-                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Efficient Collaborating</h3>
-                        <p className="my-4">You have many examples that can be used to create a fast prototype for your team."</p>
-                    </blockquote>
-                    <figcaption className="flex items-center justify-center space-x-3">
-                        <img className="rounded-full w-9 h-9" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/joseph-mcfall.png" alt="profile picture"/>
-                            <div className="space-y-0.5 font-medium dark:text-white text-left">
-                                <div>Joseph McFall</div>
-                            </div>
-                    </figcaption>
-                </figure>
-            </div>
-        </div>
-    )
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
+
+import './styles.css';
+
+// import required modules
+import {EffectCoverflow, Pagination} from 'swiper/modules';
+
+export function Review() {
+    const Reviews = [
+        {
+            name: "Ankit Kumar Shah",
+            review: "Designing with Figma components that can be easily translated to the utility classes of Tailwind CSS is a huge timesaver!",
+            heading: 'Very Easy Order',
+            image: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png"
+
+        },
+        {
+            name: "Ankit Kumar Shah",
+            review: "Designing with Figma components that can be easily translated to the utility classes of Tailwind CSS is a huge timesaver!",
+            heading: 'Very Easy Order',
+            image: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png"
+
+        },
+        {
+            name: "Ankit Kumar Shah",
+            review: "Designing with Figma components that can be easily translated to the utility classes of Tailwind CSS is a huge timesaver!",
+            heading: 'Very Easy Order',
+            image: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png"
+
+        },
+        {
+            name: "Ankit Kumar Shah",
+            review: "Designing with Figma components that can be easily translated to the utility classes of Tailwind CSS is a huge timesaver!",
+            heading: 'Very Easy Order',
+            image: "https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/karen-nelson.png"
+
+        }
+    ]
+    return (
+        <>
+            {Reviews ? <Swiper
+                style={{
+                    width:"90%",
+                    paddingTop: "50px",
+                    height:"400px",
+                }}
+                effect={'coverflow'}
+                grabCursor={true}
+                pagination={true}
+                centeredSlides={true}
+                slidesPerView={'auto'}
+                className="mySwiper"
+                modules={[Pagination]}
+            >
+                {Reviews.map((e,i)=><SwiperSlide style={{
+                    backgroundPosition: "center",
+                    backgroundSize: "cover",
+                    width: "80%",
+                    height: "300px",
+                    borderRadius: "10px",
+                    marginRight:"30px"
+                }}>
+                    <div style={{
+                        height: "100%",
+                        borderRadius: "10px",
+                        width: "100%",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                        marginRight:"30px",
+                        boxShadow:"0px 0px 40px rgba(47,72,100,0.2)",
+                        marginTop:20
+                    }}>
+                        <h1 style={{
+                            fontSize: 25,
+                            fontWeight: "600"
+                        }}>{e.heading}</h1>
+                        <h2 style={{
+                            fontSize: 15,
+                            fontWeight: "200",
+                            padding: 20
+                        }}>{e.review}</h2>
+                        <div style={{
+                            display: "flex",
+                            alignItems: "center"
+                        }}>
+                            <img className="rounded-full" style={{
+                                height: 24,
+                                width: 24,
+                                marginRight: 5
+                            }} src={e.image}
+                                 alt="profile picture"/>
+                            <h1 style={{
+                                fontSize: 15,
+                                fontWeight: "300"
+                            }}>{` ${e.name}`}</h1>
+                        </div>
+                    </div>
+                </SwiperSlide>)}
+            </Swiper> : <></>}
+        </>
+    );
 }

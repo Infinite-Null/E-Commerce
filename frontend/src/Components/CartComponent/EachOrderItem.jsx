@@ -20,8 +20,8 @@ export function EachOrderItem({
         <div
             className="mt-4 md:mt-6 flex  flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full">
             <div className="pb-4 md:pb-8 w-full md:w-40">
-                <img className="w-[150px] h-[150px] hidden md:block object-cover" src={image} alt="Cloth"/>
-                <img className="md:hidden w-full h-[300px]  object-cover" src={image} alt="Cloth"/>
+                <img className="w-[150px] h-[150px] hidden md:block object-cover  rounded-[10px]" src={image} alt="Cloth"/>
+                <img className="md:hidden w-full h-[300px]  object-cover rounded-[10px]" src={image} alt="Cloth"/>
             </div>
             <div
                 className="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full  pb-8 space-y-4 md:space-y-0">
