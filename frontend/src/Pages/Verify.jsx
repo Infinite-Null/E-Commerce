@@ -16,18 +16,19 @@ export const Verify = () => {
 
     async function VerifyData() {
         try {
-           const res= await axios.post(ApiInfo+"/user/verify/"+id)
+            const res = await axios.post(ApiInfo + "/user/verify/" + id)
             console.log(res)
             setmessage(res.data.details)
             setImage(1)
-        }catch (e) {
+        } catch (e) {
             setmessage("Failed")
             setImage(2)
         }
     }
-    useEffect(()=>{
+
+    useEffect(() => {
         VerifyData()
-    },[])
+    }, [])
 
     return (
         <div style={{
@@ -46,8 +47,8 @@ export const Verify = () => {
                 width: "300px",
             }}/>
             <h1>{message}</h1>
-            {Image===1&&<Link to={"/"} style={{
-                color:"blue"
+            {Image === 1 && <Link to={"/"} style={{
+                color: "blue"
             }}>Login>></Link>}
         </div>
     )

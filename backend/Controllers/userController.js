@@ -6,7 +6,7 @@ const ErrorHandler = require("../Utils/errorHandling")
 const sendEmail = require("../Utils/sendEmail.js")
 const crypto = require("crypto");
 const nodeMailer = require("nodemailer");
-const {SendVerificationMail} = require("../Utils/Email");
+const {SendVerificationMail, SendResetMail} = require("../Utils/Email");
 //Register User
 exports.registerUser = async (req, res) => {
     const userData = await User.find({email: req.body.email})
@@ -138,63 +138,50 @@ exports.logout = async (req, res) => {
 
 //Forgot Password
 exports.forgotPassword = async (req, res, next) => {
-    const user = await User.findOne({email: req.body.email})
-
-    if (!user) {
-        return next(new ErrorHandler("User not found", 404))
-    }
-
-    //Get ResetPassword Token
-    const resetToken = await user.getResetPasswordToken()
-
-    await user.save({validateBeforeSave: false})
-    const resetPasswordUrl = `${req.protocol}://${req.get("host")}/api/v1/password/reset/${resetToken}`
-    const message = `Your password reset token is : \n\n ${resetPasswordUrl}\n\n 
-    If you have not requested it please ignore it`
-
     try {
-        await sendEmail({
-            email: user.email,
-            subject: `Ecommerce Password Recovery`,
-            message
-        })
+        const user = await User.find({email: req.body.email})
+        if (user.length === 0) {
+            res.status(200).json({
+                success: false,
+                message: "No user with this email"
+            })
+            return
+        }
+        await SendResetMail(user[0].email, user[0]._id)
         res.status(200).json({
             success: true,
-            message: `Email sent to ${user.email} successfully`
+            message: "Reset mail is sent to your e-mail"
         })
     } catch (e) {
-        user.resetPasswordToken = undefined
-        user.resetPasswordExpire = undefined
-        await user.save({validateBeforeSave: false})
-        return next(new ErrorHandler(e.message, 500))
+        res.status(500).json({
+            success: true,
+            message: e.message
+        })
     }
 }
 
 exports.resetPassword = async (req, res, next) => {
-    //creating hash token
-    const resetPasswordToken = crypto.createHash("sha256")
-        .update(req.params.token)
-        .digest("hex")
-    const user = await User.findOne({
-        resetPasswordToken,
-        resetPasswordExpire: {$gt: Date.now()}
-    })
-
-    if (!user) {
-        return next(new ErrorHandler("Reset Password Token is invalid or has been expired", 400))
+    const id = req.params.id
+    const {password} = req.body
+    try {
+        const user = await User.findById(id)
+        user.password = password
+        user.save().then((_)=>{
+            res.status(200).json({
+                success:true,
+                message:"Password Updated Successfully"
+            })
+        }).catch((e)=>{
+            res.status(500).json({
+                success:false,
+                message:e.message
+            })
+        })
+    } catch (e) {
+        res.status(500).json({
+            message:"Something Went Wrong"
+        })
     }
-
-    if (req.body.password !== req.body.confirmPassword) {
-        return next(new ErrorHandler("Password does not match", 400))
-    }
-
-    user.password = req.body.password
-    user.resetPasswordToken = undefined
-    user.resetPasswordExpire = undefined
-
-    await user.save()
-
-    sendToken(user, 200, res)
 }
 
 // Get User Details
@@ -340,8 +327,8 @@ exports.mailtest = async (req, res) => {
         from: process.env.SMPT_MAIL,
         to: req.body.email,
         subject: req.body.subject,
-        html: '<div style="height: 400px;background-color: white"><center><img src="https://media.istockphoto.com/id/1135899660/vector/set-of-colorful-shopping-bags-and-packages.jpg?s=612x612&w=0&k=20&c=DOndmXAcN1M77k3rrlFrYNnsw8hxHGxmJv57tXyyJaQ=" style="height: 200px;width: 200px"/></center><h1 style="color: #00aced;text-align: center">Click Link Below To Verify Yourself</h1>' +
-            '<center><a style="background-color: rgb(255, 165, 47);padding: 20px;padding-left: 50px;padding-right: 50px;color: #efefef; border-radius: 10px;margin-top: 20px;">Click Me</a></center></div>'
+        html: '<div style="height: 400px;background-color: white"><center><img src="https://cdn.dribbble.com/users/2879528/screenshots/11007898/media/02a3ee1367c85fbf8ee060614cb97fb0.jpeg?resize=400x0" style="height: 200px;width: 200px"/></center><h1 style="color: #00aced;text-align: center">Click Link Below To Reset Your Password</h1>' +
+            '<center><a style="background-color: rgb(255, 165, 47);padding: 20px;padding-left: 50px;padding-right: 50px;color: #efefef; border-radius: 10px;margin-top: 20px;">Reset Password</a></center></div>'
     }
 
     await transporter.sendMail(mailOptions)
