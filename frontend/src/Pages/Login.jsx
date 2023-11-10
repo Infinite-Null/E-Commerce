@@ -50,7 +50,7 @@ export function Login() {
                     , result.data.user.role.toString()
                 )
                 SetUser(LoggedInDetails())
-                navigate(-1)
+                navigate("/")
                 Tost('Successfully Logged In')
             } catch (e) {
                 setLoading(false)

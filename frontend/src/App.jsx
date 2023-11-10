@@ -20,6 +20,7 @@ import {ReviewsPage} from "./Pages/AdminPage/Reviews/ReviewsPage";
 import {useContext} from "react";
 import Context from "./Context/Context";
 import {Verify} from "./Pages/Verify";
+import {ResetPage} from "./Pages/ResetPage";
 
 function App() {
     const {User} = useContext(Context)
@@ -45,6 +46,7 @@ function App() {
             {(User.Role?.toLowerCase() === 'admin') &&
                 <Route path="/Admin/Products/AddProduct" element={<AddProduct/>}/>}
             <Route path="verify/:id" element={<Verify/>}/>
+            <Route path="reset/:id" element={<ResetPage/>}/>
             <Route path="product/:id" element={<ProductDetails/>}/>
             <Route path="/:id" element={<AllProductWithCategory/>}/>
         </Routes>
