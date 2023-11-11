@@ -63,12 +63,13 @@ export function AllProductWithCategory() {
         window.scroll(0, 0)
     }, []);
     return (<>
-            <Filters title={state.category} onRangeChange={onRangeChange} totalProducts={data.TotalReaturened}
+            <Filters title={state.category} onRangeChange={onRangeChange}
+                     totalProducts={loading === false ? data.TotalReaturened : 0}
                      onApplyPress={onApplyPress}/>
             {(loading === false) ? <>
                 <AllProductCategory data={state} products={data.Products ?? []} key={Math.random()}/>
             </> : <ProductLayout>
-                {[1, 2, 3, 4, 5, 6].map((e) =>
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e) =>
                     <LodingSkeletion key={e}/>
                 )}
             </ProductLayout>}

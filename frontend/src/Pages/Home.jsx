@@ -25,7 +25,7 @@ import {Swiper, SwiperComponent} from "../Components/Swiper/Swiper";
 
 export function Home() {
     const navigate = useNavigate()
-    const x = [1, 2, 3, 4, 5]
+    const x = [1, 2, 3, 4, 5, 6]
     //featured state
     const [Featured, setFeatured] = useState([])
     const [FeaturedLoding, setFeaturedLoding] = useState(false)
@@ -42,25 +42,25 @@ export function Home() {
     //Functions:
     //Get Featured
     async function GetFeaturedItems() {
-        const result = await axios.get(Api + "/products?category=featured")
+        const result = await axios.get(Api + "/products?category=featuredshow")
         setFeatured(result.data)
     }
 
     //Get Trending
     async function GetTrendingItems() {
-        const result = await axios.get(Api + "/products?category=trending")
+        const result = await axios.get(Api + "/products?category=trendingshow")
         setTrending(result.data)
     }
 
     //Get Arrival
     async function GetArrivalItems() {
-        const result = await axios.get(Api + "/products?category=newarrivals")
+        const result = await axios.get(Api + "/products?category=newarrivalsshow")
         setArrival(result.data)
     }
 
     //Get Best
     async function GetBestItems() {
-        const result = await axios.get(Api + "/products?category=bestseller")
+        const result = await axios.get(Api + "/products?category=bestsellershow")
         setBest(result.data)
     }
 

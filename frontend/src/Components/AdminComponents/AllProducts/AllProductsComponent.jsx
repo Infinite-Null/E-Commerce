@@ -56,6 +56,10 @@ export function AllProductsComponent({onUpdatePress, onDeletePress, Products, Se
                 fontSize: 20
             }}>Note: To add product to New Arrivals type newarrivals, to add to Best Seller type bestseller, for
                 Trending type trending and for Featured type featured in Category feild </h1>
+            <h1 style={{
+                padding: 20,
+                fontSize: 20,
+            }}>Note: To show products in these sections just add show at end example newarrivalsshow </h1>
             {!Loading && <Card className={"m-5 border-black border-1"} isHoverable={true}>
                 <CardBody className="flex-row justify-between items-center">
                     <div style={{
