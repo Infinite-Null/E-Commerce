@@ -5,7 +5,6 @@ const ApiFeatures = require('../Utils/apifeatures')
 const ErrorHandler = require('../Utils/errorHandling')
 const cloudinary = require("cloudinary")
 
-
 //Admin route
 function Upload(buffer) {
     return new Promise(function (resolve, reject) {
@@ -20,10 +19,6 @@ function Upload(buffer) {
                 return
             }
             resolve(result)
-            // console.log(result)
-            // res.status(200).json({
-            //     message: result
-            // })
         }
     })
 }
@@ -35,35 +30,56 @@ exports.createProduct = async (req, res, _) => {
     product.images = []
     if (req.files.File[0] === undefined) {
         console.log(req.files.File.data)
-        const result = await Upload(req.files.File.data)
-        const Re = {
-            public_id: result.public_id,
-            url: result.url
-        }
-        product.images.push(Re)
-        product.save().then((e) => {
-            res.status(200).json({
-                message: "Success",
-                data: e
-            })
-        }).catch(e => {
-            res.status(500).json({
-                message: "Failed",
-                error: e.message
-            })
-        })
-        console.log("single file")
-    } else {
-        let i = 0
-        for (i; i < req.files.File.length; i++) {
-            const result = await Upload(req.files.File[i].data)
+        try {
+            const result = await Upload(req.files.File.data)
             const Re = {
                 public_id: result.public_id,
                 url: result.url
             }
             product.images.push(Re)
+            product.save({
+                validateBeforeSave: false
+            }).then((e) => {
+                res.status(200).json({
+                    message: "Success",
+                    data: e
+                })
+            }).catch(e => {
+                res.status(500).json({
+                    message: "Failed",
+                    error: e.message
+                })
+            })
+        } catch (e) {
+            console.log("createProduct() failed to upload to cloudnary single file")
+            console.log(e.message)
+            res.status(500).json({
+                success: false,
+                message: "Something Went Wrong"
+            })
         }
-        product.save().then((e) => {
+    } else {
+        let i = 0
+        for (i; i < req.files.File.length; i++) {
+            try {
+                const result = await Upload(req.files.File[i].data)
+                const Re = {
+                    public_id: result.public_id,
+                    url: result.url
+                }
+                product.images.push(Re)
+            } catch (e) {
+                console.log("createProduct() failed to upload to cloudnary multi file")
+                console.log(e.message)
+                res.status(500).json({
+                    success: false,
+                    message: "Something Went Wrong"
+                })
+            }
+        }
+        product.save({
+            validateBeforeSave: false
+        }).then((e) => {
             res.status(200).json({
                 message: "Success",
                 data: e
@@ -75,104 +91,135 @@ exports.createProduct = async (req, res, _) => {
             })
         })
     }
-    // console.log(product.images)
-    // product.save().then((doc) => {
-    //     res.status(201).json({
-    //         success: true,
-    //         product: doc
-    //     })
-    // }).catch((e) => {
-    //     res.status(500).json({
-    //         success: false,
-    //         details: e.message
-    //     })
-    // })
 }
 
 //Update One with image
 exports.UpdateWithImage = async (req, res) => {
-    const product = await Product.findById(req.params.id)
-    product.images.map((e) => {
-        cloudinary.uploader
-            .destroy(e.public_id)
-            .then(result => console.log(result));
-    })
-    product.images = []
-
-    if (req.files.File[0] === undefined) {
-        console.log(req.files.File.data)
-        const result = await Upload(req.files.File.data)
-        const Re = {
-            public_id: result.public_id,
-            url: result.url
-        }
-        product.images.push(Re)
-        product.save().then((e) => {
-            Product.updateOne({_id: req.params.id}, req.body).then((doc) => {
-                res.status(200).json({
-                    success: true,
-                    details: doc
-                })
-            }).catch((e) => {
-                res.status(500).json({
-                    message: "Failed",
-                    error: e.message
-                })
-            })
-        }).catch(e => {
-            res.status(500).json({
-                message: "Failed",
-                error: e.message
-            })
+    try {
+        const product = await Product.findById(req.params.id)
+        product.images.map((e) => {
+            cloudinary.uploader
+                .destroy(e.public_id)
+                .then(result => console.log(result));
         })
-        console.log("single file")
-    } else {
-        let i = 0
-        for (i; i < req.files.File.length; i++) {
-            const result = await Upload(req.files.File[i].data)
-            const Re = {
-                public_id: result.public_id,
-                url: result.url
-            }
-            product.images.push(Re)
-        }
-        product.save().then((_) => {
-            Product.updateOne({_id: req.params.id}, req.body).then((doc) => {
-                res.status(200).json({
-                    success: true,
-                    details: doc
+        product.images = []
+        if (req.files.File[0] === undefined) {
+            console.log(req.files.File.data)
+            try {
+                const result = await Upload(req.files.File.data)
+                const Re = {
+                    public_id: result.public_id,
+                    url: result.url
+                }
+                product.images.push(Re)
+                product.save({
+                    validateBeforeSave: false
+                }).then((e) => {
+                    Product.updateOne({_id: req.params.id}, req.body).then((doc) => {
+                        res.status(200).json({
+                            success: true,
+                            details: doc
+                        })
+                    }).catch((e) => {
+                        res.status(500).json({
+                            message: "Failed",
+                            error: e.message
+                        })
+                    })
+                }).catch(e => {
+                    res.status(500).json({
+                        message: "Failed",
+                        error: e.message
+                    })
                 })
-            }).catch((e) => {
+            } catch (e) {
+                console.log("UpdateWithImage() failed to upload single image")
+                console.log(e.message)
+                res.status(500).json({
+                    success: false,
+                    message: "Something Went Wrong"
+                })
+            }
+        } else {
+            let i = 0
+            for (i; i < req.files.File.length; i++) {
+                try {
+                    const result = await Upload(req.files.File[i].data)
+                    const Re = {
+                        public_id: result.public_id,
+                        url: result.url
+                    }
+                    product.images.push(Re)
+                } catch (e) {
+                    console.log("UpdateWithImage() failed to upload multiple image")
+                    console.log(e.message)
+                    res.status(500).json({
+                        success: false,
+                        message: "Something Went Wrong"
+                    })
+                }
+            }
+            product.save({
+                validateBeforeSave: false
+            }).then((_) => {
+                Product.updateOne({_id: req.params.id}, req.body).then((doc) => {
+                    res.status(200).json({
+                        success: true,
+                        details: doc
+                    })
+                }).catch((e) => {
+                    res.status(500).json({
+                        message: "Failed",
+                        error: e.message
+                    })
+                })
+            }).catch(e => {
                 res.status(500).json({
                     message: "Failed",
                     error: e.message
                 })
             })
-        }).catch(e => {
-            res.status(500).json({
-                message: "Failed",
-                error: e.message
-            })
+        }
+    } catch (e) {
+        console.log("UpdateWithImage() failed findById")
+        console.log(e.message)
+        res.status(500).json({
+            success: false,
+            message: "Something Went Wrong"
         })
     }
 }
 
 //Admin route
 exports.deleteProduct = async (req, res) => {
-    const product = await Product.findById(req.params.id)
-    product.images.map((e) => {
-        cloudinary.uploader
-            .destroy(e.public_id)
-            .then(result => console.log(result));
-    })
-    Product.deleteOne({_id: req.params.id}).then((e) => {
-        res.status(200).json({
-            success: true,
-            details: e
+    try {
+        const product = await Product.findById(req.params.id)
+        product.images.map((e) => {
+            cloudinary.uploader
+                .destroy(e.public_id)
+                .then(result => console.log(result));
         })
-    }).catch((e) => {
-        return next(new ErrorHandler("Product Not Found", 404))
-    })
+        Product.deleteOne({_id: req.params.id}).then((e) => {
+            res.status(200).json({
+                success: true,
+                details: e
+            })
+        }).catch((e) => {
+            console.log("deleteProduct() failed to deleteOne")
+            console.log(e.message)
+            res.status(500).json({
+                success: false,
+                message: "Something Went Wrong"
+            })
+        })
+    } catch (e) {
+        console.log("deleteProduct() failed to findById")
+        console.log(e.message)
+        res.status(500).json({
+            success: false,
+            message: "Something Went Wrong"
+        })
+    }
 }
 
 //Admin route
@@ -212,24 +259,42 @@ exports.getAllProductsAdmin = async (req, res) => {
 
 exports.getAllProducts = async (req, res, next) => {
     const resultPerPage = 10
-    const productCount = await Product.countDocuments()
-    const apifeature = new ApiFeatures(Product.find(), req.query)
-        .search()
-        .filter()
-        .pagination(resultPerPage)
-    const k = new ApiFeatures(Product.find(), req.query).filter()
-    const Result = await k.query
-    apifeature.query.then((e) => {
-        res.status(200).json({
-            success: true,
-            Total_Product: productCount,
-            TotalReaturened: Result.length,
-            ResultPerPage: resultPerPage,
-            Products: e
+    try {
+        const productCount = await Product.countDocuments()
+        const apifeature = new ApiFeatures(Product.find(), req.query)
+            .search()
+            .filter()
+            .pagination(resultPerPage)
+        const k = new ApiFeatures(Product.find(), req.query).filter()
+        try {
+            const Result = await k.query
+            apifeature.query.then((e) => {
+                res.status(200).json({
+                    success: true,
+                    Total_Product: productCount,
+                    TotalReaturened: Result.length,
+                    ResultPerPage: resultPerPage,
+                    Products: e
+                })
+            }).catch((e) => {
+                return next(new ErrorHandler("Product Not Found", 404))
+            })
+        } catch (e) {
+            console.log("getAllProducts() failed to Result = await k.query")
+            console.log(e.message)
+            res.status(500).json({
+                success: false,
+                message: "Something Went Wrong"
+            })
+        }
+    } catch (e) {
+        console.log("getAllProducts() failed to countDocuments")
+        console.log(e.message)
+        res.status(500).json({
+            success: false,
+            message: "Something Went Wrong"
         })
-    }).catch((e) => {
-        return next(new ErrorHandler("Product Not Found", 404))
-    })
+    }
 }
 
 exports.searchProduct = async (req, res, next) => {
@@ -260,39 +325,54 @@ exports.createProductReview = async (req, res) => {
         rating: Number(rating),
         comment,
     }
-
-    const product = await Product.findById(productId)
-    if (!product) {
-        return res.status(404).json({
-            success: false,
-            message: "Product not found"
-        })
-    }
-    const isReviewed = product.reviews.find((rev) => rev.user.toString() === req.user._id.toString())
-    if (isReviewed) {
+    try {
+        const product = await Product.findById(productId)
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            })
+        }
+        const isReviewed = product.reviews.find((rev) => rev.user.toString() === req.user._id.toString())
+        if (isReviewed) {
+            product.reviews.forEach((rev) => {
+                if (rev.user.toString() === req.user._id.toString()) {
+                    rev.rating = rating
+                    rev.comment = comment
+                }
+            })
+        } else {
+            product.reviews.push(review)
+            product.numOfReviews = product.reviews.length
+        }
+        let avg = 0
         product.reviews.forEach((rev) => {
-            if (rev.user.toString() === req.user._id.toString()) {
-                rev.rating = rating
-                rev.comment = comment
-            }
+            avg += rev.rating
         })
-    } else {
-        product.reviews.push(review)
-        product.numOfReviews = product.reviews.length
+        product.ratings = avg / product.reviews.length
+        try {
+            await product.save({
+                validateBeforeSave: false
+            })
+            res.status(200).json({
+                success: true
+            })
+        } catch (e) {
+            console.log("createProductReview() failed to save")
+            console.log(e.message)
+            res.status(500).json({
+                success: false,
+                message: "Something Went Wrong"
+            })
+        }
+    } catch (e) {
+        console.log("createProductReview() failed to findById")
+        console.log(e.message)
+        res.status(500).json({
+            success: false,
+            message: "Something Went Wrong"
+        })
     }
-    let avg = 0
-    product.reviews.forEach((rev) => {
-        avg += rev.rating
-    })
-    product.ratings = avg / product.reviews.length
-
-    await product.save({
-        validateBeforeSave: false
-    })
-
-    res.status(200).json({
-        success: true
-    })
 
 }
 
@@ -320,71 +400,54 @@ exports.getProductReview = async (req, res) => {
 
 //Delete review
 exports.deleteProductReview = async (req, res) => {
-    const product = await Product.findById(req.query.productId)
-    if (!product) {
-        return res.status(404).json({
+    try {
+        const product = await Product.findById(req.query.productId)
+        if (!product) {
+            return res.status(404).json({
+                success: false,
+                message: "Product not found"
+            })
+        }
+
+        const reviews = product.reviews.filter((rev) => {
+            return rev._id.toString() !== req.query.id.toString();
+        })
+
+        let avg = 0
+        reviews.forEach((rev) => {
+            avg += rev.rating
+        })
+        const ratings = avg / reviews.length
+        const numOfReviews = reviews.length
+
+        try {
+            await Product.findByIdAndUpdate(req.query.productId, {
+                reviews,
+                ratings,
+                numOfReviews
+            }, {
+                new: true,
+                runValidators: true,
+                useFindAndModify: false
+            })
+
+            res.status(200).json({
+                success: true,
+            })
+        }catch (e) {
+            console.log("deleteProductReview() failed to findByIdAndUpdate")
+            console.log(e.message)
+            res.status(500).json({
+                success: false,
+                message: "Something Went Wrong"
+            })
+        }
+    } catch (e) {
+        console.log("deleteProductReview() failed to findById")
+        console.log(e.message)
+        res.status(500).json({
             success: false,
-            message: "Product not found"
+            message: "Something Went Wrong"
         })
     }
-
-    const reviews = product.reviews.filter((rev) => {
-        return rev._id.toString() !== req.query.id.toString();
-    })
-
-    let avg = 0
-    reviews.forEach((rev) => {
-        avg += rev.rating
-    })
-    const ratings = avg / reviews.length
-    const numOfReviews = reviews.length
-
-    await Product.findByIdAndUpdate(req.query.productId, {
-        reviews,
-        ratings,
-        numOfReviews
-    }, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false
-    })
-
-    res.status(200).json({
-        success: true,
-    })
 }
-
-
-// exports.SendFile = async (req, res) => {
-// const file = req.files.File
-// console.log(req.files)
-// const arrayBuffer = await file.arrayBuffer();
-// const buffer = Buffer.from(file.data) //  <-- convert to Buffer
-// console.log(buffer)
-// cloudinary.v2.uploader.upload_stream({resource_type: "image",folder:"Ecommerce"}, onDone).end(buffer)
-//
-// function onDone(error, result) {
-//     if (error) {
-//         res.status(200).json({
-//             message: "error"
-//         })
-//         return
-//     }
-//     console.log(result)
-//     res.status(200).json({
-//         message: "Hi"
-//     })
-// }
-
-// cloudinary.v2.uploader.upload(req.files.File,
-//     {
-//         quality_analysis: true,
-//         folder: "Practice",
-//     },
-//     function (error, result) {
-//         res.status(200).json({
-//             message: "Hi"
-//         })
-//         console.log(result);
-//     })
-// }

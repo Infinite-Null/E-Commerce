@@ -6,7 +6,6 @@ const User = require("../Models/userModel")
 
 // Create new Order
 exports.newOrder = async (req, res) => {
-
     const {
         shippingInfo,
         orderItems,
@@ -28,66 +27,114 @@ exports.newOrder = async (req, res) => {
         user: req.user._id
     })
     order.save().then(async (e) => {
-        const order = await Order.findById(e.id)
-        for (const ord of order.orderItems) {
-            await updateStock(ord.product, ord.quantity)
+        try {
+            const order = await Order.findById(e.id)
+            for (const ord of order.orderItems) {
+                try {
+                    await updateStock(ord.product, ord.quantity)
+                } catch (e) {
+                    console.log("NewOrder() updateStock")
+                    res.status(500).json({
+                        success: false,
+                        message: "Something Went Wrong"
+                    })
+                }
+
+            }
+            res.status(201).json({
+                success: true,
+                order: e
+            })
+        } catch (e) {
+            console.log("NewOrder() findById")
+            res.status(500).json({
+                success: false,
+                message: "Something Went Wrong"
+            })
         }
-        res.status(201).json({
-            success: true,
-            order:e
-        })
     })
 }
 // update Comments --Admin
-exports.updateComment = async (req,res) => {
-    const order = await Order.findById(req.params.id)
-    if (!order) {
-        return res.status(404).json({
+exports.updateComment = async (req, res) => {
+    try {
+        const order = await Order.findById(req.params.id)
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                message: "Order Not Found"
+            })
+        }
+        if (order.orderStatus === "Delivered") {
+            return res.status(400).json({
+                success: false,
+                message: "Already Delivered"
+            })
+        }
+
+        order.comment = req.body.comment
+        try {
+            await order.save({validateBeforeSave: false})
+            res.status(200).json({
+                success: true
+            })
+        } catch (e) {
+            console.log("updateComment() saving order failed")
+            res.status(500).json({
+                success: false,
+                message: "Something Went Wrong"
+            })
+        }
+    } catch (e) {
+        console.log("updateComment() findById")
+        res.status(500).json({
             success: false,
-            message: "Order Not Found"
+            message: "Something Went Wrong"
         })
     }
-    if (order.orderStatus === "Delivered") {
-        return res.status(400).json({
-            success: false,
-            message: "Already Delivered"
-        })
-    }
-
-    order.comment = req.body.comment
-
-    await order.save({validateBeforeSave: false})
-    res.status(200).json({
-        success: true
-    })
 }
 
 // update Order status --Admin
 exports.updateOrderStatus = async (req, res) => {
-    const order = await Order.findById(req.params.id)
-    if (!order) {
-        return res.status(404).json({
+    try {
+        const order = await Order.findById(req.params.id)
+        if (!order) {
+            return res.status(404).json({
+                success: false,
+                message: "Order Not Found"
+            })
+        }
+        if (order.orderStatus === "Delivered") {
+            return res.status(400).json({
+                success: false,
+                message: "Already Delivered"
+            })
+        }
+
+        order.orderStatus = req.body.status
+
+        if (req.body.status === "Delivered") {
+            order.deliveredAt = Date.now()
+        }
+        try {
+            await order.save({validateBeforeSave: false})
+            res.status(200).json({
+                success: true
+            })
+        } catch (e) {
+            console.log("updateOrderStatus() failed to save document")
+            res.status(500).json({
+                success: false,
+                message: "Something Went Wrong"
+            })
+        }
+    } catch (e) {
+        console.log("updateOrderStatus() findById")
+        res.status(500).json({
             success: false,
-            message: "Order Not Found"
+            message: "Something Went Wrong"
         })
     }
-    if (order.orderStatus === "Delivered") {
-        return res.status(400).json({
-            success: false,
-            message: "Already Delivered"
-        })
-    }
 
-    order.orderStatus = req.body.status
-
-    if (req.body.status === "Delivered") {
-        order.deliveredAt = Date.now()
-    }
-
-    await order.save({validateBeforeSave: false})
-    res.status(200).json({
-        success: true
-    })
 }
 
 // Get Single Order
@@ -159,13 +206,19 @@ exports.getAllOrders = async (req, res) => {
 }
 
 
-
 async function updateStock(id, quantity) {
-    const product = await Product.findById(id)
+    try {
+        const product = await Product.findById(id)
+        product.Stock -= quantity
+        try {
+            await product.save({validateBeforeSave: false})
+        } catch (e) {
+            console.log("updateOrderStatus() failed to save document")
+        }
+    } catch (e) {
+        console.log("updateStock() findById")
+    }
 
-    product.Stock -= quantity
-
-    await product.save({validateBeforeSave: false})
 }
 
 // Delete order --admin
@@ -184,24 +237,33 @@ exports.deleteOrders = async (req, res) => {
 }
 
 exports.Dashboard = async (req, res) => {
-    const TotalUsers = await User.countDocuments()
-    Order.find().select("totalPrice").then((e) => {
-        Product.find().select("Stock").then((p) => {
-            res.status(200).json({
-                TotalProducts: p.length,
-                TotalOrders: e.length,
-                TotalUsers,
-                Orders: e,
-                Products: p
+    try {
+        const TotalUsers = await User.countDocuments()
+        Order.find().select("totalPrice").then((e) => {
+            Product.find().select("Stock").then((p) => {
+                res.status(200).json({
+                    TotalProducts: p.length,
+                    TotalOrders: e.length,
+                    TotalUsers,
+                    Orders: e,
+                    Products: p
+                })
+            }).catch((e) => {
+                res.status(500).json({
+                    message: e.message
+                })
             })
         }).catch((e) => {
             res.status(500).json({
                 message: e.message
             })
         })
-    }).catch((e) => {
+    } catch (e) {
+        console.log("Dashboard() failed to count document")
         res.status(500).json({
-            message: e.message
+            success: false,
+            message: "Something Went Wrong"
         })
-    })
+    }
+
 }

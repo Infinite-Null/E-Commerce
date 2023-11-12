@@ -2,9 +2,6 @@
 const User = require("../Models/userModel")
 const bcrypt = require("bcryptjs")
 const sendToken = require('../Utils/jwtToken')
-const ErrorHandler = require("../Utils/errorHandling")
-const sendEmail = require("../Utils/sendEmail.js")
-const crypto = require("crypto");
 const nodeMailer = require("nodemailer");
 const {SendVerificationMail, SendResetMail} = require("../Utils/Email");
 //Register User
@@ -12,12 +9,21 @@ exports.registerUser = async (req, res) => {
     const userData = await User.find({email: req.body.email})
     if (userData.length !== 0) {
         if (!userData[0].isVerified) {
-            await SendVerificationMail(userData[0]._id, userData[0].email)
-            res.status(200).json({
-                success: false,
-                message: "You need to verify yourself, Mail has been sent to your mail please verify yourself"
-            })
-            return
+            try {
+                await SendVerificationMail(userData[0]._id, userData[0].email)
+                res.status(200).json({
+                    success: false,
+                    message: "You need to verify yourself, Mail has been sent to your mail please verify yourself"
+                })
+                return
+            } catch (e) {
+                console.log("registerUser() failed to send mail")
+                console.log(e.message)
+                res.status(200).json({
+                    success: false,
+                    message: "Failed to send mail"
+                })
+            }
         }
         res.status(200).json({
             success: false,
@@ -30,10 +36,19 @@ exports.registerUser = async (req, res) => {
         name, email, password
     })
     user.save().then(async (e) => {
-        await SendVerificationMail(e._id, e.email)
-        res.status(200).json({
-            message: 'Mail has been sent to your e-mail please verify yourself'
-        })
+        try {
+            await SendVerificationMail(e._id, e.email)
+            res.status(200).json({
+                message: 'Mail has been sent to your e-mail please verify yourself'
+            })
+        } catch (e) {
+            console.log("registerUser() failed to send mail")
+            console.log(e.message)
+            res.status(200).json({
+                success: false,
+                message: "Unable to send mail"
+            })
+        }
     }).catch((e) => {
         res.status(500).json({
             success: false,
@@ -44,7 +59,6 @@ exports.registerUser = async (req, res) => {
 
 //Verify User
 exports.VerifyUser = async (req, res) => {
-
     try {
         const user = await User.findById(req.params.id)
         if (user.isVerified) {
@@ -166,20 +180,20 @@ exports.resetPassword = async (req, res, next) => {
     try {
         const user = await User.findById(id)
         user.password = password
-        user.save().then((_)=>{
+        user.save().then((_) => {
             res.status(200).json({
-                success:true,
-                message:"Password Updated Successfully"
+                success: true,
+                message: "Password Updated Successfully"
             })
-        }).catch((e)=>{
+        }).catch((e) => {
             res.status(500).json({
-                success:false,
-                message:e.message
+                success: false,
+                message: e.message
             })
         })
     } catch (e) {
         res.status(500).json({
-            message:"Something Went Wrong"
+            message: "Something Went Wrong"
         })
     }
 }
