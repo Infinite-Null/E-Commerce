@@ -57,4 +57,9 @@ Welcome to the E-Commerce Website repository! This project is a full-featured e-
 1. Clone the repository:
    ```bash
    git clone https://github.com/your-username/ecommerce-mern-jwt.git
-   cd ecommerce-mern-jwt
+   cd ecommerce
+   npm i
+   npm run dev
+   cd frontend
+   npm i
+   npm run start
