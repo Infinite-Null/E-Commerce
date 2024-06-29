@@ -21,8 +21,8 @@ const AboutUs = ({About,Social}) => {
             })}
             <h1 className="text-3xl lg:text-4xl font-bold leading-9 text-gray-800 mt-40">Connect With Us</h1>
             <SocialMedia Social={Social}/>
-            <h1 className="text-3xl lg:text-4xl font-bold leading-9 text-gray-800 mt-40 mb-14">Connect With Developer</h1>
-            <AboutDeveloper/>
+            {/*<h1 className="text-3xl lg:text-4xl font-bold leading-9 text-gray-800 mt-40 mb-14">Connect With Developer</h1>*/}
+            {/*<AboutDeveloper/>*/}
         </div>
     );
 };

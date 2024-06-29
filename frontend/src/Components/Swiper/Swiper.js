@@ -16,18 +16,18 @@ export function SwiperComponent() {
     const SliderData = [
         {
             heading: "Premium",
-            subheading: "Best store around to buy premium and great shoes",
-            image: "https://images.unsplash.com/photo-1512990414788-d97cb4a25db3?q=80&w=2015&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            subheading: "Best store around to buy premium and great clothes",
+            image: "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         },
         {
             heading: "Stylish",
-            subheading: "Best store around to buy premium and great shoes",
-            image: "https://images.unsplash.com/photo-1527423139213-e6840ae583bc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            subheading: "Your ultimate destination for stylish and trendsetting clothes!",
+            image: "https://images.unsplash.com/photo-1576188973526-0e5d7047b0cf?q=80&w=2078&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         },
         {
             heading: "Elegant",
-            subheading: "Best store around to buy premium and great shoes",
-            image: "https://images.unsplash.com/photo-1511360154485-8bac04fbdf25?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+            subheading: "Discover premium fashion that defines elegance.",
+            image: "https://images.unsplash.com/photo-1603251578711-3290ca1a0187?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
         }
     ]
     const progressCircle = useRef(null);
